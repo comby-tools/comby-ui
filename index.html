@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf8" />
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1,
+				 shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.css" />
+</head>
+
+<body>
+  <!-- elm app -->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-go.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+
+  <script src="./elm.js"></script>
+  <script>
+    var app = Elm.App.fullscreen();
+
+    // clear the text
+    app.ports.clear.subscribe(function() {
+	document.getElementById("listing").value = "";
+    });
+
+    // copy the link to clipboard
+    app.ports.copyUrl.subscribe(function () {
+        console.log("copyUrl clicked");
+        var copyText = document.getElementById("copyableLink");
+        // tell me about all the nice things I can't have.
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+});
+
+    var colors = [ "two", "three", "four", "five", "six" ];
+
+    function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+    }
+
+    app.ports.highlightMatchRanges.subscribe(function(args) {
+	var context = document.querySelector(".context");
+	var instance = new Mark(context);
+	instance.unmark();
+	matches = args["matches"];
+	source = args["source"];
+
+	document.getElementById("listing").innerHTML = escapeHtml(source);
+	for (var i = 0; i < matches.length; i++) {
+	    var start = parseInt(matches[i].range.start.offset);
+	    var length = parseInt(matches[i].range.end.offset) - start;
+	    instance.markRanges([{ start: start, length: length }]);
+	    var environment = matches[i].environment;
+            // for each variable in environment
+	    for (var j = 0; j < environment.length; j++) {
+                var inner_match = environment[j];
+                var inner_start = parseInt(inner_match.range.start.offset);
+                var inner_length = parseInt(inner_match.range.end.offset) - inner_start;
+		instance.markRanges([{ start: inner_start, length: inner_length }], {className: colors[j % 5]});
+	    }
+	}
+    });
+
+    app.ports.highlightRewriteRanges.subscribe(function(args) {
+	var context = document.querySelector(".context2");
+	var instance = new Mark(context);
+	instance.unmark();
+	console.log(JSON.stringify(args));
+	in_place_substitutions = args["in_place_substitutions"];
+	rewritten_source = args["rewritten_source"];
+	document.getElementById("listing2").innerHTML = escapeHtml(rewritten_source);
+	for (var i = 0; i < in_place_substitutions.length; i++) {
+	    var context_start = parseInt(in_place_substitutions[i].range.start.offset);
+	    var context_length = parseInt(in_place_substitutions[i].range.end.offset) - context_start;
+	    instance.markRanges([{ start: context_start, length: context_length }]);
+            /* replacement ranges for variables are not supported yet */
+            /*
+	    var environment = in_place_substitutions[i].environment;
+	    for (var j = 0; j < environment.length; j++) {
+		var inner_match = environment[j];
+		var relative_start_position = parseInt(inner_match[1].location.offset);
+		var absolute_start_position = context_start + relative_start_position;
+		var matched_string = inner_match[1].value;
+		var length = matched_string.length;
+		instance.markRanges([{ start: absolute_start_position, length: length }], {className: colors[j % 5]});
+	    }
+            */
+	}
+    });
+  </script>
+</body>
+</html>
