@@ -1,0 +1,116 @@
+mark {
+    background-color: gray;
+    color: white;
+    padding: .1em;
+}
+
+mark.two {
+    background-color: #30bc40;
+    border-radius: 4px;
+    padding: 0em;
+    padding-left: .2em;
+    padding-right: .2em;
+}
+
+mark.three {
+    background-color: orange;
+    border-radius: 4px;
+    padding: 0em;
+    padding-left: .2em;
+    padding-right: .2em;
+}
+
+mark.four {
+    background-color: #4fc6ed;
+    border-radius: 4px;
+    padding: 0em;
+    padding-left: .2em;
+    padding-right: .2em;
+}
+
+mark.five {
+    background-color: #f639f6;
+    border-radius: 4px;
+    padding: 0em;
+    padding-left: .2em;
+    padding-right: .2em;
+}
+
+mark.six {
+    background-color: #f64848;
+    border-radius: 4px;
+    padding: 0em;
+    padding-left: .2em;
+    padding-right: .2em;
+}
+
+
+
+source {
+  white-space: pre-wrap;
+}
+
+match_template {
+  white-space: pre-wrap;
+}
+
+textarea
+{
+    font-family:"Monaco";
+    spellcheck:false;
+}
+
+pre code {
+    font-family:"Monaco";
+    font-size:16px;
+}
+
+pre {
+    resize: both;
+    overflow: auto;
+    height:300px;
+}
+
+.rule-syntax-errors {
+    font-family:"Monaco";
+    font-size:11px;
+}
+
+
+.source-box {
+    border-style: solid;
+    border-color:#00b4f2;
+    border-radius: 6px;
+    border-width: 1px;
+    padding: 5px 5px 5px 5px;
+}
+
+.rewrite-box {
+    border-style: solid;
+    border-color:#f96216;
+    border-radius: 6px;
+    border-width: 1px;
+    padding: 5px 5px 5px 5px;
+}
+
+.red-pill {
+    background-color:#dc3545;
+}
+
+
+.btn-warning {
+    background-color:#ffa604;
+}
+
+.badge-warning {
+    background-color:#ffa604;
+}
+
+.btn-outline-warning {
+    border-color:#ffa604;
+    color:#ffa604;
+}
+
+.green-pill {
+    background-color:#28a745;
+}
