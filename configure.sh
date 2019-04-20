@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
 fi
 
 if [ -z "$2" ]; then
-    echo "Put the rewrite server url in argument 2 (how about http://127.0.0.1:8888)"
+    echo "Put the port of your local rewrite server 2 (good chance it's 8888)"
     exit 1
 fi
 
@@ -24,4 +24,4 @@ fi
 sed -i.bak -e "s/%%%thisDomainPort%%%/$1/" Configuration.elm
 sed -i.bak -e "s/%%%rewriteServer%%%/$2/" Configuration.elm
 
-rm .bak
+rm *.bak

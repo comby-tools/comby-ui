@@ -8,4 +8,4 @@ thisDomain =
 
 rewriteServer : String
 rewriteServer =
-    "%%%rewriteServer%%%"
+    "http://127.0.0.1:%%%rewriteServer%%%"
