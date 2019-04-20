@@ -12964,8 +12964,8 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'http://127.0.0.1:%%%rewriteServer%%%';
-var _user$project$Configuration$thisDomain = 'http://127.0.0.1:%%%thisDomainPort%%%';
+var _user$project$Configuration$rewriteServer = 'http://198.199.104.187:8888';
+var _user$project$Configuration$thisDomain = 'https://comby-tools.github.io/comby-ui';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F6(
 	function (source, match, rule, rewrite, language, substitutionKind) {
