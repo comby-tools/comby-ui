@@ -12967,8 +12967,8 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_A
 var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
 var _user$project$Configuration$thisDomain = 'https://comby-tools.github.io/comby-ui';
 
-var _user$project$JsonRequest$jsonRewriteRequest = F6(
-	function (source, match, rule, rewrite, language, substitutionKind) {
+var _user$project$JsonRequest$jsonRewriteRequest = F7(
+	function (source, match, rule, rewrite, language, substitutionKind, id) {
 		var value = _elm_lang$core$Json_Encode$object(
 			{
 				ctor: '::',
@@ -13012,7 +13012,15 @@ var _user$project$JsonRequest$jsonRewriteRequest = F6(
 										_0: 'substitution_kind',
 										_1: _elm_lang$core$Json_Encode$string(substitutionKind)
 									},
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple2',
+											_0: 'id',
+											_1: _elm_lang$core$Json_Encode$int(id)
+										},
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}
@@ -13021,8 +13029,8 @@ var _user$project$JsonRequest$jsonRewriteRequest = F6(
 			});
 		return A2(_elm_lang$core$Json_Encode$encode, 0, value);
 	});
-var _user$project$JsonRequest$jsonMatchRequest = F4(
-	function (source, match, rule, language) {
+var _user$project$JsonRequest$jsonMatchRequest = F5(
+	function (source, match, rule, language, id) {
 		var value = _elm_lang$core$Json_Encode$object(
 			{
 				ctor: '::',
@@ -13052,7 +13060,15 @@ var _user$project$JsonRequest$jsonMatchRequest = F4(
 								_0: 'language',
 								_1: _elm_lang$core$Json_Encode$string(language)
 							},
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'id',
+									_1: _elm_lang$core$Json_Encode$int(id)
+								},
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
@@ -13115,18 +13131,19 @@ var _user$project$JsonResult$matchDecoder = A4(
 	A2(_elm_lang$core$Json_Decode$field, 'range', _user$project$JsonResult$rangeDecoder),
 	A2(_elm_lang$core$Json_Decode$field, 'environment', _user$project$JsonResult$environmentDecoder),
 	A2(_elm_lang$core$Json_Decode$field, 'matched', _elm_lang$core$Json_Decode$string));
-var _user$project$JsonResult$JsonMatchResult = F2(
-	function (a, b) {
-		return {matches: a, source: b};
+var _user$project$JsonResult$JsonMatchResult = F3(
+	function (a, b, c) {
+		return {matches: a, source: b, id: c};
 	});
-var _user$project$JsonResult$matchResultDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
+var _user$project$JsonResult$matchResultDecoder = A4(
+	_elm_lang$core$Json_Decode$map3,
 	_user$project$JsonResult$JsonMatchResult,
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'matches',
 		_elm_lang$core$Json_Decode$list(_user$project$JsonResult$matchDecoder)),
-	A2(_elm_lang$core$Json_Decode$field, 'source', _elm_lang$core$Json_Decode$string));
+	A2(_elm_lang$core$Json_Decode$field, 'source', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$int));
 var _user$project$JsonResult$InPlaceSubstitution = F3(
 	function (a, b, c) {
 		return {range: a, environment: b, replacement_content: c};
@@ -13137,18 +13154,19 @@ var _user$project$JsonResult$inPlaceSubstitutionDecoder = A4(
 	A2(_elm_lang$core$Json_Decode$field, 'range', _user$project$JsonResult$rangeDecoder),
 	A2(_elm_lang$core$Json_Decode$field, 'environment', _user$project$JsonResult$environmentDecoder),
 	A2(_elm_lang$core$Json_Decode$field, 'replacement_content', _elm_lang$core$Json_Decode$string));
-var _user$project$JsonResult$JsonRewriteResult = F2(
-	function (a, b) {
-		return {in_place_substitutions: a, rewritten_source: b};
+var _user$project$JsonResult$JsonRewriteResult = F3(
+	function (a, b, c) {
+		return {in_place_substitutions: a, rewritten_source: b, id: c};
 	});
-var _user$project$JsonResult$rewriteResultDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
+var _user$project$JsonResult$rewriteResultDecoder = A4(
+	_elm_lang$core$Json_Decode$map3,
 	_user$project$JsonResult$JsonRewriteResult,
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'in_place_substitutions',
 		_elm_lang$core$Json_Decode$list(_user$project$JsonResult$inPlaceSubstitutionDecoder)),
-	A2(_elm_lang$core$Json_Decode$field, 'rewritten_source', _elm_lang$core$Json_Decode$string));
+	A2(_elm_lang$core$Json_Decode$field, 'rewritten_source', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$int));
 
 var _user$project$Types$Flags = {};
 var _user$project$Types$Model = function (a) {
@@ -13165,7 +13183,11 @@ var _user$project$Types$Model = function (a) {
 											return function (l) {
 												return function (m) {
 													return function (n) {
-														return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, serverConnected: k, language: l, substitutionKind: m, copyButtonText: n};
+														return function (o) {
+															return function (p) {
+																return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, serverConnected: k, language: l, substitutionKind: m, copyButtonText: n, currentRewriteResultId: o, currentMatchResultId: p};
+															};
+														};
 													};
 												};
 											};
@@ -13306,26 +13328,31 @@ var _user$project$Mock$empty = function (model) {
 		{
 			matchResult: {
 				matches: {ctor: '[]'},
-				source: ''
+				source: '',
+				id: 0
 			},
 			rewriteResult: {
 				in_place_substitutions: {ctor: '[]'},
-				rewritten_source: ''
+				rewritten_source: '',
+				id: 0
 			}
 		});
 };
 var _user$project$Mock$rewriteOutput = {
 	in_place_substitutions: {ctor: '[]'},
-	rewritten_source: ''
+	rewritten_source: '',
+	id: 0
 };
 var _user$project$Mock$rewriteTemplate = 'return (:[1])';
 var _user$project$Mock$rewrite = {
 	in_place_substitutions: {ctor: '[]'},
-	rewritten_source: ''
+	rewritten_source: '',
+	id: 0
 };
 var _user$project$Mock$match = {
 	matches: {ctor: '[]'},
-	source: ''
+	source: '',
+	id: 0
 };
 var _user$project$Mock$matchTemplate = 'if :[1] {\n  return true\n}\nreturn false';
 var _user$project$Mock$source = 'this here don\'t match\nif derp == true {\n  return true\n}\nreturn false\n...';
@@ -13360,7 +13387,8 @@ var _user$project$Ports$highlightMatchRanges = _elm_lang$core$Native_Platform.ou
 						matched: v.matched
 					};
 				}),
-			source: v.source
+			source: v.source,
+			id: v.id
 		};
 	});
 var _user$project$Ports$highlightRewriteRanges = _elm_lang$core$Native_Platform.outgoingPort(
@@ -13388,7 +13416,8 @@ var _user$project$Ports$highlightRewriteRanges = _elm_lang$core$Native_Platform.
 						replacement_content: v.replacement_content
 					};
 				}),
-			rewritten_source: v.rewritten_source
+			rewritten_source: v.rewritten_source,
+			id: v.id
 		};
 	});
 var _user$project$Ports$clear = _elm_lang$core$Native_Platform.outgoingPort(
@@ -13449,7 +13478,8 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			page: _user$project$Types$SourcePage,
 			matchResult: {
 				matches: {ctor: '[]'},
-				source: ''
+				source: '',
+				id: 0
 			},
 			sourceInput: result.source,
 			matchTemplateInput: result.match,
@@ -13458,14 +13488,17 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			rewriteTemplateInput: result.rewrite,
 			rewriteResult: {
 				in_place_substitutions: {ctor: '[]'},
-				rewritten_source: ''
+				rewritten_source: '',
+				id: 0
 			},
 			debug: false,
 			url: '',
 			serverConnected: false,
 			language: language,
 			substitutionKind: substitutionKind,
-			copyButtonText: 'Copy'
+			copyButtonText: 'Copy',
+			currentRewriteResultId: 0,
+			currentMatchResultId: 0
 		};
 	});
 var _user$project$Controller$log = F2(
@@ -13478,7 +13511,7 @@ var _user$project$Controller$getShortUrl = function (model) {
 		_elm_lang$core$String$length(model.ruleInput),
 		0) ? 'where true' : model.ruleInput;
 	var languageInput = _user$project$LanguageExtension$toString(model.language);
-	var json = A6(_user$project$JsonRequest$jsonRewriteRequest, model.sourceInput, model.matchTemplateInput, rule, model.rewriteTemplateInput, languageInput, substitutionKindInput);
+	var json = A7(_user$project$JsonRequest$jsonRewriteRequest, model.sourceInput, model.matchTemplateInput, rule, model.rewriteTemplateInput, languageInput, substitutionKindInput, 0);
 	var urlToShorten = A2(
 		_elm_lang$core$Basics_ops['++'],
 		_user$project$Configuration$thisDomain,
@@ -13514,14 +13547,14 @@ var _user$project$Controller$getShortUrl = function (model) {
 	return A2(_elm_lang$http$Http$send, _user$project$Types$ShortenUrlResult, myRequest);
 };
 var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/rewrite');
-var _user$project$Controller$getRewrite = F6(
-	function (sourceInput, matchTemplateInput, ruleInput, rewriteTemplateInput, languageInput, substitutionKindInput) {
+var _user$project$Controller$getRewrite = F7(
+	function (sourceInput, matchTemplateInput, ruleInput, rewriteTemplateInput, languageInput, substitutionKindInput, id) {
 		var substitutionKind = _user$project$SubstitutionKind$toString(substitutionKindInput);
 		var rule = _elm_lang$core$Native_Utils.eq(
 			_elm_lang$core$String$length(ruleInput),
 			0) ? 'where true' : ruleInput;
 		var language = _user$project$LanguageExtension$toString(languageInput);
-		var json = A6(_user$project$JsonRequest$jsonRewriteRequest, sourceInput, matchTemplateInput, rule, rewriteTemplateInput, language, substitutionKind);
+		var json = A7(_user$project$JsonRequest$jsonRewriteRequest, sourceInput, matchTemplateInput, rule, rewriteTemplateInput, language, substitutionKind, id);
 		var _p2 = A2(_user$project$Controller$log, 'getRewrite', json);
 		return A2(
 			_elm_lang$http$Http$send,
@@ -13533,13 +13566,13 @@ var _user$project$Controller$getRewrite = F6(
 				_user$project$JsonResult$rewriteResultDecoder));
 	});
 var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
-var _user$project$Controller$getMatches = F4(
-	function (sourceInput, matchTemplateInput, ruleInput, languageInput) {
+var _user$project$Controller$getMatches = F5(
+	function (sourceInput, matchTemplateInput, ruleInput, languageInput, id) {
 		var rule = _elm_lang$core$Native_Utils.eq(
 			_elm_lang$core$String$length(ruleInput),
 			0) ? 'where true' : ruleInput;
 		var language = _user$project$LanguageExtension$toString(languageInput);
-		var json = A4(_user$project$JsonRequest$jsonMatchRequest, sourceInput, matchTemplateInput, rule, language);
+		var json = A5(_user$project$JsonRequest$jsonMatchRequest, sourceInput, matchTemplateInput, rule, language, id);
 		var _p3 = A2(_user$project$Controller$log, 'getMatches:', json);
 		return A2(
 			_elm_lang$http$Http$send,
@@ -13560,10 +13593,10 @@ var _user$project$Controller$init = F2(
 			_1: _elm_lang$core$Platform_Cmd$batch(
 				{
 					ctor: '::',
-					_0: A4(_user$project$Controller$getMatches, model.sourceInput, model.matchTemplateInput, model.ruleInput, model.language),
+					_0: A5(_user$project$Controller$getMatches, model.sourceInput, model.matchTemplateInput, model.ruleInput, model.language, model.currentMatchResultId),
 					_1: {
 						ctor: '::',
-						_0: A6(_user$project$Controller$getRewrite, model.sourceInput, model.matchTemplateInput, model.ruleInput, model.rewriteTemplateInput, model.language, model.substitutionKind),
+						_0: A7(_user$project$Controller$getRewrite, model.sourceInput, model.matchTemplateInput, model.ruleInput, model.rewriteTemplateInput, model.language, model.substitutionKind, model.currentRewriteResultId),
 						_1: {ctor: '[]'}
 					}
 				})
@@ -13589,10 +13622,10 @@ var _user$project$Controller$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A4(_user$project$Controller$getMatches, new_model.sourceInput, _p7, new_model.ruleInput, new_model.language),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, _p7, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A6(_user$project$Controller$getRewrite, new_model.sourceInput, _p7, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, _p7, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
@@ -13608,10 +13641,10 @@ var _user$project$Controller$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A4(_user$project$Controller$getMatches, _p9, new_model.matchTemplateInput, new_model.ruleInput, new_model.language),
+							_0: A5(_user$project$Controller$getMatches, _p9, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A6(_user$project$Controller$getRewrite, _p9, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind),
+								_0: A7(_user$project$Controller$getRewrite, _p9, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
@@ -13626,10 +13659,10 @@ var _user$project$Controller$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A4(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, _p10, new_model.language),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, _p10, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A6(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, _p10, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, _p10, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
@@ -13641,19 +13674,19 @@ var _user$project$Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
 						{rewriteTemplateInput: _p11}),
-					_1: A6(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p11, new_model.language, new_model.substitutionKind)
+					_1: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p11, new_model.language, new_model.substitutionKind, model.currentRewriteResultId)
 				};
 			case 'MatchesResult':
 				if (_p5._0.ctor === 'Ok') {
 					var _p13 = _p5._0._0;
 					var _p12 = A2(_user$project$Controller$log, 'MatchResult', _p13);
-					return {
+					return (_elm_lang$core$Native_Utils.cmp(_p13.id, model.currentMatchResultId) > 0) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{matchResult: _p13, serverConnected: true, ruleSyntaxErrors: ''}),
+							{matchResult: _p13, serverConnected: true, ruleSyntaxErrors: '', currentMatchResultId: _p13.id}),
 						_1: _user$project$Ports$highlightMatchRanges(_p13)
-					};
+					} : {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 				} else {
 					var _p18 = _p5._0._0;
 					var _p14 = A2(_user$project$Controller$log, 'MatchResultError', _p18);
@@ -13679,13 +13712,13 @@ var _user$project$Controller$update = F2(
 			case 'RewriteResult':
 				if (_p5._0.ctor === 'Ok') {
 					var _p19 = _p5._0._0;
-					return {
+					return (_elm_lang$core$Native_Utils.cmp(_p19.id, model.currentRewriteResultId) > 0) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{rewriteResult: _p19, serverConnected: true, ruleSyntaxErrors: ''}),
+							{rewriteResult: _p19, serverConnected: true, ruleSyntaxErrors: '', currentRewriteResultId: _p19.id}),
 						_1: _user$project$Ports$highlightRewriteRanges(_p19)
-					};
+					} : {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 				} else {
 					var _p24 = _p5._0._0;
 					var _p20 = A2(_user$project$Controller$log, 'RewriteResultError', _p24);
@@ -13761,10 +13794,10 @@ var _user$project$Controller$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A4(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p26),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p26, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A6(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p26, new_model.substitutionKind),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p26, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
@@ -13780,10 +13813,10 @@ var _user$project$Controller$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A4(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.language),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A6(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p28),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p28, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
