@@ -81,7 +81,7 @@ highlightableSourceListing model =
         [ Html.Attributes.class "context" ]
         [ Html.pre [ Html.Attributes.class "source-box" ]
             [ Html.code [ Html.Attributes.id "listing" ]
-                [ text "" ]
+                [ text model.matchResult.source ]
             ]
         ]
 
@@ -92,7 +92,7 @@ highlightableRewriteResult model =
         [ Html.Attributes.class "context2" ]
         [ Html.pre [ Html.Attributes.class "rewrite-box" ]
             [ Html.code [ Html.Attributes.id "listing2" ]
-                [ text "" ]
+                [ text model.rewriteResult.rewritten_source ]
             ]
         ]
 

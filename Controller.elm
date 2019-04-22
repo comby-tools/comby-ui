@@ -234,7 +234,9 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
         new_model =
-            { model | copyButtonText = "Copy" }
+            { model
+                | copyButtonText = "Copy"
+            }
     in
     case msg of
         -- we do not do anything on this; only need location when initializing,
@@ -246,6 +248,19 @@ update msg model =
             let
                 _ =
                     log "MatchTemplateUpdated" matchTemplateInput
+
+                currentMatchResultId =
+                    model.currentMatchResultId + 1
+
+                currentRewriteResultId =
+                    model.currentRewriteResultId + 1
+
+                new_model =
+                    { model
+                        | copyButtonText = "Copy"
+                        , currentMatchResultId = currentMatchResultId
+                        , currentRewriteResultId = currentRewriteResultId
+                    }
             in
             ( { new_model | matchTemplateInput = matchTemplateInput }
             , Cmd.batch
@@ -270,6 +285,19 @@ update msg model =
             let
                 _ =
                     log "SourceInputUpdated" sourceInput
+
+                currentMatchResultId =
+                    model.currentMatchResultId + 1
+
+                currentRewriteResultId =
+                    model.currentRewriteResultId + 1
+
+                new_model =
+                    { model
+                        | copyButtonText = "Copy"
+                        , currentMatchResultId = currentMatchResultId
+                        , currentRewriteResultId = currentRewriteResultId
+                    }
             in
             ( { new_model | sourceInput = sourceInput }
             , Cmd.batch
@@ -291,6 +319,20 @@ update msg model =
             )
 
         RuleInputUpdated ruleInput ->
+            let
+                currentMatchResultId =
+                    model.currentMatchResultId + 1
+
+                currentRewriteResultId =
+                    model.currentRewriteResultId + 1
+
+                new_model =
+                    { model
+                        | copyButtonText = "Copy"
+                        , currentMatchResultId = currentMatchResultId
+                        , currentRewriteResultId = currentRewriteResultId
+                    }
+            in
             ( { new_model | ruleInput = ruleInput }
             , Cmd.batch
                 [ getMatches
@@ -311,6 +353,16 @@ update msg model =
             )
 
         RewriteTemplateInputUpdated rewriteTemplateInput ->
+            let
+                currentRewriteResultId =
+                    model.currentRewriteResultId + 1
+
+                new_model =
+                    { model
+                        | copyButtonText = "Copy"
+                        , currentRewriteResultId = currentRewriteResultId
+                    }
+            in
             ( { new_model | rewriteTemplateInput = rewriteTemplateInput }
             , getRewrite
                 new_model.sourceInput
@@ -319,15 +371,21 @@ update msg model =
                 rewriteTemplateInput
                 new_model.language
                 new_model.substitutionKind
-                model.currentRewriteResultId
+                new_model.currentRewriteResultId
             )
 
         MatchesResult (Ok matchResult) ->
             let
                 _ =
                     log "MatchResult" matchResult
+
+                _ =
+                    log "Resp Match id" matchResult.id
+
+                _ =
+                    log "current id match is" model.currentMatchResultId
             in
-            if matchResult.id > model.currentMatchResultId then
+            if matchResult.id >= model.currentMatchResultId then
                 ( { new_model
                     | matchResult = matchResult
                     , serverConnected = True
@@ -363,7 +421,17 @@ update msg model =
                     )
 
         RewriteResult (Ok rewriteResult) ->
-            if rewriteResult.id > model.currentRewriteResultId then
+            let
+                _ =
+                    log "RewriteResult" rewriteResult
+
+                _ =
+                    log "Resp Rewrite id" rewriteResult.id
+
+                _ =
+                    log "current rewrite id is" model.currentMatchResultId
+            in
+            if rewriteResult.id >= model.currentRewriteResultId then
                 ( { new_model
                     | rewriteResult = rewriteResult
                     , serverConnected = True
@@ -435,6 +503,20 @@ update msg model =
             )
 
         LanguageInputUpdated language ->
+            let
+                currentMatchResultId =
+                    model.currentMatchResultId + 1
+
+                currentRewriteResultId =
+                    model.currentRewriteResultId + 1
+
+                new_model =
+                    { model
+                        | copyButtonText = "Copy"
+                        , currentMatchResultId = currentMatchResultId
+                        , currentRewriteResultId = currentRewriteResultId
+                    }
+            in
             ( { new_model | language = language }
             , Cmd.batch
                 [ getMatches
@@ -458,6 +540,19 @@ update msg model =
             let
                 _ =
                     log "SubstitutionKindInputUpdated" substitutionKind
+
+                currentMatchResultId =
+                    model.currentMatchResultId + 1
+
+                currentRewriteResultId =
+                    model.currentRewriteResultId + 1
+
+                new_model =
+                    { model
+                        | copyButtonText = "Copy"
+                        , currentMatchResultId = currentMatchResultId
+                        , currentRewriteResultId = currentRewriteResultId
+                    }
             in
             ( { new_model | substitutionKind = substitutionKind }
             , Cmd.batch
