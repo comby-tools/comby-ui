@@ -81,7 +81,7 @@
         var context = document.querySelector(".context2");
         var instance = new Mark(context);
         instance.unmark();
-        console.log(JSON.stringify(args));
+        // console.log(JSON.stringify(args));
         in_place_substitutions = args["in_place_substitutions"];
         rewritten_source = args["rewritten_source"];
         document.getElementById("listing2").innerHTML = escapeHtml(rewritten_source);

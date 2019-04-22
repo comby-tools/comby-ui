@@ -15,6 +15,11 @@ import Token
 import Types exposing (..)
 
 
+debug : Bool
+debug =
+    False
+
+
 matchEndpoint : String
 matchEndpoint =
     Configuration.rewriteServer ++ "/match"
@@ -25,9 +30,17 @@ rewriteEndpoint =
     Configuration.rewriteServer ++ "/rewrite"
 
 
-log : String -> a -> a
+log : String -> a -> ()
 log s a =
-    Debug.log s a
+    if debug then
+        let
+            _ =
+                Debug.log s a
+        in
+        ()
+
+    else
+        ()
 
 
 getShortUrl : Model -> Cmd Msg
