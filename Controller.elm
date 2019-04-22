@@ -54,6 +54,7 @@ getShortUrl model =
                 model.rewriteTemplateInput
                 languageInput
                 substitutionKindInput
+                0
 
         urlToShorten =
             Configuration.thisDomain
@@ -81,8 +82,8 @@ getShortUrl model =
     Http.send ShortenUrlResult myRequest
 
 
-getMatches : String -> String -> String -> LanguageExtension -> Cmd Msg
-getMatches sourceInput matchTemplateInput ruleInput languageInput =
+getMatches : String -> String -> String -> LanguageExtension -> Int -> Cmd Msg
+getMatches sourceInput matchTemplateInput ruleInput languageInput id =
     let
         language =
             LanguageExtension.toString languageInput
@@ -100,6 +101,7 @@ getMatches sourceInput matchTemplateInput ruleInput languageInput =
                 matchTemplateInput
                 rule
                 language
+                id
 
         _ =
             log "getMatches:" json
@@ -111,8 +113,8 @@ getMatches sourceInput matchTemplateInput ruleInput languageInput =
             JsonResult.matchResultDecoder
 
 
-getRewrite : String -> String -> String -> String -> LanguageExtension -> SubstitutionKind -> Cmd Msg
-getRewrite sourceInput matchTemplateInput ruleInput rewriteTemplateInput languageInput substitutionKindInput =
+getRewrite : String -> String -> String -> String -> LanguageExtension -> SubstitutionKind -> Int -> Cmd Msg
+getRewrite sourceInput matchTemplateInput ruleInput rewriteTemplateInput languageInput substitutionKindInput id =
     let
         language =
             LanguageExtension.toString languageInput
@@ -135,6 +137,7 @@ getRewrite sourceInput matchTemplateInput ruleInput rewriteTemplateInput languag
                 rewriteTemplateInput
                 language
                 substitutionKind
+                id
 
         _ =
             log "getRewrite" json
@@ -175,6 +178,7 @@ loadInitialStaticState flags location =
     , matchResult =
         { matches = []
         , source = ""
+        , id = 0
         }
     , sourceInput = result.source
     , matchTemplateInput = result.match
@@ -184,6 +188,7 @@ loadInitialStaticState flags location =
     , rewriteResult =
         { in_place_substitutions = []
         , rewritten_source = ""
+        , id = 0
         }
     , debug = False
     , url = ""
@@ -191,6 +196,8 @@ loadInitialStaticState flags location =
     , language = language
     , substitutionKind = substitutionKind
     , copyButtonText = "Copy"
+    , currentRewriteResultId = 0
+    , currentMatchResultId = 0
     }
 
 
@@ -210,6 +217,7 @@ init flags location =
             model.matchTemplateInput
             model.ruleInput
             model.language
+            model.currentMatchResultId
         , getRewrite
             model.sourceInput
             model.matchTemplateInput
@@ -217,6 +225,7 @@ init flags location =
             model.rewriteTemplateInput
             model.language
             model.substitutionKind
+            model.currentRewriteResultId
         ]
     )
 
@@ -245,6 +254,7 @@ update msg model =
                     matchTemplateInput
                     new_model.ruleInput
                     new_model.language
+                    new_model.currentMatchResultId
                 , getRewrite
                     new_model.sourceInput
                     matchTemplateInput
@@ -252,6 +262,7 @@ update msg model =
                     new_model.rewriteTemplateInput
                     new_model.language
                     new_model.substitutionKind
+                    new_model.currentRewriteResultId
                 ]
             )
 
@@ -267,6 +278,7 @@ update msg model =
                     new_model.matchTemplateInput
                     new_model.ruleInput
                     new_model.language
+                    new_model.currentMatchResultId
                 , getRewrite
                     sourceInput
                     new_model.matchTemplateInput
@@ -274,6 +286,7 @@ update msg model =
                     new_model.rewriteTemplateInput
                     new_model.language
                     new_model.substitutionKind
+                    new_model.currentRewriteResultId
                 ]
             )
 
@@ -285,6 +298,7 @@ update msg model =
                     new_model.matchTemplateInput
                     ruleInput
                     new_model.language
+                    new_model.currentMatchResultId
                 , getRewrite
                     new_model.sourceInput
                     new_model.matchTemplateInput
@@ -292,6 +306,7 @@ update msg model =
                     new_model.rewriteTemplateInput
                     new_model.language
                     new_model.substitutionKind
+                    new_model.currentRewriteResultId
                 ]
             )
 
@@ -304,6 +319,7 @@ update msg model =
                 rewriteTemplateInput
                 new_model.language
                 new_model.substitutionKind
+                model.currentRewriteResultId
             )
 
         MatchesResult (Ok matchResult) ->
@@ -311,13 +327,18 @@ update msg model =
                 _ =
                     log "MatchResult" matchResult
             in
-            ( { new_model
-                | matchResult = matchResult
-                , serverConnected = True
-                , ruleSyntaxErrors = ""
-              }
-            , Ports.highlightMatchRanges matchResult
-            )
+            if matchResult.id > model.currentMatchResultId then
+                ( { new_model
+                    | matchResult = matchResult
+                    , serverConnected = True
+                    , ruleSyntaxErrors = ""
+                    , currentMatchResultId = matchResult.id
+                  }
+                , Ports.highlightMatchRanges matchResult
+                )
+
+            else
+                ( new_model, Cmd.none )
 
         MatchesResult (Err error) ->
             let
@@ -342,13 +363,18 @@ update msg model =
                     )
 
         RewriteResult (Ok rewriteResult) ->
-            ( { new_model
-                | rewriteResult = rewriteResult
-                , serverConnected = True
-                , ruleSyntaxErrors = ""
-              }
-            , Ports.highlightRewriteRanges rewriteResult
-            )
+            if rewriteResult.id > model.currentRewriteResultId then
+                ( { new_model
+                    | rewriteResult = rewriteResult
+                    , serverConnected = True
+                    , ruleSyntaxErrors = ""
+                    , currentRewriteResultId = rewriteResult.id
+                  }
+                , Ports.highlightRewriteRanges rewriteResult
+                )
+
+            else
+                ( new_model, Cmd.none )
 
         RewriteResult (Err error) ->
             let
@@ -416,6 +442,7 @@ update msg model =
                     new_model.matchTemplateInput
                     new_model.ruleInput
                     language
+                    new_model.currentMatchResultId
                 , getRewrite
                     new_model.sourceInput
                     new_model.matchTemplateInput
@@ -423,6 +450,7 @@ update msg model =
                     new_model.rewriteTemplateInput
                     language
                     new_model.substitutionKind
+                    new_model.currentRewriteResultId
                 ]
             )
 
@@ -438,6 +466,7 @@ update msg model =
                     new_model.matchTemplateInput
                     new_model.ruleInput
                     new_model.language
+                    new_model.currentMatchResultId
                 , getRewrite
                     new_model.sourceInput
                     new_model.matchTemplateInput
@@ -445,6 +474,7 @@ update msg model =
                     new_model.rewriteTemplateInput
                     new_model.language
                     substitutionKind
+                    new_model.currentRewriteResultId
                 ]
             )
 

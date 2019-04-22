@@ -43,6 +43,8 @@ type alias Model =
     , language : LanguageExtension
     , substitutionKind : SubstitutionKind
     , copyButtonText : String
+    , currentRewriteResultId : Int
+    , currentMatchResultId : Int
     }
 
 

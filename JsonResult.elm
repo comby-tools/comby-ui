@@ -46,6 +46,7 @@ type alias Match =
 type alias JsonMatchResult =
     { matches : List Match
     , source : String
+    , id : Int
     }
 
 
@@ -59,6 +60,7 @@ type alias InPlaceSubstitution =
 type alias JsonRewriteResult =
     { in_place_substitutions : List InPlaceSubstitution
     , rewritten_source : String
+    , id : Int
     }
 
 
@@ -101,9 +103,10 @@ matchDecoder =
 
 matchResultDecoder : Json.Decode.Decoder JsonMatchResult
 matchResultDecoder =
-    Json.Decode.map2 JsonMatchResult
+    Json.Decode.map3 JsonMatchResult
         (field "matches" (Json.Decode.list matchDecoder))
         (field "source" Json.Decode.string)
+        (field "id" Json.Decode.int)
 
 
 inPlaceSubstitutionDecoder : Json.Decode.Decoder InPlaceSubstitution
@@ -116,6 +119,7 @@ inPlaceSubstitutionDecoder =
 
 rewriteResultDecoder : Json.Decode.Decoder JsonRewriteResult
 rewriteResultDecoder =
-    Json.Decode.map2 JsonRewriteResult
+    Json.Decode.map3 JsonRewriteResult
         (field "in_place_substitutions" (Json.Decode.list inPlaceSubstitutionDecoder))
         (field "rewritten_source" Json.Decode.string)
+        (field "id" Json.Decode.int)

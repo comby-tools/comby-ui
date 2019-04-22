@@ -25,8 +25,8 @@ defaultRewriteRequest =
     }
 
 
-jsonMatchRequest : String -> String -> String -> String -> String
-jsonMatchRequest source match rule language =
+jsonMatchRequest : String -> String -> String -> String -> Int -> String
+jsonMatchRequest source match rule language id =
     let
         value =
             Json.Encode.object
@@ -34,12 +34,13 @@ jsonMatchRequest source match rule language =
                 , ( "match", Json.Encode.string match )
                 , ( "rule", Json.Encode.string rule )
                 , ( "language", Json.Encode.string language )
+                , ( "id", Json.Encode.int id )
                 ]
     in
     Json.Encode.encode 0 value
 
 
-jsonRewriteRequest source match rule rewrite language substitutionKind =
+jsonRewriteRequest source match rule rewrite language substitutionKind id =
     let
         value =
             Json.Encode.object
@@ -49,6 +50,7 @@ jsonRewriteRequest source match rule rewrite language substitutionKind =
                 , ( "rewrite", Json.Encode.string rewrite )
                 , ( "language", Json.Encode.string language )
                 , ( "substitution_kind", Json.Encode.string substitutionKind )
+                , ( "id", Json.Encode.int id )
                 ]
     in
     Json.Encode.encode 0 value

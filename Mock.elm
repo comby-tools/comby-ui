@@ -18,6 +18,7 @@ match : JsonMatchResult
 match =
     { matches = []
     , source = ""
+    , id = 0
     }
 
 
@@ -25,6 +26,7 @@ rewrite : JsonRewriteResult
 rewrite =
     { in_place_substitutions = []
     , rewritten_source = ""
+    , id = 0
     }
 
 
@@ -37,6 +39,7 @@ rewriteOutput : JsonRewriteResult
 rewriteOutput =
     { in_place_substitutions = []
     , rewritten_source = ""
+    , id = 0
     }
 
 
@@ -57,9 +60,11 @@ empty model =
         | matchResult =
             { matches = []
             , source = ""
+            , id = 0
             }
         , rewriteResult =
             { in_place_substitutions = []
             , rewritten_source = ""
+            , id = 0
             }
     }
