@@ -13698,14 +13698,10 @@ var _user$project$Controller$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
 								{ruleSyntaxErrors: _p23.body}),
-							_1: _user$project$Ports$highlightMatchRanges(_user$project$Mock$match)
+							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
-						return {
-							ctor: '_Tuple2',
-							_0: new_model,
-							_1: _user$project$Ports$highlightMatchRanges(_user$project$Mock$match)
-						};
+						return {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 					}
 				}
 			case 'ShareLinkClicked':
