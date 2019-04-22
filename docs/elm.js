@@ -13501,9 +13501,17 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			currentMatchResultId: 0
 		};
 	});
+var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/rewrite');
+var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
+var _user$project$Controller$debug = false;
 var _user$project$Controller$log = F2(
 	function (s, a) {
-		return A2(_elm_lang$core$Debug$log, s, a);
+		if (_user$project$Controller$debug) {
+			var _p1 = A2(_elm_lang$core$Debug$log, s, a);
+			return {ctor: '_Tuple0'};
+		} else {
+			return {ctor: '_Tuple0'};
+		}
 	});
 var _user$project$Controller$getShortUrl = function (model) {
 	var substitutionKindInput = _user$project$SubstitutionKind$toString(model.substitutionKind);
@@ -13523,7 +13531,7 @@ var _user$project$Controller$getShortUrl = function (model) {
 		_elm_lang$core$Json_Encode$encode,
 		0,
 		_elm_lang$core$Json_Encode$string(urlToShorten));
-	var _p1 = A2(_user$project$Controller$log, 'getShortUrl', v);
+	var _p2 = A2(_user$project$Controller$log, 'getShortUrl', v);
 	var myRequest = _elm_lang$http$Http$request(
 		{
 			method: 'POST',
@@ -13546,26 +13554,6 @@ var _user$project$Controller$getShortUrl = function (model) {
 		});
 	return A2(_elm_lang$http$Http$send, _user$project$Types$ShortenUrlResult, myRequest);
 };
-var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/rewrite');
-var _user$project$Controller$getRewrite = F7(
-	function (sourceInput, matchTemplateInput, ruleInput, rewriteTemplateInput, languageInput, substitutionKindInput, id) {
-		var substitutionKind = _user$project$SubstitutionKind$toString(substitutionKindInput);
-		var rule = _elm_lang$core$Native_Utils.eq(
-			_elm_lang$core$String$length(ruleInput),
-			0) ? 'where true' : ruleInput;
-		var language = _user$project$LanguageExtension$toString(languageInput);
-		var json = A7(_user$project$JsonRequest$jsonRewriteRequest, sourceInput, matchTemplateInput, rule, rewriteTemplateInput, language, substitutionKind, id);
-		var _p2 = A2(_user$project$Controller$log, 'getRewrite', json);
-		return A2(
-			_elm_lang$http$Http$send,
-			_user$project$Types$RewriteResult,
-			A3(
-				_elm_lang$http$Http$post,
-				_user$project$Controller$rewriteEndpoint,
-				A2(_elm_lang$http$Http$stringBody, 'text/plain', json),
-				_user$project$JsonResult$rewriteResultDecoder));
-	});
-var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
 var _user$project$Controller$getMatches = F5(
 	function (sourceInput, matchTemplateInput, ruleInput, languageInput, id) {
 		var rule = _elm_lang$core$Native_Utils.eq(
@@ -13583,10 +13571,28 @@ var _user$project$Controller$getMatches = F5(
 				A2(_elm_lang$http$Http$stringBody, 'text/plain', json),
 				_user$project$JsonResult$matchResultDecoder));
 	});
+var _user$project$Controller$getRewrite = F7(
+	function (sourceInput, matchTemplateInput, ruleInput, rewriteTemplateInput, languageInput, substitutionKindInput, id) {
+		var substitutionKind = _user$project$SubstitutionKind$toString(substitutionKindInput);
+		var rule = _elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$String$length(ruleInput),
+			0) ? 'where true' : ruleInput;
+		var language = _user$project$LanguageExtension$toString(languageInput);
+		var json = A7(_user$project$JsonRequest$jsonRewriteRequest, sourceInput, matchTemplateInput, rule, rewriteTemplateInput, language, substitutionKind, id);
+		var _p4 = A2(_user$project$Controller$log, 'getRewrite', json);
+		return A2(
+			_elm_lang$http$Http$send,
+			_user$project$Types$RewriteResult,
+			A3(
+				_elm_lang$http$Http$post,
+				_user$project$Controller$rewriteEndpoint,
+				A2(_elm_lang$http$Http$stringBody, 'text/plain', json),
+				_user$project$JsonResult$rewriteResultDecoder));
+	});
 var _user$project$Controller$init = F2(
 	function (flags, location) {
 		var model = A2(_user$project$Controller$loadInitialStaticState, flags, location);
-		var _p4 = A2(_user$project$Controller$log, 'Flags', flags);
+		var _p5 = A2(_user$project$Controller$log, 'Flags', flags);
 		return {
 			ctor: '_Tuple2',
 			_0: model,
@@ -13607,60 +13613,60 @@ var _user$project$Controller$update = F2(
 		var new_model = _elm_lang$core$Native_Utils.update(
 			model,
 			{copyButtonText: 'Copy'});
-		var _p5 = msg;
-		switch (_p5.ctor) {
+		var _p6 = msg;
+		switch (_p6.ctor) {
 			case 'OnLocationChange':
 				return {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'MatchTemplateInputUpdated':
-				var _p7 = _p5._0;
+				var _p8 = _p6._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
 					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p6 = A2(_user$project$Controller$log, 'MatchTemplateUpdated', _p7);
+				var _p7 = A2(_user$project$Controller$log, 'MatchTemplateUpdated', _p8);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{matchTemplateInput: _p7}),
+						{matchTemplateInput: _p8}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, _p7, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, _p8, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, _p7, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, _p8, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'SourceInputUpdated':
-				var _p9 = _p5._0;
+				var _p10 = _p6._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
 					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p8 = A2(_user$project$Controller$log, 'SourceInputUpdated', _p9);
+				var _p9 = A2(_user$project$Controller$log, 'SourceInputUpdated', _p10);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{sourceInput: _p9}),
+						{sourceInput: _p10}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, _p9, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, _p10, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, _p9, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, _p10, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'RuleInputUpdated':
-				var _p10 = _p5._0;
+				var _p11 = _p6._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
@@ -13670,20 +13676,20 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{ruleInput: _p10}),
+						{ruleInput: _p11}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, _p10, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, _p11, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, _p10, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, _p11, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'RewriteTemplateInputUpdated':
-				var _p11 = _p5._0;
+				var _p12 = _p6._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
@@ -13692,34 +13698,34 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{rewriteTemplateInput: _p11}),
-					_1: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p11, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId)
+						{rewriteTemplateInput: _p12}),
+					_1: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p12, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId)
 				};
 			case 'MatchesResult':
-				if (_p5._0.ctor === 'Ok') {
-					var _p15 = _p5._0._0;
-					var _p12 = A2(_user$project$Controller$log, 'current id match is', model.currentMatchResultId);
-					var _p13 = A2(_user$project$Controller$log, 'Resp Match id', _p15.id);
-					var _p14 = A2(_user$project$Controller$log, 'MatchResult', _p15);
-					return (_elm_lang$core$Native_Utils.cmp(_p15.id, model.currentMatchResultId) > -1) ? {
+				if (_p6._0.ctor === 'Ok') {
+					var _p16 = _p6._0._0;
+					var _p13 = A2(_user$project$Controller$log, 'current id match is', model.currentMatchResultId);
+					var _p14 = A2(_user$project$Controller$log, 'Resp Match id', _p16.id);
+					var _p15 = A2(_user$project$Controller$log, 'MatchResult', _p16);
+					return (_elm_lang$core$Native_Utils.cmp(_p16.id, model.currentMatchResultId) > -1) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{matchResult: _p15, serverConnected: true, ruleSyntaxErrors: '', currentMatchResultId: _p15.id}),
-						_1: _user$project$Ports$highlightMatchRanges(_p15)
+							{matchResult: _p16, serverConnected: true, ruleSyntaxErrors: '', currentMatchResultId: _p16.id}),
+						_1: _user$project$Ports$highlightMatchRanges(_p16)
 					} : {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 				} else {
-					var _p20 = _p5._0._0;
-					var _p16 = A2(_user$project$Controller$log, 'MatchResultError', _p20);
-					var _p17 = _p20;
-					if (_p17.ctor === 'BadStatus') {
-						var _p19 = _p17._0;
-						var _p18 = A2(_user$project$Controller$log, 'MatchResultError body', _p19.body);
+					var _p21 = _p6._0._0;
+					var _p17 = A2(_user$project$Controller$log, 'MatchResultError', _p21);
+					var _p18 = _p21;
+					if (_p18.ctor === 'BadStatus') {
+						var _p20 = _p18._0;
+						var _p19 = A2(_user$project$Controller$log, 'MatchResultError body', _p20.body);
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{ruleSyntaxErrors: _p19.body}),
+								{ruleSyntaxErrors: _p20.body}),
 							_1: _user$project$Ports$highlightMatchRanges(_user$project$Mock$match)
 						};
 					} else {
@@ -13731,30 +13737,30 @@ var _user$project$Controller$update = F2(
 					}
 				}
 			case 'RewriteResult':
-				if (_p5._0.ctor === 'Ok') {
-					var _p24 = _p5._0._0;
-					var _p21 = A2(_user$project$Controller$log, 'current rewrite id is', model.currentMatchResultId);
-					var _p22 = A2(_user$project$Controller$log, 'Resp Rewrite id', _p24.id);
-					var _p23 = A2(_user$project$Controller$log, 'RewriteResult', _p24);
-					return (_elm_lang$core$Native_Utils.cmp(_p24.id, model.currentRewriteResultId) > -1) ? {
+				if (_p6._0.ctor === 'Ok') {
+					var _p25 = _p6._0._0;
+					var _p22 = A2(_user$project$Controller$log, 'current rewrite id is', model.currentMatchResultId);
+					var _p23 = A2(_user$project$Controller$log, 'Resp Rewrite id', _p25.id);
+					var _p24 = A2(_user$project$Controller$log, 'RewriteResult', _p25);
+					return (_elm_lang$core$Native_Utils.cmp(_p25.id, model.currentRewriteResultId) > -1) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{rewriteResult: _p24, serverConnected: true, ruleSyntaxErrors: '', currentRewriteResultId: _p24.id}),
-						_1: _user$project$Ports$highlightRewriteRanges(_p24)
+							{rewriteResult: _p25, serverConnected: true, ruleSyntaxErrors: '', currentRewriteResultId: _p25.id}),
+						_1: _user$project$Ports$highlightRewriteRanges(_p25)
 					} : {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 				} else {
-					var _p29 = _p5._0._0;
-					var _p25 = A2(_user$project$Controller$log, 'RewriteResultError', _p29);
-					var _p26 = _p29;
-					if (_p26.ctor === 'BadStatus') {
-						var _p28 = _p26._0;
-						var _p27 = A2(_user$project$Controller$log, 'RewriteResultError body', _p28.body);
+					var _p30 = _p6._0._0;
+					var _p26 = A2(_user$project$Controller$log, 'RewriteResultError', _p30);
+					var _p27 = _p30;
+					if (_p27.ctor === 'BadStatus') {
+						var _p29 = _p27._0;
+						var _p28 = A2(_user$project$Controller$log, 'RewriteResultError body', _p29.body);
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{ruleSyntaxErrors: _p28.body}),
+								{ruleSyntaxErrors: _p29.body}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
@@ -13777,17 +13783,17 @@ var _user$project$Controller$update = F2(
 						{ctor: '_Tuple0'})
 				};
 			case 'ShortenUrlResult':
-				if (_p5._0.ctor === 'Ok') {
-					var _p30 = A2(
+				if (_p6._0.ctor === 'Ok') {
+					var _p31 = A2(
 						_elm_lang$core$Json_Decode$decodeString,
 						A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string),
-						_p5._0._0);
-					if (_p30.ctor === 'Ok') {
+						_p6._0._0);
+					if (_p31.ctor === 'Ok') {
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{url: _p30._0}),
+								{url: _p31._0}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
@@ -13809,7 +13815,7 @@ var _user$project$Controller$update = F2(
 					};
 				}
 			case 'LanguageInputUpdated':
-				var _p31 = _p5._0;
+				var _p32 = _p6._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
@@ -13819,38 +13825,38 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{language: _p31}),
+						{language: _p32}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p31, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p32, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p31, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p32, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			default:
-				var _p33 = _p5._0;
+				var _p34 = _p6._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
 					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p32 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p33);
+				var _p33 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p34);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{substitutionKind: _p33}),
+						{substitutionKind: _p34}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
 							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p33, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p34, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
