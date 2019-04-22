@@ -364,12 +364,12 @@ update msg model =
                     ( { new_model
                         | ruleSyntaxErrors = s.body
                       }
-                    , Ports.highlightMatchRanges Mock.match
+                    , Cmd.none
                     )
 
                 _ ->
                     ( new_model
-                    , Ports.highlightMatchRanges Mock.match
+                    , Cmd.none
                     )
 
         ShareLinkClicked ->
