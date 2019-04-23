@@ -45,7 +45,6 @@ mark.six {
 }
 
 
-
 source {
   white-space: pre-wrap;
 }
@@ -78,6 +77,10 @@ pre {
     margin:0px;
 }
 
+/* unset rela position so that octocat is above language selection */
+.col-md-1 {
+    position: unset;
+}
 
 .source-box {
     border-style: solid;
@@ -102,6 +105,7 @@ pre {
 
 .btn-warning {
     background-color:#ffa604;
+    color: white;
 }
 
 .badge-warning {
