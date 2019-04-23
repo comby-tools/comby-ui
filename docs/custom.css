@@ -73,7 +73,9 @@ pre {
 
 .rule-syntax-errors {
     font-family:"Monaco";
-    font-size:11px;
+    white-space: pre-wrap;
+    font-size:14px;
+    margin:0px;
 }
 
 

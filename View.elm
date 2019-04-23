@@ -56,12 +56,9 @@ ruleInput model =
 
 ruleDisplaySyntaxErrors : Model -> Html Msg
 ruleDisplaySyntaxErrors model =
-    Textarea.textarea
-        [ Textarea.id "ruleSyntaxError"
-        , Textarea.rows 4
-        , Textarea.attrs [ Html.Attributes.class "rule-syntax-errors" ]
-        , Textarea.value model.ruleSyntaxErrors
-        ]
+    Html.p
+        [ Html.Attributes.class "rule-syntax-errors" ]
+        [ text model.ruleSyntaxErrors ]
 
 
 rewriteTemplateInput : Model -> Html Msg
