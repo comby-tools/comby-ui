@@ -13185,7 +13185,9 @@ var _user$project$Types$Model = function (a) {
 													return function (n) {
 														return function (o) {
 															return function (p) {
-																return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, serverConnected: k, language: l, substitutionKind: m, copyButtonText: n, currentRewriteResultId: o, currentMatchResultId: p};
+																return function (q) {
+																	return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonText: o, currentRewriteResultId: p, currentMatchResultId: q};
+																};
 															};
 														};
 													};
@@ -13204,11 +13206,31 @@ var _user$project$Types$Model = function (a) {
 };
 var _user$project$Types$NotFound = {ctor: 'NotFound'};
 var _user$project$Types$SourcePage = {ctor: 'SourcePage'};
-var _user$project$Types$Html = {ctor: 'Html'};
-var _user$project$Types$Bash = {ctor: 'Bash'};
+var _user$project$Types$XML = {ctor: 'XML'};
+var _user$project$Types$Swift = {ctor: 'Swift'};
+var _user$project$Types$SQL = {ctor: 'SQL'};
+var _user$project$Types$Scala = {ctor: 'Scala'};
+var _user$project$Types$Rust = {ctor: 'Rust'};
+var _user$project$Types$Ruby = {ctor: 'Ruby'};
 var _user$project$Types$Python = {ctor: 'Python'};
+var _user$project$Types$Php = {ctor: 'Php'};
+var _user$project$Types$OCaml = {ctor: 'OCaml'};
+var _user$project$Types$Latex = {ctor: 'Latex'};
+var _user$project$Types$Json = {ctor: 'Json'};
+var _user$project$Types$Javascript = {ctor: 'Javascript'};
+var _user$project$Types$Java = {ctor: 'Java'};
 var _user$project$Types$Go = {ctor: 'Go'};
+var _user$project$Types$Haskell = {ctor: 'Haskell'};
+var _user$project$Types$Html = {ctor: 'Html'};
+var _user$project$Types$Elixir = {ctor: 'Elixir'};
+var _user$project$Types$Erlang = {ctor: 'Erlang'};
+var _user$project$Types$Elm = {ctor: 'Elm'};
+var _user$project$Types$Dart = {ctor: 'Dart'};
+var _user$project$Types$CSS = {ctor: 'CSS'};
+var _user$project$Types$Clojure = {ctor: 'Clojure'};
 var _user$project$Types$Cpp = {ctor: 'Cpp'};
+var _user$project$Types$Bash = {ctor: 'Bash'};
+var _user$project$Types$Assembly = {ctor: 'Assembly'};
 var _user$project$Types$Generic = {ctor: 'Generic'};
 var _user$project$Types$NewlineSeparated = {ctor: 'NewlineSeparated'};
 var _user$project$Types$InPlace = {ctor: 'InPlace'};
@@ -13252,14 +13274,54 @@ var _user$project$LanguageExtension$toString = function (s) {
 			return '.generic';
 		case 'Cpp':
 			return '.c';
+		case 'Clojure':
+			return '.clj';
+		case 'CSS':
+			return '.css';
+		case 'Dart':
+			return '.dart';
+		case 'Elm':
+			return '.elm';
+		case 'Erlang':
+			return '.erl';
+		case 'Elixir':
+			return '.ex';
+		case 'Html':
+			return '.html';
+		case 'Haskell':
+			return '.hs';
 		case 'Go':
 			return '.go';
+		case 'Java':
+			return '.java';
+		case 'Javascript':
+			return '.js';
+		case 'Json':
+			return '.json';
+		case 'OCaml':
+			return '.ml';
+		case 'Php':
+			return '.php';
 		case 'Python':
 			return '.py';
+		case 'Ruby':
+			return '.rb';
+		case 'Rust':
+			return '.rs';
+		case 'Assembly':
+			return '.s';
+		case 'Scala':
+			return '.scala';
+		case 'SQL':
+			return '.sql';
 		case 'Bash':
 			return '.sh';
+		case 'Swift':
+			return '.swift';
+		case 'Latex':
+			return '.tex';
 		default:
-			return '.html';
+			return '.xml';
 	}
 };
 var _user$project$LanguageExtension$prettyName = function (s) {
@@ -13267,16 +13329,56 @@ var _user$project$LanguageExtension$prettyName = function (s) {
 	switch (_p1.ctor) {
 		case 'Generic':
 			return 'Generic';
-		case 'Cpp':
-			return 'C/C++';
-		case 'Go':
-			return 'Go';
-		case 'Python':
-			return 'Python';
 		case 'Bash':
 			return 'Bash';
+		case 'Cpp':
+			return 'C/C++';
+		case 'Clojure':
+			return 'Clojure';
+		case 'CSS':
+			return 'CSS';
+		case 'Dart':
+			return 'Dart';
+		case 'Elm':
+			return 'Elm';
+		case 'Erlang':
+			return 'Erlang';
+		case 'Elixir':
+			return 'Elixir';
+		case 'Html':
+			return 'HTML/XML';
+		case 'Haskell':
+			return 'Haskell';
+		case 'Go':
+			return 'Go';
+		case 'Java':
+			return 'Java';
+		case 'Javascript':
+			return 'JS/Typescript';
+		case 'Json':
+			return 'JSON';
+		case 'OCaml':
+			return 'OCaml';
+		case 'Php':
+			return 'PHP';
+		case 'Python':
+			return 'Python';
+		case 'Ruby':
+			return 'Ruby';
+		case 'Rust':
+			return 'Rust';
+		case 'Assembly':
+			return 'Assembly';
+		case 'Scala':
+			return 'Scala';
+		case 'SQL':
+			return 'SQL';
+		case 'Swift':
+			return 'Swift';
+		case 'Latex':
+			return 'Latex';
 		default:
-			return 'HTML';
+			return 'XML';
 	}
 };
 var _user$project$LanguageExtension$ofString = function (s) {
@@ -13284,14 +13386,60 @@ var _user$project$LanguageExtension$ofString = function (s) {
 	switch (_p2) {
 		case '.c':
 			return _user$project$Types$Cpp;
-		case '.go':
-			return _user$project$Types$Go;
-		case '.py':
-			return _user$project$Types$Python;
-		case '.sh':
-			return _user$project$Types$Bash;
+		case '.clj':
+			return _user$project$Types$Clojure;
+		case '.css':
+			return _user$project$Types$CSS;
+		case '.dart':
+			return _user$project$Types$Dart;
+		case '.elm':
+			return _user$project$Types$Elm;
+		case '.erl':
+			return _user$project$Types$Erlang;
+		case '.ex':
+			return _user$project$Types$Elixir;
 		case '.html':
 			return _user$project$Types$Html;
+		case '.xml':
+			return _user$project$Types$Html;
+		case '.hs':
+			return _user$project$Types$Haskell;
+		case '.go':
+			return _user$project$Types$Go;
+		case '.java':
+			return _user$project$Types$Java;
+		case '.js':
+			return _user$project$Types$Javascript;
+		case '.json':
+			return _user$project$Types$Json;
+		case '.ml':
+			return _user$project$Types$OCaml;
+		case '.mli':
+			return _user$project$Types$OCaml;
+		case '.php':
+			return _user$project$Types$Php;
+		case '.py':
+			return _user$project$Types$Python;
+		case '.rb':
+			return _user$project$Types$Ruby;
+		case '.rs':
+			return _user$project$Types$Rust;
+		case '.s':
+			return _user$project$Types$Assembly;
+		case '.asm':
+			return _user$project$Types$Assembly;
+		case '.scala':
+			return _user$project$Types$Scala;
+		case '.sql':
+			return _user$project$Types$SQL;
+		case '.sh':
+			return _user$project$Types$Bash;
+		case '.swift':
+			return _user$project$Types$Swift;
+		case '.tex':
+			return _user$project$Types$Latex;
+		case '.bib':
+			return _user$project$Types$Latex;
 		default:
 			return _user$project$Types$Generic;
 	}
@@ -13301,20 +13449,100 @@ var _user$project$LanguageExtension$all = {
 	_0: _user$project$Types$Generic,
 	_1: {
 		ctor: '::',
-		_0: _user$project$Types$Cpp,
+		_0: _user$project$Types$Assembly,
 		_1: {
 			ctor: '::',
-			_0: _user$project$Types$Go,
+			_0: _user$project$Types$Bash,
 			_1: {
 				ctor: '::',
-				_0: _user$project$Types$Python,
+				_0: _user$project$Types$Cpp,
 				_1: {
 					ctor: '::',
-					_0: _user$project$Types$Bash,
+					_0: _user$project$Types$Clojure,
 					_1: {
 						ctor: '::',
-						_0: _user$project$Types$Html,
-						_1: {ctor: '[]'}
+						_0: _user$project$Types$CSS,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Types$Dart,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Types$Elm,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Types$Erlang,
+									_1: {
+										ctor: '::',
+										_0: _user$project$Types$Elixir,
+										_1: {
+											ctor: '::',
+											_0: _user$project$Types$Html,
+											_1: {
+												ctor: '::',
+												_0: _user$project$Types$Haskell,
+												_1: {
+													ctor: '::',
+													_0: _user$project$Types$Go,
+													_1: {
+														ctor: '::',
+														_0: _user$project$Types$Java,
+														_1: {
+															ctor: '::',
+															_0: _user$project$Types$Javascript,
+															_1: {
+																ctor: '::',
+																_0: _user$project$Types$Json,
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Types$Latex,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Types$OCaml,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Types$Php,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Types$Python,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Types$Ruby,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Types$Rust,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Types$Scala,
+																							_1: {
+																								ctor: '::',
+																								_0: _user$project$Types$SQL,
+																								_1: {
+																									ctor: '::',
+																									_0: _user$project$Types$Swift,
+																									_1: {
+																										ctor: '::',
+																										_0: _user$project$Types$XML,
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
@@ -13428,7 +13656,7 @@ var _user$project$Ports$clear = _elm_lang$core$Native_Platform.outgoingPort(
 var _user$project$Ports$copyUrl = _elm_lang$core$Native_Platform.outgoingPort(
 	'copyUrl',
 	function (v) {
-		return null;
+		return v;
 	});
 
 var _user$project$SubstitutionKind$toString = function (s) {
@@ -13493,6 +13721,7 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			},
 			debug: false,
 			url: '',
+			prettyUrl: '',
 			serverConnected: false,
 			language: language,
 			substitutionKind: substitutionKind,
@@ -13501,6 +13730,14 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			currentMatchResultId: 0
 		};
 	});
+var _user$project$Controller$jsonFromModel = function (model) {
+	var substitutionKindInput = _user$project$SubstitutionKind$toString(model.substitutionKind);
+	var rule = _elm_lang$core$Native_Utils.eq(
+		_elm_lang$core$String$length(model.ruleInput),
+		0) ? 'where true' : model.ruleInput;
+	var languageInput = _user$project$LanguageExtension$toString(model.language);
+	return A7(_user$project$JsonRequest$jsonRewriteRequest, model.sourceInput, model.matchTemplateInput, rule, model.rewriteTemplateInput, languageInput, substitutionKindInput, 0);
+};
 var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/rewrite');
 var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
 var _user$project$Controller$debug = false;
@@ -13514,19 +13751,14 @@ var _user$project$Controller$log = F2(
 		}
 	});
 var _user$project$Controller$getShortUrl = function (model) {
-	var substitutionKindInput = _user$project$SubstitutionKind$toString(model.substitutionKind);
-	var rule = _elm_lang$core$Native_Utils.eq(
-		_elm_lang$core$String$length(model.ruleInput),
-		0) ? 'where true' : model.ruleInput;
-	var languageInput = _user$project$LanguageExtension$toString(model.language);
-	var json = A7(_user$project$JsonRequest$jsonRewriteRequest, model.sourceInput, model.matchTemplateInput, rule, model.rewriteTemplateInput, languageInput, substitutionKindInput, 0);
 	var urlToShorten = A2(
 		_elm_lang$core$Basics_ops['++'],
 		_user$project$Configuration$thisDomain,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			'/index.html#',
-			_elm_lang$http$Http$encodeUri(json)));
+			_elm_lang$http$Http$encodeUri(
+				_user$project$Controller$jsonFromModel(model))));
 	var v = A2(
 		_elm_lang$core$Json_Encode$encode,
 		0,
@@ -13779,8 +14011,7 @@ var _user$project$Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
 						{copyButtonText: 'Copied!'}),
-					_1: _user$project$Ports$copyUrl(
-						{ctor: '_Tuple0'})
+					_1: _user$project$Ports$copyUrl(model.url)
 				};
 			case 'ShortenUrlResult':
 				if (_p6._0.ctor === 'Ok') {
@@ -13789,11 +14020,12 @@ var _user$project$Controller$update = F2(
 						A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string),
 						_p6._0._0);
 					if (_p31.ctor === 'Ok') {
+						var _p32 = _p31._0;
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{url: _p31._0}),
+								{url: _p32, prettyUrl: _p32}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
@@ -13806,57 +14038,67 @@ var _user$project$Controller$update = F2(
 						};
 					}
 				} else {
+					var urlPath = A2(
+						_elm_lang$core$Basics_ops['++'],
+						'index.html#',
+						_elm_lang$http$Http$encodeUri(
+							_user$project$Controller$jsonFromModel(model)));
+					var fullUrl = A2(
+						_elm_lang$core$Basics_ops['++'],
+						_user$project$Configuration$thisDomain,
+						A2(_elm_lang$core$Basics_ops['++'], '/', urlPath));
+					var _p33 = A2(_user$project$Controller$log, 'Generate URL Error. Using long URL', _p6._0._0);
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{url: ''}),
-						_1: _elm_lang$core$Platform_Cmd$none
+							{url: fullUrl, prettyUrl: 'Too much data for a short link. Copy for a long one :)'}),
+						_1: _elm_lang$navigation$Navigation$modifyUrl(urlPath)
 					};
 				}
 			case 'LanguageInputUpdated':
-				var _p32 = _p6._0;
-				var currentRewriteResultId = model.currentRewriteResultId + 1;
-				var currentMatchResultId = model.currentMatchResultId + 1;
-				var new_model = _elm_lang$core$Native_Utils.update(
-					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						new_model,
-						{language: _p32}),
-					_1: _elm_lang$core$Platform_Cmd$batch(
-						{
-							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p32, new_model.currentMatchResultId),
-							_1: {
-								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p32, new_model.substitutionKind, new_model.currentRewriteResultId),
-								_1: {ctor: '[]'}
-							}
-						})
-				};
-			default:
 				var _p34 = _p6._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
 					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p33 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p34);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{substitutionKind: _p34}),
+						{language: _p34}),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p34, new_model.currentMatchResultId),
+							_1: {
+								ctor: '::',
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p34, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_1: {ctor: '[]'}
+							}
+						})
+				};
+			default:
+				var _p36 = _p6._0;
+				var currentRewriteResultId = model.currentRewriteResultId + 1;
+				var currentMatchResultId = model.currentMatchResultId + 1;
+				var new_model = _elm_lang$core$Native_Utils.update(
+					model,
+					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+				var _p35 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p36);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						new_model,
+						{substitutionKind: _p36}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
 							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p34, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p36, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
@@ -13955,7 +14197,7 @@ var _user$project$View$footerShareLink = function (model) {
 							}),
 						_1: {ctor: '[]'}
 					},
-					_elm_lang$core$Native_Utils.eq(model.url, '') ? {ctor: '[]'} : {
+					_elm_lang$core$Native_Utils.eq(model.prettyUrl, '') ? {ctor: '[]'} : {
 						ctor: '::',
 						_0: A2(
 							_rundis$elm_bootstrap$Bootstrap_Badge$badgeWarning,
@@ -13970,7 +14212,7 @@ var _user$project$View$footerShareLink = function (model) {
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(model.url),
+								_0: _elm_lang$html$Html$text(model.prettyUrl),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -14064,7 +14306,7 @@ var _user$project$View$substitutionKindSelection = function (model) {
 									}
 								}
 							},
-							'Newline-separated'),
+							'Just Matches'),
 						_1: {ctor: '[]'}
 					}
 				})));
@@ -14338,125 +14580,176 @@ var _user$project$View$sourcePage = function (model) {
 							_rundis$elm_bootstrap$Bootstrap_Grid$col,
 							{
 								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
+								_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md10,
 								_1: {ctor: '[]'}
 							},
-							{ctor: '[]'}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_rundis$elm_bootstrap$Bootstrap_Grid$col,
-								{
-									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md5,
-									_1: {ctor: '[]'}
-								},
-								{
-									ctor: '::',
-									_0: _user$project$View$highlightableSourceListing(model),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$br,
-											{ctor: '[]'},
-											{ctor: '[]'}),
-										_1: {
-											ctor: '::',
-											_0: _user$project$View$matchTemplateInput(model),
-											_1: {
-												ctor: '::',
-												_0: A2(
-													_elm_lang$html$Html$br,
-													{ctor: '[]'},
-													{ctor: '[]'}),
-												_1: {
-													ctor: '::',
-													_0: _user$project$View$ruleInput(model),
-													_1: {ctor: '[]'}
-												}
-											}
-										}
-									}
-								}),
-							_1: {
+							{
 								ctor: '::',
 								_0: A2(
-									_rundis$elm_bootstrap$Bootstrap_Grid$col,
+									_rundis$elm_bootstrap$Bootstrap_Grid$row,
 									{
 										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md5,
+										_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$rightMd,
 										_1: {ctor: '[]'}
 									},
 									{
 										ctor: '::',
-										_0: _user$project$View$highlightableRewriteResult(model),
-										_1: {
-											ctor: '::',
-											_0: A2(
-												_elm_lang$html$Html$br,
-												{ctor: '[]'},
-												{ctor: '[]'}),
-											_1: {
+										_0: A2(
+											_rundis$elm_bootstrap$Bootstrap_Grid$col,
+											{
 												ctor: '::',
-												_0: _user$project$View$rewriteTemplateInput(model),
-												_1: {
-													ctor: '::',
-													_0: A2(
-														_elm_lang$html$Html$br,
-														{ctor: '[]'},
-														{ctor: '[]'}),
-													_1: {
-														ctor: '::',
-														_0: _user$project$View$ruleDisplaySyntaxErrors(model),
-														_1: {ctor: '[]'}
-													}
-												}
-											}
-										}
-									}),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_rundis$elm_bootstrap$Bootstrap_Grid$col,
-										{
-											ctor: '::',
-											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
-											_1: {ctor: '[]'}
-										},
-										{
-											ctor: '::',
-											_0: _user$project$View$languageSelection(model),
-											_1: {
+												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
+												_1: {ctor: '[]'}
+											},
+											{
 												ctor: '::',
 												_0: A2(
-													_elm_lang$html$Html$br,
+													_rundis$elm_bootstrap$Bootstrap_Grid$row,
 													{ctor: '[]'},
-													{ctor: '[]'}),
+													{
+														ctor: '::',
+														_0: A2(
+															_rundis$elm_bootstrap$Bootstrap_Grid$col,
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: _user$project$View$highlightableSourceListing(model),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$br,
+																		{ctor: '[]'},
+																		{ctor: '[]'}),
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$View$matchTemplateInput(model),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$br,
+																				{ctor: '[]'},
+																				{ctor: '[]'}),
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$View$ruleInput(model),
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	}
+																}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: _user$project$View$highlightableRewriteResult(model),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$br,
+																			{ctor: '[]'},
+																			{ctor: '[]'}),
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$View$rewriteTemplateInput(model),
+																			_1: {
+																				ctor: '::',
+																				_0: A2(
+																					_elm_lang$html$Html$br,
+																					{ctor: '[]'},
+																					{ctor: '[]'}),
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$View$ruleDisplaySyntaxErrors(model),
+																					_1: {ctor: '[]'}
+																				}
+																			}
+																		}
+																	}
+																}),
+															_1: {ctor: '[]'}
+														}
+													}),
 												_1: {
 													ctor: '::',
 													_0: A2(
-														_elm_lang$html$Html$br,
+														_rundis$elm_bootstrap$Bootstrap_Grid$row,
 														{ctor: '[]'},
-														{ctor: '[]'}),
+														{
+															ctor: '::',
+															_0: A2(
+																_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$br,
+																		{ctor: '[]'},
+																		{ctor: '[]'}),
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$View$sourceInput(model),
+																		_1: {ctor: '[]'}
+																	}
+																}),
+															_1: {ctor: '[]'}
+														}),
 													_1: {
 														ctor: '::',
-														_0: _user$project$View$substitutionKindSelection(model),
-														_1: {ctor: '[]'}
+														_0: A2(
+															_elm_lang$html$Html$br,
+															{ctor: '[]'},
+															{ctor: '[]'}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_rundis$elm_bootstrap$Bootstrap_Grid$row,
+																{ctor: '[]'},
+																{
+																	ctor: '::',
+																	_0: _user$project$View$footerShareLink(model),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																			{
+																				ctor: '::',
+																				_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
+																				_1: {ctor: '[]'}
+																			},
+																			{ctor: '[]'}),
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$View$footerServerConnected(model),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}),
+															_1: {ctor: '[]'}
+														}
 													}
 												}
-											}
-										}),
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_rundis$elm_bootstrap$Bootstrap_Grid$row,
-						{ctor: '[]'},
-						{
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
 							ctor: '::',
 							_0: A2(
 								_rundis$elm_bootstrap$Bootstrap_Grid$col,
@@ -14465,17 +14758,10 @@ var _user$project$View$sourcePage = function (model) {
 									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
 									_1: {ctor: '[]'}
 								},
-								{ctor: '[]'}),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_rundis$elm_bootstrap$Bootstrap_Grid$col,
-									{
-										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md10,
-										_1: {ctor: '[]'}
-									},
-									{
+								{
+									ctor: '::',
+									_0: _user$project$View$languageSelection(model),
+									_1: {
 										ctor: '::',
 										_0: A2(
 											_elm_lang$html$Html$br,
@@ -14483,76 +14769,28 @@ var _user$project$View$sourcePage = function (model) {
 											{ctor: '[]'}),
 										_1: {
 											ctor: '::',
-											_0: _user$project$View$sourceInput(model),
-											_1: {ctor: '[]'}
-										}
-									}),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_rundis$elm_bootstrap$Bootstrap_Grid$col,
-										{
-											ctor: '::',
-											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
-											_1: {ctor: '[]'}
-										},
-										{ctor: '[]'}),
-									_1: {ctor: '[]'}
-								}
-							}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$br,
-							{ctor: '[]'},
-							{ctor: '[]'}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_rundis$elm_bootstrap$Bootstrap_Grid$row,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: A2(
-										_rundis$elm_bootstrap$Bootstrap_Grid$col,
-										{
-											ctor: '::',
-											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
-											_1: {ctor: '[]'}
-										},
-										{ctor: '[]'}),
-									_1: {
-										ctor: '::',
-										_0: _user$project$View$footerShareLink(model),
-										_1: {
-											ctor: '::',
-											_0: _user$project$View$footerServerConnected(model),
+											_0: A2(
+												_elm_lang$html$Html$br,
+												{ctor: '[]'},
+												{ctor: '[]'}),
 											_1: {
 												ctor: '::',
-												_0: A2(
-													_rundis$elm_bootstrap$Bootstrap_Grid$col,
-													{
-														ctor: '::',
-														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
-														_1: {ctor: '[]'}
-													},
-													{ctor: '[]'}),
+												_0: _user$project$View$substitutionKindSelection(model),
 												_1: {ctor: '[]'}
 											}
 										}
 									}
 								}),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$br,
-									{ctor: '[]'},
-									{ctor: '[]'}),
-								_1: {ctor: '[]'}
-							}
+							_1: {ctor: '[]'}
 						}
-					}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$br,
+						{ctor: '[]'},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
 				}
 			}
 		});
