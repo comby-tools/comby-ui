@@ -6,11 +6,31 @@ import Types exposing (..)
 all : List LanguageExtension
 all =
     [ Generic
-    , Cpp
-    , Go
-    , Python
+    , Assembly
     , Bash
+    , Cpp
+    , Clojure
+    , CSS
+    , Dart
+    , Elm
+    , Erlang
+    , Elixir
     , Html
+    , Haskell
+    , Go
+    , Java
+    , Javascript
+    , Json
+    , Latex
+    , OCaml
+    , Php
+    , Python
+    , Ruby
+    , Rust
+    , Scala
+    , SQL
+    , Swift
+    , XML
     ]
 
 
@@ -20,17 +40,86 @@ ofString s =
         ".c" ->
             Cpp
 
+        ".clj" ->
+            Clojure
+
+        ".css" ->
+            CSS
+
+        ".dart" ->
+            Dart
+
+        ".elm" ->
+            Elm
+
+        ".erl" ->
+            Erlang
+
+        ".ex" ->
+            Elixir
+
+        ".html" ->
+            Html
+
+        ".xml" ->
+            Html
+
+        ".hs" ->
+            Haskell
+
         ".go" ->
             Go
+
+        ".java" ->
+            Java
+
+        ".js" ->
+            Javascript
+
+        ".json" ->
+            Json
+
+        ".ml" ->
+            OCaml
+
+        ".mli" ->
+            OCaml
+
+        ".php" ->
+            Php
 
         ".py" ->
             Python
 
+        ".rb" ->
+            Ruby
+
+        ".rs" ->
+            Rust
+
+        ".s" ->
+            Assembly
+
+        ".asm" ->
+            Assembly
+
+        ".scala" ->
+            Scala
+
+        ".sql" ->
+            SQL
+
         ".sh" ->
             Bash
 
-        ".html" ->
-            Html
+        ".swift" ->
+            Swift
+
+        ".tex" ->
+            Latex
+
+        ".bib" ->
+            Latex
 
         _ ->
             Generic
@@ -42,20 +131,80 @@ prettyName s =
         Generic ->
             "Generic"
 
+        Bash ->
+            "Bash"
+
         Cpp ->
             "C/C++"
+
+        Clojure ->
+            "Clojure"
+
+        CSS ->
+            "CSS"
+
+        Dart ->
+            "Dart"
+
+        Elm ->
+            "Elm"
+
+        Erlang ->
+            "Erlang"
+
+        Elixir ->
+            "Elixir"
+
+        Html ->
+            "HTML/XML"
+
+        Haskell ->
+            "Haskell"
 
         Go ->
             "Go"
 
+        Java ->
+            "Java"
+
+        Javascript ->
+            "JS/Typescript"
+
+        Json ->
+            "JSON"
+
+        OCaml ->
+            "OCaml"
+
+        Php ->
+            "PHP"
+
         Python ->
             "Python"
 
-        Bash ->
-            "Bash"
+        Ruby ->
+            "Ruby"
 
-        Html ->
-            "HTML"
+        Rust ->
+            "Rust"
+
+        Assembly ->
+            "Assembly"
+
+        Scala ->
+            "Scala"
+
+        SQL ->
+            "SQL"
+
+        Swift ->
+            "Swift"
+
+        Latex ->
+            "Latex"
+
+        XML ->
+            "XML"
 
 
 toString : LanguageExtension -> String
@@ -67,14 +216,74 @@ toString s =
         Cpp ->
             ".c"
 
+        Clojure ->
+            ".clj"
+
+        CSS ->
+            ".css"
+
+        Dart ->
+            ".dart"
+
+        Elm ->
+            ".elm"
+
+        Erlang ->
+            ".erl"
+
+        Elixir ->
+            ".ex"
+
+        Html ->
+            ".html"
+
+        Haskell ->
+            ".hs"
+
         Go ->
             ".go"
+
+        Java ->
+            ".java"
+
+        Javascript ->
+            ".js"
+
+        Json ->
+            ".json"
+
+        OCaml ->
+            ".ml"
+
+        Php ->
+            ".php"
 
         Python ->
             ".py"
 
+        Ruby ->
+            ".rb"
+
+        Rust ->
+            ".rs"
+
+        Assembly ->
+            ".s"
+
+        Scala ->
+            ".scala"
+
+        SQL ->
+            ".sql"
+
         Bash ->
             ".sh"
 
-        Html ->
-            ".html"
+        Swift ->
+            ".swift"
+
+        Latex ->
+            ".tex"
+
+        XML ->
+            ".xml"

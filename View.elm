@@ -6,6 +6,7 @@ import Bootstrap.Form.Radio as Radio
 import Bootstrap.Form.Textarea as Textarea
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
+import Bootstrap.Grid.Row as Row
 import Bootstrap.Utilities.Spacing as Spacing
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -147,7 +148,7 @@ substitutionKindSelection model =
                         Radio.checked False
                     , Radio.onClick <| SubstitutionKindInputUpdated NewlineSeparated
                     ]
-                    "Newline-separated"
+                    "Just Matches"
                 ]
         )
 
@@ -195,20 +196,39 @@ sourcePage model =
     Grid.containerFluid []
         [ br [] []
         , Grid.row []
-            [ Grid.col [ Col.md1 ] []
-            , Grid.col [ Col.md5 ]
-                [ highlightableSourceListing model
-                , br [] []
-                , matchTemplateInput model
-                , br [] []
-                , ruleInput model
-                ]
-            , Grid.col [ Col.md5 ]
-                [ highlightableRewriteResult model
-                , br [] []
-                , rewriteTemplateInput model
-                , br [] []
-                , ruleDisplaySyntaxErrors model
+            [ Grid.col [ Col.md10 ]
+                [ Grid.row [ Row.rightMd ]
+                    [ Grid.col [ Col.md12 ]
+                        [ Grid.row []
+                            [ Grid.col [ Col.md6 ]
+                                [ highlightableSourceListing model
+                                , br [] []
+                                , matchTemplateInput model
+                                , br [] []
+                                , ruleInput model
+                                ]
+                            , Grid.col [ Col.md6 ]
+                                [ highlightableRewriteResult model
+                                , br [] []
+                                , rewriteTemplateInput model
+                                , br [] []
+                                , ruleDisplaySyntaxErrors model
+                                ]
+                            ]
+                        , Grid.row []
+                            [ Grid.col [ Col.md12 ]
+                                [ br [] []
+                                , sourceInput model
+                                ]
+                            ]
+                        , br [] []
+                        , Grid.row []
+                            [ footerShareLink model
+                            , Grid.col [ Col.md2 ] []
+                            , footerServerConnected model
+                            ]
+                        ]
+                    ]
                 ]
             , Grid.col [ Col.md1 ]
                 [ languageSelection model
@@ -216,21 +236,6 @@ sourcePage model =
                 , br [] []
                 , substitutionKindSelection model
                 ]
-            ]
-        , Grid.row []
-            [ Grid.col [ Col.md1 ] []
-            , Grid.col [ Col.md10 ]
-                [ br [] []
-                , sourceInput model
-                ]
-            , Grid.col [ Col.md1 ] []
-            ]
-        , br [] []
-        , Grid.row []
-            [ Grid.col [ Col.md1 ] []
-            , footerShareLink model
-            , footerServerConnected model
-            , Grid.col [ Col.md1 ] []
             ]
         , br [] []
         ]

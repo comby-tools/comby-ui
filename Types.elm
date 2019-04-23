@@ -16,11 +16,31 @@ type Page
 
 type LanguageExtension
     = Generic
-    | Cpp
-    | Go
-    | Python
+    | Assembly
     | Bash
+    | Cpp
+    | Clojure
+    | CSS
+    | Dart
+    | Elm
+    | Erlang
+    | Elixir
     | Html
+    | Haskell
+    | Go
+    | Java
+    | Javascript
+    | Json
+    | Latex
+    | OCaml
+    | Php
+    | Python
+    | Ruby
+    | Rust
+    | Scala
+    | SQL
+    | Swift
+    | XML
 
 
 type SubstitutionKind
