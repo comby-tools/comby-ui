@@ -14217,28 +14217,17 @@ var _user$project$View$rewriteTemplateInput = function (model) {
 		});
 };
 var _user$project$View$ruleDisplaySyntaxErrors = function (model) {
-	return _rundis$elm_bootstrap$Bootstrap_Form_Textarea$textarea(
+	return A2(
+		_elm_lang$html$Html$p,
 		{
 			ctor: '::',
-			_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$id('ruleSyntaxError'),
-			_1: {
-				ctor: '::',
-				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(4),
-				_1: {
-					ctor: '::',
-					_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$attrs(
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('rule-syntax-errors'),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.ruleSyntaxErrors),
-						_1: {ctor: '[]'}
-					}
-				}
-			}
+			_0: _elm_lang$html$Html_Attributes$class('rule-syntax-errors'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(model.ruleSyntaxErrors),
+			_1: {ctor: '[]'}
 		});
 };
 var _user$project$View$ruleInput = function (model) {
