@@ -43,8 +43,7 @@ log s a =
         ()
 
 
-getShortUrl : Model -> Cmd Msg
-getShortUrl model =
+jsonFromModel model =
     let
         languageInput =
             LanguageExtension.toString model.language
@@ -58,21 +57,24 @@ getShortUrl model =
 
         substitutionKindInput =
             SubstitutionKind.toString model.substitutionKind
+    in
+    JsonRequest.jsonRewriteRequest
+        model.sourceInput
+        model.matchTemplateInput
+        rule
+        model.rewriteTemplateInput
+        languageInput
+        substitutionKindInput
+        0
 
-        json =
-            JsonRequest.jsonRewriteRequest
-                model.sourceInput
-                model.matchTemplateInput
-                rule
-                model.rewriteTemplateInput
-                languageInput
-                substitutionKindInput
-                0
 
+getShortUrl : Model -> Cmd Msg
+getShortUrl model =
+    let
         urlToShorten =
             Configuration.thisDomain
                 ++ "/index.html#"
-                ++ encodeUri json
+                ++ encodeUri (jsonFromModel model)
 
         v =
             Json.Encode.string urlToShorten
@@ -205,6 +207,7 @@ loadInitialStaticState flags location =
         }
     , debug = False
     , url = ""
+    , prettyUrl = ""
     , serverConnected = False
     , language = language
     , substitutionKind = substitutionKind
@@ -488,7 +491,7 @@ update msg model =
             ( { new_model
                 | copyButtonText = "Copied!"
               }
-            , Ports.copyUrl ()
+            , Ports.copyUrl model.url
             )
 
         ShortenUrlResult (Ok url) ->
@@ -496,23 +499,35 @@ update msg model =
                 Ok url ->
                     ( { new_model
                         | url = url
+                        , prettyUrl = url
                       }
                     , Cmd.none
-                      -- Navigation.modifyUrl url
                     )
 
-                Err _ ->
+                Err error ->
                     ( { new_model
                         | url = ""
                       }
                     , Cmd.none
                     )
 
-        ShortenUrlResult (Err _) ->
+        ShortenUrlResult (Err error) ->
+            let
+                _ =
+                    log "Generate URL Error. Using long URL" error
+
+                urlPath =
+                    "index.html#"
+                        ++ encodeUri (jsonFromModel model)
+
+                fullUrl =
+                    Configuration.thisDomain ++ "/" ++ urlPath
+            in
             ( { new_model
-                | url = ""
+                | url = fullUrl
+                , prettyUrl = "Too much data for a short link. Copy for a long one :)"
               }
-            , Cmd.none
+            , Navigation.modifyUrl urlPath
             )
 
         LanguageInputUpdated language ->

@@ -59,6 +59,7 @@ type alias Model =
     , rewriteResult : JsonResult.JsonRewriteResult
     , debug : Bool
     , url : String
+    , prettyUrl : String
     , serverConnected : Bool
     , language : LanguageExtension
     , substitutionKind : SubstitutionKind

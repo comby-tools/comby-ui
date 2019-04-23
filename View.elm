@@ -159,11 +159,11 @@ footerShareLink model =
         [ h3 [] <|
             [ Button.button [ Button.small, Button.warning, Button.onClick ShareLinkClicked ] [ text "Share Link" ]
             ]
-                ++ (if model.url == "" then
+                ++ (if model.prettyUrl == "" then
                         []
 
                     else
-                        [ Badge.badgeWarning [ Spacing.ml1, Html.Attributes.id "copyableLink" ] [ text model.url ]
+                        [ Badge.badgeWarning [ Spacing.ml1, Html.Attributes.id "copyableLink" ] [ text model.prettyUrl ]
                         , Button.button [ Button.small, Button.outlineWarning, Button.attrs [], Button.onClick CopyShareLinkClicked ] [ text model.copyButtonText ]
                         ]
                    )

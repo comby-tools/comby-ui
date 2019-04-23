@@ -12,4 +12,4 @@ port highlightRewriteRanges : JsonResult.JsonRewriteResult -> Cmd msg
 port clear : () -> Cmd msg
 
 
-port copyUrl : () -> Cmd msg
+port copyUrl : String -> Cmd msg
