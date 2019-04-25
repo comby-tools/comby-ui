@@ -53,27 +53,37 @@ match_template {
   white-space: pre-wrap;
 }
 
+.language_selection {
+    font-size:14px;
+}
+
+.substitution_kind {
+    font-size:14px;
+}
+
+
 textarea
 {
     font-family:"Monaco";
     spellcheck:false;
+    font-size:14px !important;
 }
 
 pre code {
     font-family:"Monaco";
-    font-size:16px;
+    font-size:14px;
 }
 
 pre {
     resize: both;
     overflow: auto;
-    height:300px;
+    height:200px;
 }
 
 .rule-syntax-errors {
     font-family:"Monaco";
     white-space: pre-wrap;
-    font-size:14px;
+    font-size:12px;
     margin:0px;
 }
 
