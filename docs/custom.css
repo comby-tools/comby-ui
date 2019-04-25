@@ -77,7 +77,7 @@ pre code {
 pre {
     resize: both;
     overflow: auto;
-    height:200px;
+    height:38vh;
 }
 
 .rule-syntax-errors {
