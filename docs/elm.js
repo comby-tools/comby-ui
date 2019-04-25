@@ -12965,7 +12965,7 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
 var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
-var _user$project$Configuration$thisDomain = 'https://comby-tools.github.io/comby-ui';
+var _user$project$Configuration$thisDomain = 'https://comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
 	function (source, match, rule, rewrite, language, substitutionKind, id) {
@@ -14106,6 +14106,42 @@ var _user$project$Controller$update = F2(
 		}
 	});
 
+var _user$project$View$halves = function (l) {
+	var n = ((_elm_lang$core$List$length(l) / 2) | 0) + 2;
+	var newl = A2(
+		_elm_lang$core$List$indexedMap,
+		F2(
+			function (i, x) {
+				return {ctor: '_Tuple2', _0: i, _1: x};
+			}),
+		l);
+	var _p0 = A2(
+		_elm_lang$core$List$partition,
+		function (_p1) {
+			var _p2 = _p1;
+			return _elm_lang$core$Native_Utils.cmp(_p2._0, n) < 0;
+		},
+		newl);
+	var left = _p0._0;
+	var right = _p0._1;
+	return {
+		ctor: '_Tuple2',
+		_0: A2(
+			_elm_lang$core$List$map,
+			function (_p3) {
+				var _p4 = _p3;
+				return _p4._1;
+			},
+			left),
+		_1: A2(
+			_elm_lang$core$List$map,
+			function (_p5) {
+				var _p6 = _p5;
+				return _p6._1;
+			},
+			right)
+	};
+};
 var _user$project$View$footerServerConnected = function (model) {
 	return A2(
 		_rundis$elm_bootstrap$Bootstrap_Grid$col,
@@ -14251,7 +14287,11 @@ var _user$project$View$footerShareLink = function (model) {
 var _user$project$View$substitutionKindSelection = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('substitution_kind'),
+			_1: {ctor: '[]'}
+		},
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			{
@@ -14311,52 +14351,57 @@ var _user$project$View$substitutionKindSelection = function (model) {
 					}
 				})));
 };
-var _user$project$View$languageSelection = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		A2(
-			_elm_lang$core$Basics_ops['++'],
+var _user$project$View$languageSelection = F3(
+	function (header_text, model, languages) {
+		return A2(
+			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$h6,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('Language'),
-						_1: {ctor: '[]'}
-					}),
+				_0: _elm_lang$html$Html_Attributes$class('language_selection'),
 				_1: {ctor: '[]'}
 			},
 			A2(
-				_rundis$elm_bootstrap$Bootstrap_Form_Radio$radioList,
-				'languageRadios',
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$h6,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(header_text),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
 				A2(
-					_elm_lang$core$List$map,
-					function (l) {
-						var radioChecked = _elm_lang$core$Native_Utils.eq(model.language, l) ? _rundis$elm_bootstrap$Bootstrap_Form_Radio$checked(true) : _rundis$elm_bootstrap$Bootstrap_Form_Radio$checked(false);
-						return A2(
-							_rundis$elm_bootstrap$Bootstrap_Form_Radio$create,
-							{
-								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Form_Radio$id(
-									_user$project$LanguageExtension$toString(l)),
-								_1: {
+					_rundis$elm_bootstrap$Bootstrap_Form_Radio$radioList,
+					'languageRadios',
+					A2(
+						_elm_lang$core$List$map,
+						function (l) {
+							var radioChecked = _elm_lang$core$Native_Utils.eq(model.language, l) ? _rundis$elm_bootstrap$Bootstrap_Form_Radio$checked(true) : _rundis$elm_bootstrap$Bootstrap_Form_Radio$checked(false);
+							return A2(
+								_rundis$elm_bootstrap$Bootstrap_Form_Radio$create,
+								{
 									ctor: '::',
-									_0: radioChecked,
+									_0: _rundis$elm_bootstrap$Bootstrap_Form_Radio$id(
+										_user$project$LanguageExtension$toString(l)),
 									_1: {
 										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Form_Radio$onClick(
-											_user$project$Types$LanguageInputUpdated(l)),
-										_1: {ctor: '[]'}
+										_0: radioChecked,
+										_1: {
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Form_Radio$onClick(
+												_user$project$Types$LanguageInputUpdated(l)),
+											_1: {ctor: '[]'}
+										}
 									}
-								}
-							},
-							_user$project$LanguageExtension$prettyName(l));
-					},
-					_user$project$LanguageExtension$all))));
-};
+								},
+								_user$project$LanguageExtension$prettyName(l));
+						},
+						languages))));
+	});
 var _user$project$View$highlightableRewriteResult = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -14436,7 +14481,7 @@ var _user$project$View$rewriteTemplateInput = function (model) {
 			_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$id('rewrite'),
 			_1: {
 				ctor: '::',
-				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(5),
+				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(3),
 				_1: {
 					ctor: '::',
 					_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$onInput(_user$project$Types$RewriteTemplateInputUpdated),
@@ -14479,7 +14524,7 @@ var _user$project$View$ruleInput = function (model) {
 			_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$id('rule'),
 			_1: {
 				ctor: '::',
-				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(3),
+				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(1),
 				_1: {
 					ctor: '::',
 					_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$onInput(_user$project$Types$RuleInputUpdated),
@@ -14508,7 +14553,7 @@ var _user$project$View$matchTemplateInput = function (model) {
 			_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$id('match_template'),
 			_1: {
 				ctor: '::',
-				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(5),
+				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(3),
 				_1: {
 					ctor: '::',
 					_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$onInput(_user$project$Types$MatchTemplateInputUpdated),
@@ -14537,7 +14582,7 @@ var _user$project$View$sourceInput = function (model) {
 			_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$id('source'),
 			_1: {
 				ctor: '::',
-				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(5),
+				_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$rows(3),
 				_1: {
 					ctor: '::',
 					_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$onInput(_user$project$Types$SourceInputUpdated),
@@ -14546,7 +14591,7 @@ var _user$project$View$sourceInput = function (model) {
 						_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$attrs(
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder('Source Input'),
+								_0: _elm_lang$html$Html_Attributes$placeholder('Paste your source code here'),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -14560,6 +14605,9 @@ var _user$project$View$sourceInput = function (model) {
 		});
 };
 var _user$project$View$sourcePage = function (model) {
+	var _p7 = _user$project$View$halves(_user$project$LanguageExtension$all);
+	var left = _p7._0;
+	var right = _p7._1;
 	return A2(
 		_rundis$elm_bootstrap$Bootstrap_Grid$containerFluid,
 		{ctor: '[]'},
@@ -14598,7 +14646,7 @@ var _user$project$View$sourcePage = function (model) {
 											_rundis$elm_bootstrap$Bootstrap_Grid$col,
 											{
 												ctor: '::',
-												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
+												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md11,
 												_1: {ctor: '[]'}
 											},
 											{
@@ -14755,12 +14803,12 @@ var _user$project$View$sourcePage = function (model) {
 								_rundis$elm_bootstrap$Bootstrap_Grid$col,
 								{
 									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
+									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
 									_1: {ctor: '[]'}
 								},
 								{
 									ctor: '::',
-									_0: _user$project$View$languageSelection(model),
+									_0: _user$project$View$substitutionKindSelection(model),
 									_1: {
 										ctor: '::',
 										_0: A2(
@@ -14770,12 +14818,49 @@ var _user$project$View$sourcePage = function (model) {
 										_1: {
 											ctor: '::',
 											_0: A2(
-												_elm_lang$html$Html$br,
+												_elm_lang$html$Html$h6,
 												{ctor: '[]'},
-												{ctor: '[]'}),
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Language'),
+													_1: {ctor: '[]'}
+												}),
 											_1: {
 												ctor: '::',
-												_0: _user$project$View$substitutionKindSelection(model),
+												_0: A2(
+													_rundis$elm_bootstrap$Bootstrap_Grid$row,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: A2(
+															_rundis$elm_bootstrap$Bootstrap_Grid$col,
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: A3(_user$project$View$languageSelection, '', model, left),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: A3(_user$project$View$languageSelection, '', model, right),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
+														}
+													}),
 												_1: {ctor: '[]'}
 											}
 										}
@@ -14815,8 +14900,8 @@ var _user$project$View$pageNotFound = A2(
 		}
 	});
 var _user$project$View$root = function (model) {
-	var _p0 = model.page;
-	if (_p0.ctor === 'SourcePage') {
+	var _p8 = model.page;
+	if (_p8.ctor === 'SourcePage') {
 		return _user$project$View$sourcePage(model);
 	} else {
 		return _user$project$View$pageNotFound;
