@@ -120,6 +120,8 @@ pre {
 
 .badge-warning {
     background-color:#ffa604;
+    color: white;
+    font-weight: unset
 }
 
 .btn-outline-warning {
