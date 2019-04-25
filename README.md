@@ -1,6 +1,6 @@
 # comby-ui
 
-A front end UI for declarative syntax rewriting using [Comby](https://github.com/comby-tools/comby). [Try it live](https://comby.live).
+A front end UI for declarative syntax rewriting using [comby](https://github.com/comby-tools/comby). [Try it live](https://comby.live).
 
 ## Source build
 
