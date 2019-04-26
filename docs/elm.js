@@ -14408,6 +14408,7 @@ var _user$project$Types$Assembly = {ctor: 'Assembly'};
 var _user$project$Types$Generic = {ctor: 'Generic'};
 var _user$project$Types$NewlineSeparated = {ctor: 'NewlineSeparated'};
 var _user$project$Types$InPlace = {ctor: 'InPlace'};
+var _user$project$Types$CopyTerminalCommandInPlaceClicked = {ctor: 'CopyTerminalCommandInPlaceClicked'};
 var _user$project$Types$CopyTerminalCommandClicked = {ctor: 'CopyTerminalCommandClicked'};
 var _user$project$Types$ShowModal = {ctor: 'ShowModal'};
 var _user$project$Types$CloseModal = {ctor: 'CloseModal'};
@@ -14919,52 +14920,78 @@ var _user$project$Controller$jsonFromModel = function (model) {
 };
 var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/rewrite');
 var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
-var _user$project$Controller$terminalCommand = function (model) {
-	var _p1 = _elm_lang$core$Native_Utils.eq(model.ruleInput, 'where true') ? {ctor: '_Tuple2', _0: '', _1: ''} : {
-		ctor: '_Tuple2',
-		_0: A2(
+var _user$project$Controller$terminalCommand = F2(
+	function (model, extra_option) {
+		var zeroInstall = A2(_elm_lang$core$Basics_ops['++'], '# the next line installs comby if you need it :)\n', 'bash <(curl -sL 0.comby.dev) && \\\n');
+		var _p1 = _elm_lang$core$Native_Utils.eq(model.ruleInput, 'where true') ? {ctor: '_Tuple2', _0: '', _1: ''} : {
+			ctor: '_Tuple2',
+			_0: A2(
+				_elm_lang$core$Basics_ops['++'],
+				'COMBY_RULE=$(cat <<\"RULE\"\n',
+				A2(_elm_lang$core$Basics_ops['++'], model.ruleInput, '\nRULE\n)\n')),
+			_1: ' -rule $COMBY_RULE'
+		};
+		var ruleEnv = _p1._0;
+		var rule = _p1._1;
+		var _p2 = _elm_lang$core$Native_Utils.eq(model.rewriteTemplateInput, '') ? {ctor: '_Tuple2', _0: '', _1: '\'\''} : {
+			ctor: '_Tuple2',
+			_0: A2(
+				_elm_lang$core$Basics_ops['++'],
+				'COMBY_R=pp$(cat <<\"REWRITE\"\n',
+				A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\n')),
+			_1: '$COMBY_R'
+		};
+		var rewriteTemplateEnv = _p2._0;
+		var rewriteVar = _p2._1;
+		var matchTemplate = A2(
 			_elm_lang$core$Basics_ops['++'],
-			'COMBY_RULE=$(cat <<\"RULE\"\n',
-			A2(_elm_lang$core$Basics_ops['++'], model.ruleInput, '\nRULE\n)\n')),
-		_1: ' -rule $COMBY_RULE'
-	};
-	var ruleEnv = _p1._0;
-	var rule = _p1._1;
-	var rewriteTemplate = A2(
-		_elm_lang$core$Basics_ops['++'],
-		'COMBY_R=$(cat <<\"REWRITE\"\n',
-		A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\n'));
-	var matchTemplate = A2(
-		_elm_lang$core$Basics_ops['++'],
-		'COMBY_M=$(cat <<\"MATCH\"\n',
-		A2(_elm_lang$core$Basics_ops['++'], model.matchTemplateInput, '\nMATCH\n)\n'));
-	var languageFilter = function () {
-		var s = _user$project$LanguageExtension$toString(model.language);
-		return _elm_lang$core$Native_Utils.eq(s, '.generic') ? '*' : s;
-	}();
-	var text = _elm_lang$core$Native_Utils.eq(model.matchTemplateInput, '') ? 'First enter a match template :)' : A2(
-		_elm_lang$core$Basics_ops['++'],
-		matchTemplate,
-		A2(
+			'COMBY_M=$(cat <<\"MATCH\"\n',
+			A2(_elm_lang$core$Basics_ops['++'], model.matchTemplateInput, '\nMATCH\n)\n'));
+		var languageFilter = function () {
+			var s = _user$project$LanguageExtension$toString(model.language);
+			return _elm_lang$core$Native_Utils.eq(s, '.generic') ? '*' : s;
+		}();
+		var text = _elm_lang$core$Native_Utils.eq(model.matchTemplateInput, '') ? 'First enter a match template :)' : A2(
 			_elm_lang$core$Basics_ops['++'],
-			rewriteTemplate,
+			matchTemplate,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				ruleEnv,
+				rewriteTemplateEnv,
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					'comby $COMBY_M $COMBY_R',
+					ruleEnv,
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						rule,
-						A2(_elm_lang$core$Basics_ops['++'], ' ', languageFilter))))));
-	return text;
-};
+						zeroInstall,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'comby $COMBY_M ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								rewriteVar,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									' ',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										rule,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											' ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												languageFilter,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													' ',
+													A2(_elm_lang$core$Basics_ops['++'], '-stats', extra_option))))))))))));
+		return text;
+	});
 var _user$project$Controller$debug = false;
 var _user$project$Controller$log = F2(
 	function (s, a) {
 		if (_user$project$Controller$debug) {
-			var _p2 = A2(_elm_lang$core$Debug$log, s, a);
+			var _p3 = A2(_elm_lang$core$Debug$log, s, a);
 			return {ctor: '_Tuple0'};
 		} else {
 			return {ctor: '_Tuple0'};
@@ -14983,7 +15010,7 @@ var _user$project$Controller$getShortUrl = function (model) {
 		_elm_lang$core$Json_Encode$encode,
 		0,
 		_elm_lang$core$Json_Encode$string(urlToShorten));
-	var _p3 = A2(_user$project$Controller$log, 'getShortUrl', v);
+	var _p4 = A2(_user$project$Controller$log, 'getShortUrl', v);
 	var myRequest = _elm_lang$http$Http$request(
 		{
 			method: 'POST',
@@ -15013,7 +15040,7 @@ var _user$project$Controller$getMatches = F5(
 			0) ? 'where true' : ruleInput;
 		var language = _user$project$LanguageExtension$toString(languageInput);
 		var json = A5(_user$project$JsonRequest$jsonMatchRequest, sourceInput, matchTemplateInput, rule, language, id);
-		var _p4 = A2(_user$project$Controller$log, 'getMatches:', json);
+		var _p5 = A2(_user$project$Controller$log, 'getMatches:', json);
 		return A2(
 			_elm_lang$http$Http$send,
 			_user$project$Types$MatchesResult,
@@ -15031,7 +15058,7 @@ var _user$project$Controller$getRewrite = F7(
 			0) ? 'where true' : ruleInput;
 		var language = _user$project$LanguageExtension$toString(languageInput);
 		var json = A7(_user$project$JsonRequest$jsonRewriteRequest, sourceInput, matchTemplateInput, rule, rewriteTemplateInput, language, substitutionKind, id);
-		var _p5 = A2(_user$project$Controller$log, 'getRewrite', json);
+		var _p6 = A2(_user$project$Controller$log, 'getRewrite', json);
 		return A2(
 			_elm_lang$http$Http$send,
 			_user$project$Types$RewriteResult,
@@ -15044,7 +15071,7 @@ var _user$project$Controller$getRewrite = F7(
 var _user$project$Controller$init = F2(
 	function (flags, location) {
 		var model = A2(_user$project$Controller$loadInitialStaticState, flags, location);
-		var _p6 = A2(_user$project$Controller$log, 'Flags', flags);
+		var _p7 = A2(_user$project$Controller$log, 'Flags', flags);
 		return {
 			ctor: '_Tuple2',
 			_0: model,
@@ -15065,60 +15092,60 @@ var _user$project$Controller$update = F2(
 		var new_model = _elm_lang$core$Native_Utils.update(
 			model,
 			{copyButtonText: 'Copy'});
-		var _p7 = msg;
-		switch (_p7.ctor) {
+		var _p8 = msg;
+		switch (_p8.ctor) {
 			case 'OnLocationChange':
 				return {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'MatchTemplateInputUpdated':
-				var _p9 = _p7._0;
+				var _p10 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
 					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p8 = A2(_user$project$Controller$log, 'MatchTemplateUpdated', _p9);
+				var _p9 = A2(_user$project$Controller$log, 'MatchTemplateUpdated', _p10);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{matchTemplateInput: _p9}),
+						{matchTemplateInput: _p10}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, _p9, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, _p10, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, _p9, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, _p10, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'SourceInputUpdated':
-				var _p11 = _p7._0;
+				var _p12 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
 					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p10 = A2(_user$project$Controller$log, 'SourceInputUpdated', _p11);
+				var _p11 = A2(_user$project$Controller$log, 'SourceInputUpdated', _p12);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{sourceInput: _p11}),
+						{sourceInput: _p12}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, _p11, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, _p12, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, _p11, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, _p12, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'RuleInputUpdated':
-				var _p12 = _p7._0;
+				var _p13 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
@@ -15128,20 +15155,20 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{ruleInput: _p12}),
+						{ruleInput: _p13}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, _p12, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, _p13, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, _p12, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, _p13, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'RewriteTemplateInputUpdated':
-				var _p13 = _p7._0;
+				var _p14 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
@@ -15150,34 +15177,34 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{rewriteTemplateInput: _p13}),
-					_1: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p13, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId)
+						{rewriteTemplateInput: _p14}),
+					_1: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p14, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId)
 				};
 			case 'MatchesResult':
-				if (_p7._0.ctor === 'Ok') {
-					var _p17 = _p7._0._0;
-					var _p14 = A2(_user$project$Controller$log, 'current id match is', model.currentMatchResultId);
-					var _p15 = A2(_user$project$Controller$log, 'Resp Match id', _p17.id);
-					var _p16 = A2(_user$project$Controller$log, 'MatchResult', _p17);
-					return (_elm_lang$core$Native_Utils.cmp(_p17.id, model.currentMatchResultId) > -1) ? {
+				if (_p8._0.ctor === 'Ok') {
+					var _p18 = _p8._0._0;
+					var _p15 = A2(_user$project$Controller$log, 'current id match is', model.currentMatchResultId);
+					var _p16 = A2(_user$project$Controller$log, 'Resp Match id', _p18.id);
+					var _p17 = A2(_user$project$Controller$log, 'MatchResult', _p18);
+					return (_elm_lang$core$Native_Utils.cmp(_p18.id, model.currentMatchResultId) > -1) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{matchResult: _p17, serverConnected: true, ruleSyntaxErrors: '', currentMatchResultId: _p17.id}),
-						_1: _user$project$Ports$highlightMatchRanges(_p17)
+							{matchResult: _p18, serverConnected: true, ruleSyntaxErrors: '', currentMatchResultId: _p18.id}),
+						_1: _user$project$Ports$highlightMatchRanges(_p18)
 					} : {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 				} else {
-					var _p22 = _p7._0._0;
-					var _p18 = A2(_user$project$Controller$log, 'MatchResultError', _p22);
-					var _p19 = _p22;
-					if (_p19.ctor === 'BadStatus') {
-						var _p21 = _p19._0;
-						var _p20 = A2(_user$project$Controller$log, 'MatchResultError body', _p21.body);
+					var _p23 = _p8._0._0;
+					var _p19 = A2(_user$project$Controller$log, 'MatchResultError', _p23);
+					var _p20 = _p23;
+					if (_p20.ctor === 'BadStatus') {
+						var _p22 = _p20._0;
+						var _p21 = A2(_user$project$Controller$log, 'MatchResultError body', _p22.body);
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{ruleSyntaxErrors: _p21.body}),
+								{ruleSyntaxErrors: _p22.body}),
 							_1: _user$project$Ports$highlightMatchRanges(_user$project$Mock$match)
 						};
 					} else {
@@ -15189,30 +15216,30 @@ var _user$project$Controller$update = F2(
 					}
 				}
 			case 'RewriteResult':
-				if (_p7._0.ctor === 'Ok') {
-					var _p26 = _p7._0._0;
-					var _p23 = A2(_user$project$Controller$log, 'current rewrite id is', model.currentMatchResultId);
-					var _p24 = A2(_user$project$Controller$log, 'Resp Rewrite id', _p26.id);
-					var _p25 = A2(_user$project$Controller$log, 'RewriteResult', _p26);
-					return (_elm_lang$core$Native_Utils.cmp(_p26.id, model.currentRewriteResultId) > -1) ? {
+				if (_p8._0.ctor === 'Ok') {
+					var _p27 = _p8._0._0;
+					var _p24 = A2(_user$project$Controller$log, 'current rewrite id is', model.currentMatchResultId);
+					var _p25 = A2(_user$project$Controller$log, 'Resp Rewrite id', _p27.id);
+					var _p26 = A2(_user$project$Controller$log, 'RewriteResult', _p27);
+					return (_elm_lang$core$Native_Utils.cmp(_p27.id, model.currentRewriteResultId) > -1) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{rewriteResult: _p26, serverConnected: true, ruleSyntaxErrors: '', currentRewriteResultId: _p26.id}),
-						_1: _user$project$Ports$highlightRewriteRanges(_p26)
+							{rewriteResult: _p27, serverConnected: true, ruleSyntaxErrors: '', currentRewriteResultId: _p27.id}),
+						_1: _user$project$Ports$highlightRewriteRanges(_p27)
 					} : {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 				} else {
-					var _p31 = _p7._0._0;
-					var _p27 = A2(_user$project$Controller$log, 'RewriteResultError', _p31);
-					var _p28 = _p31;
-					if (_p28.ctor === 'BadStatus') {
-						var _p30 = _p28._0;
-						var _p29 = A2(_user$project$Controller$log, 'RewriteResultError body', _p30.body);
+					var _p32 = _p8._0._0;
+					var _p28 = A2(_user$project$Controller$log, 'RewriteResultError', _p32);
+					var _p29 = _p32;
+					if (_p29.ctor === 'BadStatus') {
+						var _p31 = _p29._0;
+						var _p30 = A2(_user$project$Controller$log, 'RewriteResultError body', _p31.body);
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{ruleSyntaxErrors: _p30.body}),
+								{ruleSyntaxErrors: _p31.body}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
@@ -15234,18 +15261,18 @@ var _user$project$Controller$update = F2(
 					_1: _user$project$Ports$copyToClipboard(model.url)
 				};
 			case 'ShortenUrlResult':
-				if (_p7._0.ctor === 'Ok') {
-					var _p32 = A2(
+				if (_p8._0.ctor === 'Ok') {
+					var _p33 = A2(
 						_elm_lang$core$Json_Decode$decodeString,
 						A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string),
-						_p7._0._0);
-					if (_p32.ctor === 'Ok') {
-						var _p33 = _p32._0;
+						_p8._0._0);
+					if (_p33.ctor === 'Ok') {
+						var _p34 = _p33._0;
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{url: _p33, prettyUrl: _p33}),
+								{url: _p34, prettyUrl: _p34}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
@@ -15267,7 +15294,7 @@ var _user$project$Controller$update = F2(
 						_elm_lang$core$Basics_ops['++'],
 						_user$project$Configuration$thisDomain,
 						A2(_elm_lang$core$Basics_ops['++'], '/', urlPath));
-					var _p34 = A2(_user$project$Controller$log, 'Generate URL Error. Using long URL', _p7._0._0);
+					var _p35 = A2(_user$project$Controller$log, 'Generate URL Error. Using long URL', _p8._0._0);
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -15277,7 +15304,7 @@ var _user$project$Controller$update = F2(
 					};
 				}
 			case 'LanguageInputUpdated':
-				var _p35 = _p7._0;
+				var _p36 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
@@ -15287,38 +15314,38 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{language: _p35}),
+						{language: _p36}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p35, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p36, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p35, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p36, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'SubstitutionKindInputUpdated':
-				var _p37 = _p7._0;
+				var _p38 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
 					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p36 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p37);
+				var _p37 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p38);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{substitutionKind: _p37}),
+						{substitutionKind: _p38}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
 							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p37, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p38, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
@@ -15332,14 +15359,21 @@ var _user$project$Controller$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'CopyTerminalCommandClicked':
-				var text = _user$project$Controller$terminalCommand(model);
+				var text = A2(_user$project$Controller$terminalCommand, model, '');
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Ports$copyToClipboard(text)
+				};
+			case 'CopyTerminalCommandInPlaceClicked':
+				var text = A2(_user$project$Controller$terminalCommand, model, ' -i');
 				return {
 					ctor: '_Tuple2',
 					_0: model,
 					_1: _user$project$Ports$copyToClipboard(text)
 				};
 			default:
-				var text = _user$project$Controller$terminalCommand(model);
+				var text = A2(_user$project$Controller$terminalCommand, model, '');
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15364,30 +15398,184 @@ var _user$project$View$modal = function (model) {
 			{
 				ctor: '::',
 				_0: A2(
-					_rundis$elm_bootstrap$Bootstrap_Button$button,
+					_rundis$elm_bootstrap$Bootstrap_Grid$containerFluid,
+					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineSecondary,
+						_0: A2(
+							_rundis$elm_bootstrap$Bootstrap_Grid$row,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_rundis$elm_bootstrap$Bootstrap_Grid$col,
+									{
+										ctor: '::',
+										_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
+											{
+												ctor: '::',
+												_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+												_1: {
+													ctor: '::',
+													_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs(
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$class('fullwidth'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+													{
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+														_1: {
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
+															_1: {ctor: '[]'}
+														}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Output changes to terminal'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineSecondary,
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class('fa fa-copy'),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														{ctor: '[]'}),
+													_1: {ctor: '[]'}
+												}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+							_0: A2(
+								_rundis$elm_bootstrap$Bootstrap_Grid$row,
+								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('fa fa-copy'),
+									_0: A2(
+										_rundis$elm_bootstrap$Bootstrap_Grid$col,
+										{
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
+												{
+													ctor: '::',
+													_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+													_1: {
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs(
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('fullwidth'),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												},
+												{
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Button$danger,
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandInPlaceClicked),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('Change files *in place* (adds -i)'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineDanger,
+																_1: {
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('fa fa-copy'),
+																			_1: {
+																				ctor: '::',
+																				_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandInPlaceClicked),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															},
+															{ctor: '[]'}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}),
 									_1: {ctor: '[]'}
 								}),
-							_1: {
-								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
-								_1: {
-									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Button$block,
-									_1: {ctor: '[]'}
-								}
-							}
+							_1: {ctor: '[]'}
 						}
-					},
-					{ctor: '[]'}),
+					}),
 				_1: {ctor: '[]'}
 			},
 			A3(
@@ -15419,7 +15607,7 @@ var _user$project$View$modal = function (model) {
 											_rundis$elm_bootstrap$Bootstrap_Grid$col,
 											{
 												ctor: '::',
-												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md7,
 												_1: {ctor: '[]'}
 											},
 											{
@@ -15456,7 +15644,7 @@ var _user$project$View$modal = function (model) {
 						_0: _elm_lang$html$Html$text(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								'Run on all ',
+								'Paste this in your terminal to run on all ',
 								A2(_elm_lang$core$Basics_ops['++'], language, ' files in the current directory'))),
 						_1: {ctor: '[]'}
 					},
