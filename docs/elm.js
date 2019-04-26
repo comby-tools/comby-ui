@@ -14134,7 +14134,7 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'https://idgaffff:8888';
+var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
 var _user$project$Configuration$thisDomain = 'https://comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
