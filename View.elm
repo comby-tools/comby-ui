@@ -2,11 +2,13 @@ module View exposing (root)
 
 import Bootstrap.Badge as Badge
 import Bootstrap.Button as Button
+import Bootstrap.ButtonGroup as ButtonGroup
 import Bootstrap.Form.Radio as Radio
 import Bootstrap.Form.Textarea as Textarea
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
 import Bootstrap.Grid.Row as Row
+import Bootstrap.Modal as Modal
 import Bootstrap.Utilities.Spacing as Spacing
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -164,7 +166,14 @@ footerShareLink model =
 
                     else
                         [ Badge.badgeWarning [ Spacing.ml1, Html.Attributes.id "copyableLink" ] [ text model.prettyUrl ]
-                        , Button.button [ Button.small, Button.outlineWarning, Button.attrs [], Button.onClick CopyShareLinkClicked ] [ text model.copyButtonText ]
+                        , Button.button
+                            [ Button.small
+                            , Button.outlineWarning
+
+                            --, Button.attrs [ class "fa fa-copy" ]
+                            , Button.onClick CopyShareLinkClicked
+                            ]
+                            [ text model.copyButtonText ]
                         ]
                    )
         ]
@@ -207,6 +216,57 @@ halves l =
     ( List.map (\( _, x ) -> x) left, List.map (\( _, x ) -> x) right )
 
 
+modal : Model -> Html Msg
+modal model =
+    let
+        language =
+            let
+                s =
+                    LanguageExtension.toString model.language
+            in
+            if s == ".generic" then
+                ""
+
+            else
+                s
+    in
+    Modal.config CloseModal
+        |> Modal.large
+        |> Modal.h4 [] [ text ("Run on all " ++ language ++ " files in the current directory") ]
+        |> Modal.body []
+            [ Grid.containerFluid []
+                [ Grid.row []
+                    [ Grid.col [ Col.md3 ] []
+                    , Grid.col [ Col.md6 ]
+                        [ Html.pre []
+                            [ Html.code []
+                                [ text model.modalText ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        |> Modal.footer []
+            [ Button.button
+                [ Button.outlineSecondary
+                , Button.attrs [ class "fa fa-copy" ]
+                , Button.onClick CopyTerminalCommandClicked
+                , Button.block
+                ]
+                []
+
+            {- , Button.button
+               [ Button.outlinePrimary
+               , Button.attrs []
+               , Button.onClick CloseModal
+               , Button.small
+               ]
+               [ text "Close" ]
+            -}
+            ]
+        |> Modal.view model.modalVisibility
+
+
 sourcePage : Model -> Html Msg
 sourcePage model =
     let
@@ -245,7 +305,25 @@ sourcePage model =
                         , br [] []
                         , Grid.row []
                             [ footerShareLink model
-                            , Grid.col [ Col.md2 ] []
+
+                            --                            , Grid.col [ Col.md1 ] []
+                            , Grid.col [ Col.md2 ]
+                                [ ButtonGroup.buttonGroup [ ButtonGroup.small ]
+                                    [ ButtonGroup.button
+                                        [ Button.secondary
+                                        , Button.small
+                                        , Button.onClick ShowModal
+                                        ]
+                                        [ text "Run in Terminal" ]
+                                    , ButtonGroup.button
+                                        [ Button.outlineSecondary
+                                        , Button.small
+                                        , Button.attrs [ class "fa fa-copy" ]
+                                        , Button.onClick CopyTerminalCommandClicked
+                                        ]
+                                        []
+                                    ]
+                                ]
                             , footerServerConnected model
                             ]
                         ]
@@ -262,6 +340,7 @@ sourcePage model =
                 ]
             ]
         , br [] []
+        , modal model
         ]
 
 

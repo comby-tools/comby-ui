@@ -1,5 +1,6 @@
 module Types exposing (Flags, LanguageExtension(..), Model, Msg(..), Page(..), SubstitutionKind(..))
 
+import Bootstrap.Modal as Modal
 import Http
 import JsonResult exposing (JsonMatchResult)
 import Navigation exposing (Location)
@@ -66,6 +67,8 @@ type alias Model =
     , copyButtonText : String
     , currentRewriteResultId : Int
     , currentMatchResultId : Int
+    , modalVisibility : Modal.Visibility
+    , modalText : String
     }
 
 
@@ -82,3 +85,6 @@ type Msg
     | ShareLinkClicked
     | CopyShareLinkClicked
     | ShortenUrlResult (Result Http.Error String)
+    | CloseModal
+    | ShowModal
+    | CopyTerminalCommandClicked

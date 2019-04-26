@@ -1,5 +1,6 @@
 module Controller exposing (getMatches, getRewrite, init, loadInitialStaticState, log, matchEndpoint, rewriteEndpoint, subscriptions, update)
 
+import Bootstrap.Modal as Modal
 import Configuration
 import Http exposing (..)
 import Json.Decode exposing (..)
@@ -18,6 +19,51 @@ import Types exposing (..)
 debug : Bool
 debug =
     False
+
+
+terminalCommand : Model -> String
+terminalCommand model =
+    let
+        languageFilter =
+            let
+                s =
+                    LanguageExtension.toString model.language
+            in
+            if s == ".generic" then
+                "*"
+
+            else
+                s
+
+        matchTemplate =
+            "COMBY_M=$(cat <<\"MATCH\"\n"
+                ++ model.matchTemplateInput
+                ++ "\nMATCH\n)\n"
+
+        rewriteTemplate =
+            "COMBY_R=$(cat <<\"REWRITE\"\n"
+                ++ model.rewriteTemplateInput
+                ++ "\nREWRITE\n)\n"
+
+        ( ruleEnv, rule ) =
+            if model.ruleInput == "where true" then
+                ( "", "" )
+
+            else
+                ( "COMBY_RULE=$(cat <<\"RULE\"\n"
+                    ++ model.ruleInput
+                    ++ "\nRULE\n)\n"
+                , " -rule $COMBY_RULE"
+                )
+
+        text =
+            if model.matchTemplateInput == "" then
+                "First enter a match template :)"
+
+            else
+                matchTemplate ++ rewriteTemplate ++ ruleEnv ++ "comby $COMBY_M $COMBY_R" ++ rule ++ " " ++ languageFilter
+    in
+    text
 
 
 matchEndpoint : String
@@ -43,6 +89,7 @@ log s a =
         ()
 
 
+jsonFromModel : Model -> String
 jsonFromModel model =
     let
         languageInput =
@@ -214,6 +261,8 @@ loadInitialStaticState flags location =
     , copyButtonText = "Copy"
     , currentRewriteResultId = 0
     , currentMatchResultId = 0
+    , modalVisibility = Modal.hidden
+    , modalText = ""
     }
 
 
@@ -491,7 +540,7 @@ update msg model =
             ( { new_model
                 | copyButtonText = "Copied!"
               }
-            , Ports.copyUrl model.url
+            , Ports.copyToClipboard model.url
             )
 
         ShortenUrlResult (Ok url) ->
@@ -601,7 +650,32 @@ update msg model =
                 ]
             )
 
+        CloseModal ->
+            ( { model | modalVisibility = Modal.hidden }
+            , Cmd.none
+            )
+
+        CopyTerminalCommandClicked ->
+            let
+                text =
+                    terminalCommand model
+            in
+            ( model, Ports.copyToClipboard text )
+
+        ShowModal ->
+            let
+                text =
+                    terminalCommand model
+            in
+            ( { model
+                | modalText = text
+                , modalVisibility = Modal.shown
+              }
+            , Cmd.none
+            )
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.batch []
+    Sub.batch
+        []

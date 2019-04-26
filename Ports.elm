@@ -1,4 +1,4 @@
-port module Ports exposing (clear, copyUrl, highlightMatchRanges, highlightRewriteRanges)
+port module Ports exposing (clear, copyToClipboard, highlightMatchRanges, highlightRewriteRanges)
 
 import JsonResult
 
@@ -12,4 +12,4 @@ port highlightRewriteRanges : JsonResult.JsonRewriteResult -> Cmd msg
 port clear : () -> Cmd msg
 
 
-port copyUrl : String -> Cmd msg
+port copyToClipboard : String -> Cmd msg
