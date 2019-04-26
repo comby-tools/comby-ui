@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="./custom.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138709898-1"></script>
   <script>
@@ -42,7 +43,7 @@
     });
 
     // copy the link to clipboard
-    app.ports.copyUrl.subscribe(function (copyText) {
+    app.ports.copyToClipboard.subscribe(function (copyText) {
         // console.log("copyUrl clicked");
         // tell me about all the nice things I can't have.
         var textArea = document.createElement("textarea");
