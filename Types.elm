@@ -88,3 +88,4 @@ type Msg
     | CloseModal
     | ShowModal
     | CopyTerminalCommandClicked
+    | CopyTerminalCommandInPlaceClicked

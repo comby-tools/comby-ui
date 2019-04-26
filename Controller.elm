@@ -21,8 +21,8 @@ debug =
     False
 
 
-terminalCommand : Model -> String
-terminalCommand model =
+terminalCommand : Model -> String -> String
+terminalCommand model extra_option =
     let
         languageFilter =
             let
@@ -40,10 +40,16 @@ terminalCommand model =
                 ++ model.matchTemplateInput
                 ++ "\nMATCH\n)\n"
 
-        rewriteTemplate =
-            "COMBY_R=$(cat <<\"REWRITE\"\n"
-                ++ model.rewriteTemplateInput
-                ++ "\nREWRITE\n)\n"
+        ( rewriteTemplateEnv, rewriteVar ) =
+            if model.rewriteTemplateInput == "" then
+                ( "", "''" )
+
+            else
+                ( "COMBY_R=pp$(cat <<\"REWRITE\"\n"
+                    ++ model.rewriteTemplateInput
+                    ++ "\nREWRITE\n)\n"
+                , "$COMBY_R"
+                )
 
         ( ruleEnv, rule ) =
             if model.ruleInput == "where true" then
@@ -56,12 +62,16 @@ terminalCommand model =
                 , " -rule $COMBY_RULE"
                 )
 
+        zeroInstall =
+            "# the next line installs comby if you need it :)\n"
+                ++ "bash <(curl -sL 0.comby.dev) && \\\n"
+
         text =
             if model.matchTemplateInput == "" then
                 "First enter a match template :)"
 
             else
-                matchTemplate ++ rewriteTemplate ++ ruleEnv ++ "comby $COMBY_M $COMBY_R" ++ rule ++ " " ++ languageFilter
+                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby $COMBY_M " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extra_option
     in
     text
 
@@ -658,14 +668,21 @@ update msg model =
         CopyTerminalCommandClicked ->
             let
                 text =
-                    terminalCommand model
+                    terminalCommand model ""
+            in
+            ( model, Ports.copyToClipboard text )
+
+        CopyTerminalCommandInPlaceClicked ->
+            let
+                text =
+                    terminalCommand model " -i"
             in
             ( model, Ports.copyToClipboard text )
 
         ShowModal ->
             let
                 text =
-                    terminalCommand model
+                    terminalCommand model ""
             in
             ( { model
                 | modalText = text

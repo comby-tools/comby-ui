@@ -1,3 +1,11 @@
+.btn-group.fullwidth {
+  display: flex;
+}
+
+.fullwidth .btn {
+  flex: 1
+}
+
 mark {
     background-color: gray;
     color: white;

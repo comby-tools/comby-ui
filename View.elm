@@ -232,12 +232,12 @@ modal model =
     in
     Modal.config CloseModal
         |> Modal.large
-        |> Modal.h4 [] [ text ("Run on all " ++ language ++ " files in the current directory") ]
+        |> Modal.h4 [] [ text ("Paste this in your terminal to run on all " ++ language ++ " files in the current directory") ]
         |> Modal.body []
             [ Grid.containerFluid []
                 [ Grid.row []
                     [ Grid.col [ Col.md3 ] []
-                    , Grid.col [ Col.md6 ]
+                    , Grid.col [ Col.md7 ]
                         [ Html.pre []
                             [ Html.code []
                                 [ text model.modalText ]
@@ -247,22 +247,45 @@ modal model =
                 ]
             ]
         |> Modal.footer []
-            [ Button.button
-                [ Button.outlineSecondary
-                , Button.attrs [ class "fa fa-copy" ]
-                , Button.onClick CopyTerminalCommandClicked
-                , Button.block
+            [ Grid.containerFluid []
+                [ Grid.row []
+                    [ Grid.col [ Col.md12 ]
+                        [ ButtonGroup.buttonGroup
+                            [ ButtonGroup.small, ButtonGroup.attrs [ class "fullwidth" ] ]
+                            [ ButtonGroup.button
+                                [ Button.secondary
+                                , Button.onClick CopyTerminalCommandClicked
+                                ]
+                                [ text "Output changes to terminal" ]
+                            , ButtonGroup.button
+                                [ Button.outlineSecondary
+                                , Button.attrs [ class "fa fa-copy" ]
+                                , Button.onClick CopyTerminalCommandClicked
+                                ]
+                                []
+                            ]
+                        ]
+                    ]
+                , Grid.row []
+                    [ Grid.col [ Col.md12 ]
+                        [ ButtonGroup.buttonGroup
+                            [ ButtonGroup.small, ButtonGroup.attrs [ class "fullwidth" ] ]
+                            [ ButtonGroup.button
+                                [ Button.danger
+                                , Button.attrs [ Spacing.mt1 ]
+                                , Button.onClick CopyTerminalCommandInPlaceClicked
+                                ]
+                                [ text "Change files *in place* (adds -i)" ]
+                            , ButtonGroup.button
+                                [ Button.outlineDanger
+                                , Button.attrs [ class "fa fa-copy", Spacing.mt1 ]
+                                , Button.onClick CopyTerminalCommandInPlaceClicked
+                                ]
+                                []
+                            ]
+                        ]
+                    ]
                 ]
-                []
-
-            {- , Button.button
-               [ Button.outlinePrimary
-               , Button.attrs []
-               , Button.onClick CloseModal
-               , Button.small
-               ]
-               [ text "Close" ]
-            -}
             ]
         |> Modal.view model.modalVisibility
 
