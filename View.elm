@@ -264,15 +264,18 @@ modal model =
                 [ Grid.row []
                     [ Grid.col [ Col.md12 ]
                         [ ButtonGroup.buttonGroup
-                            [ ButtonGroup.small, ButtonGroup.attrs [ class "d-flex w-100" ] ]
+                            [ ButtonGroup.small
+                            , ButtonGroup.attrs [ class "w-100" ]
+                            ]
                             [ ButtonGroup.button
                                 [ Button.secondary
+                                , Button.attrs [ Spacing.mt1, class "w-100" ]
                                 , Button.onClick CopyTerminalCommandClicked
                                 ]
                                 [ text "Output changes to terminal" ]
                             , ButtonGroup.button
                                 [ Button.outlineSecondary
-                                , Button.attrs [ class (model.copyButtonText ++ " d-flex flex-shrink-1") ]
+                                , Button.attrs [ class model.copyButtonText, Spacing.mt1 ]
                                 , Button.onClick CopyTerminalCommandClicked
                                 ]
                                 []
@@ -282,10 +285,12 @@ modal model =
                 , Grid.row []
                     [ Grid.col [ Col.md12 ]
                         [ ButtonGroup.buttonGroup
-                            [ ButtonGroup.small, ButtonGroup.attrs [ class "w-100" ] ]
+                            [ ButtonGroup.small
+                            , ButtonGroup.attrs [ class "w-100" ]
+                            ]
                             [ ButtonGroup.button
                                 [ Button.danger
-                                , Button.attrs [ Spacing.mt1 ]
+                                , Button.attrs [ Spacing.mt1, class "w-100" ]
                                 , Button.onClick CopyTerminalCommandInPlaceClicked
                                 ]
                                 [ text "Change files in place (adds -i). Make sure you have a backup or version control." ]
