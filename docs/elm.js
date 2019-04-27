@@ -14358,7 +14358,11 @@ var _user$project$Types$Model = function (a) {
 																return function (q) {
 																	return function (r) {
 																		return function (s) {
-																			return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonText: o, currentRewriteResultId: p, currentMatchResultId: q, modalVisibility: r, modalText: s};
+																			return function (t) {
+																				return function (u) {
+																					return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonLinkText: o, copyButtonTerminalText: p, copyButtonTextInPlace: q, currentRewriteResultId: r, currentMatchResultId: s, modalVisibility: t, modalText: u};
+																				};
+																			};
 																		};
 																	};
 																};
@@ -14857,7 +14861,7 @@ var _user$project$SubstitutionKind$ofString = function (s) {
 	}
 };
 
-var _user$project$Token$t = '';
+var _user$project$Token$t = 'Bearer c5e5814216183a3a53a1ad5bc030c5071b98af07';
 
 var _user$project$Controller$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
@@ -14903,7 +14907,9 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			serverConnected: false,
 			language: language,
 			substitutionKind: substitutionKind,
-			copyButtonText: 'Copy',
+			copyButtonLinkText: 'fa fa-copy',
+			copyButtonTerminalText: 'fa fa-copy',
+			copyButtonTextInPlace: 'fa fa-copy',
 			currentRewriteResultId: 0,
 			currentMatchResultId: 0,
 			modalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
@@ -14937,7 +14943,7 @@ var _user$project$Controller$terminalCommand = F2(
 			ctor: '_Tuple2',
 			_0: A2(
 				_elm_lang$core$Basics_ops['++'],
-				'COMBY_R=pp$(cat <<\"REWRITE\"\n',
+				'COMBY_R=$(cat <<\"REWRITE\"\n',
 				A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\n')),
 			_1: '$COMBY_R'
 		};
@@ -15091,7 +15097,7 @@ var _user$project$Controller$update = F2(
 	function (msg, model) {
 		var new_model = _elm_lang$core$Native_Utils.update(
 			model,
-			{copyButtonText: 'Copy'});
+			{copyButtonLinkText: 'fa fa-copy', copyButtonTerminalText: 'fa fa-copy'});
 		var _p8 = msg;
 		switch (_p8.ctor) {
 			case 'OnLocationChange':
@@ -15102,7 +15108,7 @@ var _user$project$Controller$update = F2(
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
 				var _p9 = A2(_user$project$Controller$log, 'MatchTemplateUpdated', _p10);
 				return {
 					ctor: '_Tuple2',
@@ -15126,7 +15132,7 @@ var _user$project$Controller$update = F2(
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
 				var _p11 = A2(_user$project$Controller$log, 'SourceInputUpdated', _p12);
 				return {
 					ctor: '_Tuple2',
@@ -15150,7 +15156,7 @@ var _user$project$Controller$update = F2(
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15172,7 +15178,7 @@ var _user$project$Controller$update = F2(
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentRewriteResultId: currentRewriteResultId});
+					{currentRewriteResultId: currentRewriteResultId});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15257,7 +15263,7 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{copyButtonText: 'Copied!'}),
+						{copyButtonLinkText: 'fa fa-check'}),
 					_1: _user$project$Ports$copyToClipboard(model.url)
 				};
 			case 'ShortenUrlResult':
@@ -15309,7 +15315,7 @@ var _user$project$Controller$update = F2(
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15332,7 +15338,7 @@ var _user$project$Controller$update = F2(
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
 				var _p37 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p38);
 				return {
 					ctor: '_Tuple2',
@@ -15362,14 +15368,18 @@ var _user$project$Controller$update = F2(
 				var text = A2(_user$project$Controller$terminalCommand, model, '');
 				return {
 					ctor: '_Tuple2',
-					_0: model,
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{copyButtonTextInPlace: 'fa fa-copy', copyButtonTerminalText: 'fa fa-check', copyButtonLinkText: 'fa fa-copy', modalText: text}),
 					_1: _user$project$Ports$copyToClipboard(text)
 				};
 			case 'CopyTerminalCommandInPlaceClicked':
 				var text = A2(_user$project$Controller$terminalCommand, model, ' -i');
 				return {
 					ctor: '_Tuple2',
-					_0: model,
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{copyButtonTextInPlace: 'fa fa-check', copyButtonTerminalText: 'fa fa-copy', modalText: text}),
 					_1: _user$project$Ports$copyToClipboard(text)
 				};
 			default:
@@ -15378,12 +15388,84 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{modalText: text, modalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$shown}),
+						{modalText: text, modalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$shown, copyButtonTextInPlace: 'fa fa-copy'}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
 	});
 
+var _user$project$View$terminalButtonGroup = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('text-right'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
+				{
+					ctor: '::',
+					_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+							_1: {
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+								_1: {
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShowModal),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Run in Terminal'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+							{
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineSecondary,
+								_1: {
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+									_1: {
+										ctor: '::',
+										_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTerminalText),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
 var _user$project$View$modal = function (model) {
 	var language = function () {
 		var s = _user$project$LanguageExtension$toString(model.language);
@@ -15426,7 +15508,7 @@ var _user$project$View$modal = function (model) {
 													_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs(
 														{
 															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$class('fullwidth'),
+															_0: _elm_lang$html$Html_Attributes$class('w-100'),
 															_1: {ctor: '[]'}
 														}),
 													_1: {ctor: '[]'}
@@ -15441,13 +15523,26 @@ var _user$project$View$modal = function (model) {
 														_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
 														_1: {
 															ctor: '::',
-															_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
-															_1: {ctor: '[]'}
+															_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																	_1: {
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class('w-100'),
+																		_1: {ctor: '[]'}
+																	}
+																}),
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
+																_1: {ctor: '[]'}
+															}
 														}
 													},
 													{
 														ctor: '::',
-														_0: _elm_lang$html$Html$text('Output changes to terminal'),
+														_0: _elm_lang$html$Html$text('Copy above command. Output will print to terminal.'),
 														_1: {ctor: '[]'}
 													}),
 												_1: {
@@ -15462,8 +15557,12 @@ var _user$project$View$modal = function (model) {
 																_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
 																	{
 																		ctor: '::',
-																		_0: _elm_lang$html$Html_Attributes$class('fa fa-copy'),
-																		_1: {ctor: '[]'}
+																		_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTerminalText),
+																		_1: {
+																			ctor: '::',
+																			_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																			_1: {ctor: '[]'}
+																		}
 																	}),
 																_1: {
 																	ctor: '::',
@@ -15506,7 +15605,7 @@ var _user$project$View$modal = function (model) {
 														_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs(
 															{
 																ctor: '::',
-																_0: _elm_lang$html$Html_Attributes$class('fullwidth'),
+																_0: _elm_lang$html$Html_Attributes$class('w-100'),
 																_1: {ctor: '[]'}
 															}),
 														_1: {ctor: '[]'}
@@ -15525,7 +15624,11 @@ var _user$project$View$modal = function (model) {
 																	{
 																		ctor: '::',
 																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
-																		_1: {ctor: '[]'}
+																		_1: {
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('w-100'),
+																			_1: {ctor: '[]'}
+																		}
 																	}),
 																_1: {
 																	ctor: '::',
@@ -15536,7 +15639,7 @@ var _user$project$View$modal = function (model) {
 														},
 														{
 															ctor: '::',
-															_0: _elm_lang$html$Html$text('Change files *in place* (adds -i)'),
+															_0: _elm_lang$html$Html$text('Add -i option to the command. Files will change in place. Make sure you have a backup or version control.'),
 															_1: {ctor: '[]'}
 														}),
 													_1: {
@@ -15551,7 +15654,7 @@ var _user$project$View$modal = function (model) {
 																	_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
 																		{
 																			ctor: '::',
-																			_0: _elm_lang$html$Html_Attributes$class('fa fa-copy'),
+																			_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTextInPlace),
 																			_1: {
 																				ctor: '::',
 																				_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
@@ -15637,14 +15740,14 @@ var _user$project$View$modal = function (model) {
 					_1: {ctor: '[]'}
 				},
 				A3(
-					_rundis$elm_bootstrap$Bootstrap_Modal$h4,
+					_rundis$elm_bootstrap$Bootstrap_Modal$h5,
 					{ctor: '[]'},
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html$text(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								'Paste this in your terminal to run on all ',
+								'Paste the command in your terminal to run on all ',
 								A2(_elm_lang$core$Basics_ops['++'], language, ' files in the current directory'))),
 						_1: {ctor: '[]'}
 					},
@@ -15688,106 +15791,104 @@ var _user$project$View$halves = function (l) {
 	};
 };
 var _user$project$View$footerServerConnected = function (model) {
-	return A2(
-		_rundis$elm_bootstrap$Bootstrap_Grid$col,
+	return model.serverConnected ? A2(
+		_rundis$elm_bootstrap$Bootstrap_Badge$pillSuccess,
 		{
 			ctor: '::',
-			_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
-			_1: {ctor: '[]'}
+			_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml1,
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('green-pill'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('float-right'),
+					_1: {ctor: '[]'}
+				}
+			}
 		},
 		{
 			ctor: '::',
-			_0: model.serverConnected ? A2(
-				_rundis$elm_bootstrap$Bootstrap_Badge$pillSuccess,
-				{
+			_0: _elm_lang$html$Html$text('Server Connected'),
+			_1: {ctor: '[]'}
+		}) : A2(
+		_rundis$elm_bootstrap$Bootstrap_Badge$pillDanger,
+		{
+			ctor: '::',
+			_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml1,
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('red-pill'),
+				_1: {
 					ctor: '::',
-					_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml1,
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('green-pill'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('float-right'),
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('Server Connected'),
+					_0: _elm_lang$html$Html_Attributes$class('float-right'),
 					_1: {ctor: '[]'}
-				}) : A2(
-				_rundis$elm_bootstrap$Bootstrap_Badge$pillDanger,
-				{
-					ctor: '::',
-					_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml1,
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('red-pill'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('float-right'),
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('No Server Connected'),
-					_1: {ctor: '[]'}
-				}),
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text('No Server Connected'),
 			_1: {ctor: '[]'}
 		});
 };
 var _user$project$View$footerShareLink = function (model) {
 	return A2(
-		_rundis$elm_bootstrap$Bootstrap_Grid$col,
-		{
-			ctor: '::',
-			_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md8,
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$h3,
-				{ctor: '[]'},
-				A2(
-					_elm_lang$core$Basics_ops['++'],
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			{
+				ctor: '::',
+				_0: A2(
+					_rundis$elm_bootstrap$Bootstrap_Button$button,
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+						_1: {
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Button$warning,
+							_1: {
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShareLinkClicked),
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Share Link'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			_elm_lang$core$Native_Utils.eq(model.prettyUrl, '') ? {ctor: '[]'} : {
+				ctor: '::',
+				_0: A2(
+					_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+						_1: {
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs(
+								{
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml2,
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					},
 					{
 						ctor: '::',
 						_0: A2(
-							_rundis$elm_bootstrap$Bootstrap_Button$button,
+							_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
 							{
 								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$warning,
 								_1: {
 									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Button$warning,
-									_1: {
-										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShareLinkClicked),
-										_1: {ctor: '[]'}
-									}
-								}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('Share Link'),
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
-					},
-					_elm_lang$core$Native_Utils.eq(model.prettyUrl, '') ? {ctor: '[]'} : {
-						ctor: '::',
-						_0: A2(
-							_rundis$elm_bootstrap$Bootstrap_Badge$badgeWarning,
-							{
-								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml1,
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$id('copyableLink'),
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyShareLinkClicked),
 									_1: {ctor: '[]'}
 								}
 							},
@@ -15799,30 +15900,39 @@ var _user$project$View$footerShareLink = function (model) {
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_rundis$elm_bootstrap$Bootstrap_Button$button,
+								_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
 								{
 									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineWarning,
 									_1: {
 										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineWarning,
+										_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyShareLinkClicked),
 										_1: {
 											ctor: '::',
-											_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyShareLinkClicked),
-											_1: {ctor: '[]'}
+											_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+											_1: {
+												ctor: '::',
+												_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$class(model.copyButtonLinkText),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$id('copyableLink'),
+															_1: {ctor: '[]'}
+														}
+													}),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(model.copyButtonText),
-									_1: {ctor: '[]'}
-								}),
+								{ctor: '[]'}),
 							_1: {ctor: '[]'}
 						}
-					})),
-			_1: {ctor: '[]'}
-		});
+					}),
+				_1: {ctor: '[]'}
+			}));
 };
 var _user$project$View$substitutionKindSelection = function (model) {
 	return A2(
@@ -16154,47 +16264,86 @@ var _user$project$View$sourcePage = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$br,
-				{ctor: '[]'},
-				{ctor: '[]'}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_rundis$elm_bootstrap$Bootstrap_Grid$row,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: A2(
-							_rundis$elm_bootstrap$Bootstrap_Grid$col,
-							{
-								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md10,
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: A2(
-									_rundis$elm_bootstrap$Bootstrap_Grid$row,
-									{
-										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$rightMd,
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: A2(
-											_rundis$elm_bootstrap$Bootstrap_Grid$col,
-											{
-												ctor: '::',
-												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md11,
-												_1: {ctor: '[]'}
-											},
-											{
-												ctor: '::',
-												_0: A2(
-													_rundis$elm_bootstrap$Bootstrap_Grid$row,
-													{ctor: '[]'},
-													{
+				_rundis$elm_bootstrap$Bootstrap_Grid$row,
+				{
+					ctor: '::',
+					_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_rundis$elm_bootstrap$Bootstrap_Grid$col,
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md10,
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_rundis$elm_bootstrap$Bootstrap_Grid$row,
+								{
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$rightMd,
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_rundis$elm_bootstrap$Bootstrap_Grid$col,
+										{
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md11,
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_rundis$elm_bootstrap$Bootstrap_Grid$row,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_Grid$col,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: _user$project$View$highlightableSourceListing(model),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$br,
+																	{ctor: '[]'},
+																	{ctor: '[]'}),
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$View$matchTemplateInput(model),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$br,
+																			{ctor: '[]'},
+																			{ctor: '[]'}),
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$View$ruleInput(model),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}
+														}),
+													_1: {
 														ctor: '::',
 														_0: A2(
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
@@ -16205,7 +16354,7 @@ var _user$project$View$sourcePage = function (model) {
 															},
 															{
 																ctor: '::',
-																_0: _user$project$View$highlightableSourceListing(model),
+																_0: _user$project$View$highlightableRewriteResult(model),
 																_1: {
 																	ctor: '::',
 																	_0: A2(
@@ -16214,7 +16363,7 @@ var _user$project$View$sourcePage = function (model) {
 																		{ctor: '[]'}),
 																	_1: {
 																		ctor: '::',
-																		_0: _user$project$View$matchTemplateInput(model),
+																		_0: _user$project$View$rewriteTemplateInput(model),
 																		_1: {
 																			ctor: '::',
 																			_0: A2(
@@ -16223,209 +16372,15 @@ var _user$project$View$sourcePage = function (model) {
 																				{ctor: '[]'}),
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$View$ruleInput(model),
+																				_0: _user$project$View$ruleDisplaySyntaxErrors(model),
 																				_1: {ctor: '[]'}
 																			}
 																		}
 																	}
 																}
 															}),
-														_1: {
-															ctor: '::',
-															_0: A2(
-																_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																{
-																	ctor: '::',
-																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
-																	_1: {ctor: '[]'}
-																},
-																{
-																	ctor: '::',
-																	_0: _user$project$View$highlightableRewriteResult(model),
-																	_1: {
-																		ctor: '::',
-																		_0: A2(
-																			_elm_lang$html$Html$br,
-																			{ctor: '[]'},
-																			{ctor: '[]'}),
-																		_1: {
-																			ctor: '::',
-																			_0: _user$project$View$rewriteTemplateInput(model),
-																			_1: {
-																				ctor: '::',
-																				_0: A2(
-																					_elm_lang$html$Html$br,
-																					{ctor: '[]'},
-																					{ctor: '[]'}),
-																				_1: {
-																					ctor: '::',
-																					_0: _user$project$View$ruleDisplaySyntaxErrors(model),
-																					_1: {ctor: '[]'}
-																				}
-																			}
-																		}
-																	}
-																}),
-															_1: {ctor: '[]'}
-														}
-													}),
-												_1: {
-													ctor: '::',
-													_0: A2(
-														_rundis$elm_bootstrap$Bootstrap_Grid$row,
-														{ctor: '[]'},
-														{
-															ctor: '::',
-															_0: A2(
-																_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																{
-																	ctor: '::',
-																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
-																	_1: {ctor: '[]'}
-																},
-																{
-																	ctor: '::',
-																	_0: A2(
-																		_elm_lang$html$Html$br,
-																		{ctor: '[]'},
-																		{ctor: '[]'}),
-																	_1: {
-																		ctor: '::',
-																		_0: _user$project$View$sourceInput(model),
-																		_1: {ctor: '[]'}
-																	}
-																}),
-															_1: {ctor: '[]'}
-														}),
-													_1: {
-														ctor: '::',
-														_0: A2(
-															_elm_lang$html$Html$br,
-															{ctor: '[]'},
-															{ctor: '[]'}),
-														_1: {
-															ctor: '::',
-															_0: A2(
-																_rundis$elm_bootstrap$Bootstrap_Grid$row,
-																{ctor: '[]'},
-																{
-																	ctor: '::',
-																	_0: _user$project$View$footerShareLink(model),
-																	_1: {
-																		ctor: '::',
-																		_0: A2(
-																			_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																			{
-																				ctor: '::',
-																				_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
-																				_1: {ctor: '[]'}
-																			},
-																			{
-																				ctor: '::',
-																				_0: A2(
-																					_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
-																					{
-																						ctor: '::',
-																						_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
-																						_1: {ctor: '[]'}
-																					},
-																					{
-																						ctor: '::',
-																						_0: A2(
-																							_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
-																							{
-																								ctor: '::',
-																								_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
-																								_1: {
-																									ctor: '::',
-																									_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
-																									_1: {
-																										ctor: '::',
-																										_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShowModal),
-																										_1: {ctor: '[]'}
-																									}
-																								}
-																							},
-																							{
-																								ctor: '::',
-																								_0: _elm_lang$html$Html$text('Run in Terminal'),
-																								_1: {ctor: '[]'}
-																							}),
-																						_1: {
-																							ctor: '::',
-																							_0: A2(
-																								_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
-																								{
-																									ctor: '::',
-																									_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineSecondary,
-																									_1: {
-																										ctor: '::',
-																										_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
-																										_1: {
-																											ctor: '::',
-																											_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
-																												{
-																													ctor: '::',
-																													_0: _elm_lang$html$Html_Attributes$class('fa fa-copy'),
-																													_1: {ctor: '[]'}
-																												}),
-																											_1: {
-																												ctor: '::',
-																												_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
-																												_1: {ctor: '[]'}
-																											}
-																										}
-																									}
-																								},
-																								{ctor: '[]'}),
-																							_1: {ctor: '[]'}
-																						}
-																					}),
-																				_1: {ctor: '[]'}
-																			}),
-																		_1: {
-																			ctor: '::',
-																			_0: _user$project$View$footerServerConnected(model),
-																			_1: {ctor: '[]'}
-																		}
-																	}
-																}),
-															_1: {ctor: '[]'}
-														}
+														_1: {ctor: '[]'}
 													}
-												}
-											}),
-										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_rundis$elm_bootstrap$Bootstrap_Grid$col,
-								{
-									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
-									_1: {ctor: '[]'}
-								},
-								{
-									ctor: '::',
-									_0: _user$project$View$substitutionKindSelection(model),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$br,
-											{ctor: '[]'},
-											{ctor: '[]'}),
-										_1: {
-											ctor: '::',
-											_0: A2(
-												_elm_lang$html$Html$h6,
-												{ctor: '[]'},
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html$text('Language'),
-													_1: {ctor: '[]'}
 												}),
 											_1: {
 												ctor: '::',
@@ -16438,51 +16393,180 @@ var _user$project$View$sourcePage = function (model) {
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
 															{
 																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
 																_1: {ctor: '[]'}
 															},
 															{
 																ctor: '::',
-																_0: A3(_user$project$View$languageSelection, '', model, left),
-																_1: {ctor: '[]'}
+																_0: A2(
+																	_elm_lang$html$Html$br,
+																	{ctor: '[]'},
+																	{ctor: '[]'}),
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$View$sourceInput(model),
+																	_1: {ctor: '[]'}
+																}
 															}),
-														_1: {
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_Grid$row,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$betweenXs,
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}
+														},
+														{
 															ctor: '::',
 															_0: A2(
 																_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																{ctor: '[]'},
 																{
 																	ctor: '::',
-																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
-																	_1: {ctor: '[]'}
-																},
-																{
-																	ctor: '::',
-																	_0: A3(_user$project$View$languageSelection, '', model, right),
+																	_0: _user$project$View$footerShareLink(model),
 																	_1: {ctor: '[]'}
 																}),
-															_1: {ctor: '[]'}
-														}
-													}),
-												_1: {ctor: '[]'}
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																	{ctor: '[]'},
+																	{
+																		ctor: '::',
+																		_0: _user$project$View$terminalButtonGroup(model),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}
+														}),
+													_1: {ctor: '[]'}
+												}
 											}
-										}
-									}
+										}),
+									_1: {ctor: '[]'}
 								}),
 							_1: {ctor: '[]'}
-						}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$br,
-						{ctor: '[]'},
-						{ctor: '[]'}),
+						}),
 					_1: {
 						ctor: '::',
-						_0: _user$project$View$modal(model),
+						_0: A2(
+							_rundis$elm_bootstrap$Bootstrap_Grid$col,
+							{
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _user$project$View$substitutionKindSelection(model),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$h6,
+										{
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Language'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_rundis$elm_bootstrap$Bootstrap_Grid$row,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: A2(
+													_rundis$elm_bootstrap$Bootstrap_Grid$col,
+													{
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: A3(_user$project$View$languageSelection, '', model, left),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_Grid$col,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: A3(_user$project$View$languageSelection, '', model, right),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_rundis$elm_bootstrap$Bootstrap_Grid$row,
+												{
+													ctor: '::',
+													_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$centerMd,
+													_1: {
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt5,
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												},
+												{
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_Grid$col,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$mdAuto,
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: _user$project$View$footerServerConnected(model),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}),
 						_1: {ctor: '[]'}
 					}
-				}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$View$modal(model),
+				_1: {ctor: '[]'}
 			}
 		});
 };
