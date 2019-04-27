@@ -45,7 +45,7 @@ terminalCommand model extra_option =
                 ( "", "''" )
 
             else
-                ( "COMBY_R=pp$(cat <<\"REWRITE\"\n"
+                ( "COMBY_R=$(cat <<\"REWRITE\"\n"
                     ++ model.rewriteTemplateInput
                     ++ "\nREWRITE\n)\n"
                 , "$COMBY_R"

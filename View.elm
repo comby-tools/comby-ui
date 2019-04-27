@@ -155,49 +155,45 @@ substitutionKindSelection model =
         )
 
 
-footerShareLink : Model -> Grid.Column Msg
+footerShareLink : Model -> Html Msg
 footerShareLink model =
-    Grid.col [ Col.md8 ]
-        [ h3 [] <|
-            [ Button.button [ Button.small, Button.warning, Button.onClick ShareLinkClicked ] [ text "Share Link" ]
-            ]
-                ++ (if model.prettyUrl == "" then
-                        []
+    h3 [] <|
+        [ Button.button [ Button.small, Button.warning, Button.onClick ShareLinkClicked ] [ text "Share Link" ]
+        ]
+            ++ (if model.prettyUrl == "" then
+                    []
 
-                    else
-                        [ Badge.badgeWarning [ Spacing.ml1, Html.Attributes.id "copyableLink" ] [ text model.prettyUrl ]
-                        , Button.button
-                            [ Button.small
-                            , Button.outlineWarning
+                else
+                    [ Badge.badgeWarning [ Spacing.ml1, Html.Attributes.id "copyableLink" ] [ text model.prettyUrl ]
+                    , Button.button
+                        [ Button.small
+                        , Button.outlineWarning
 
-                            --, Button.attrs [ class "fa fa-copy" ]
-                            , Button.onClick CopyShareLinkClicked
-                            ]
-                            [ text model.copyButtonText ]
+                        --, Button.attrs [ class "fa fa-copy" ]
+                        , Button.onClick CopyShareLinkClicked
                         ]
-                   )
-        ]
+                        [ text model.copyButtonText ]
+                    ]
+               )
 
 
-footerServerConnected : Model -> Grid.Column Msg
+footerServerConnected : Model -> Html Msg
 footerServerConnected model =
-    Grid.col [ Col.md2 ]
-        [ if model.serverConnected then
-            Badge.pillSuccess
-                [ Spacing.ml1
-                , Html.Attributes.class "green-pill"
-                , Html.Attributes.class "float-right"
-                ]
-                [ text "Server Connected" ]
+    if model.serverConnected then
+        Badge.pillSuccess
+            [ Spacing.ml1
+            , Html.Attributes.class "green-pill"
+            , Html.Attributes.class "float-right"
+            ]
+            [ text "Server Connected" ]
 
-          else
-            Badge.pillDanger
-                [ Spacing.ml1
-                , Html.Attributes.class "red-pill"
-                , Html.Attributes.class "float-right"
-                ]
-                [ text "No Server Connected" ]
-        ]
+    else
+        Badge.pillDanger
+            [ Spacing.ml1
+            , Html.Attributes.class "red-pill"
+            , Html.Attributes.class "float-right"
+            ]
+            [ text "No Server Connected" ]
 
 
 halves : List LanguageExtension -> ( List LanguageExtension, List LanguageExtension )
@@ -275,7 +271,7 @@ modal model =
                                 , Button.attrs [ Spacing.mt1 ]
                                 , Button.onClick CopyTerminalCommandInPlaceClicked
                                 ]
-                                [ text "Change files *in place* (adds -i)" ]
+                                [ text "Change files in place (adds -i)" ]
                             , ButtonGroup.button
                                 [ Button.outlineDanger
                                 , Button.attrs [ class "fa fa-copy", Spacing.mt1 ]
@@ -297,8 +293,7 @@ sourcePage model =
             halves LanguageExtension.all
     in
     Grid.containerFluid []
-        [ br [] []
-        , Grid.row []
+        [ Grid.row [ Row.attrs [ Spacing.mt3 ] ]
             [ Grid.col [ Col.md10 ]
                 [ Grid.row [ Row.rightMd ]
                     -- changing to md12 makes this flush on left
@@ -327,9 +322,9 @@ sourcePage model =
                             ]
                         , br [] []
                         , Grid.row []
-                            [ footerShareLink model
-
-                            --                            , Grid.col [ Col.md1 ] []
+                            [ Grid.col [ Col.md10 ]
+                                [ footerShareLink model
+                                ]
                             , Grid.col [ Col.md2 ]
                                 [ ButtonGroup.buttonGroup [ ButtonGroup.small ]
                                     [ ButtonGroup.button
@@ -347,22 +342,23 @@ sourcePage model =
                                         []
                                     ]
                                 ]
-                            , footerServerConnected model
                             ]
                         ]
                     ]
                 ]
             , Grid.col [ Col.md2 ]
                 [ substitutionKindSelection model
-                , br [] []
-                , h6 [] [ text "Language" ]
+                , h6 [ Spacing.mt3 ] [ text "Language" ]
                 , Grid.row []
                     [ Grid.col [ Col.md6 ] [ languageSelection "" model left ]
                     , Grid.col [ Col.md6 ] [ languageSelection "" model right ]
                     ]
+                , Grid.row [ Row.centerMd, Row.attrs [ Spacing.mt5 ] ]
+                    [ Grid.col [ Col.mdAuto ]
+                        [ footerServerConnected model ]
+                    ]
                 ]
             ]
-        , br [] []
         , modal model
         ]
 
