@@ -184,7 +184,7 @@ footerShareLink model =
                             , Button.onClick CopyShareLinkClicked
                             , Button.small
                             , Button.attrs
-                                [ class model.copyButtonText
+                                [ class model.copyButtonLinkText
                                 , id "copyableLink"
                                 ]
                             ]
@@ -245,7 +245,7 @@ modal model =
     in
     Modal.config CloseModal
         |> Modal.large
-        |> Modal.h4 [] [ text ("Paste this in your terminal to run on all " ++ language ++ " files in the current directory") ]
+        |> Modal.h5 [] [ text ("Paste the command in your terminal to run on all " ++ language ++ " files in the current directory") ]
         |> Modal.body []
             [ Grid.containerFluid []
                 [ Grid.row []
@@ -272,10 +272,10 @@ modal model =
                                 , Button.attrs [ Spacing.mt1, class "w-100" ]
                                 , Button.onClick CopyTerminalCommandClicked
                                 ]
-                                [ text "Output changes to terminal" ]
+                                [ text "Copy above command. Output will print to terminal." ]
                             , ButtonGroup.button
                                 [ Button.outlineSecondary
-                                , Button.attrs [ class model.copyButtonText, Spacing.mt1 ]
+                                , Button.attrs [ class model.copyButtonTerminalText, Spacing.mt1 ]
                                 , Button.onClick CopyTerminalCommandClicked
                                 ]
                                 []
@@ -293,7 +293,7 @@ modal model =
                                 , Button.attrs [ Spacing.mt1, class "w-100" ]
                                 , Button.onClick CopyTerminalCommandInPlaceClicked
                                 ]
-                                [ text "Change files in place (adds -i). Make sure you have a backup or version control." ]
+                                [ text "Add -i option to the command. Files will change in place. Make sure you have a backup or version control." ]
                             , ButtonGroup.button
                                 [ Button.outlineDanger
                                 , Button.attrs [ class model.copyButtonTextInPlace, Spacing.mt1 ]
@@ -321,7 +321,7 @@ terminalButtonGroup model =
             , ButtonGroup.button
                 [ Button.outlineSecondary
                 , Button.small
-                , Button.attrs [ class model.copyButtonText ]
+                , Button.attrs [ class model.copyButtonTerminalText ]
                 , Button.onClick CopyTerminalCommandClicked
                 ]
                 []

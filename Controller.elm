@@ -268,7 +268,8 @@ loadInitialStaticState flags location =
     , serverConnected = False
     , language = language
     , substitutionKind = substitutionKind
-    , copyButtonText = "fa fa-copy"
+    , copyButtonLinkText = "fa fa-copy"
+    , copyButtonTerminalText = "fa fa-copy"
     , copyButtonTextInPlace = "fa fa-copy"
     , currentRewriteResultId = 0
     , currentMatchResultId = 0
@@ -311,7 +312,8 @@ update msg model =
     let
         new_model =
             { model
-                | copyButtonText = "fa fa-copy"
+                | copyButtonLinkText = "fa fa-copy"
+                , copyButtonTerminalText = "fa fa-copy"
             }
     in
     case msg of
@@ -333,8 +335,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "fa fa-copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
             in
@@ -370,8 +371,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "fa fa-copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
             in
@@ -404,8 +404,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "fa fa-copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
             in
@@ -435,8 +434,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "fa fa-copy"
-                        , currentRewriteResultId = currentRewriteResultId
+                        | currentRewriteResultId = currentRewriteResultId
                     }
             in
             ( { new_model | rewriteTemplateInput = rewriteTemplateInput }
@@ -549,7 +547,7 @@ update msg model =
 
         CopyShareLinkClicked ->
             ( { new_model
-                | copyButtonText = "fa fa-check"
+                | copyButtonLinkText = "fa fa-check"
               }
             , Ports.copyToClipboard model.url
             )
@@ -600,8 +598,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "fa fa-copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
             in
@@ -637,8 +634,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "fa fa-copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
             in
@@ -673,7 +669,9 @@ update msg model =
             in
             ( { model
                 | copyButtonTextInPlace = "fa fa-copy"
-                , copyButtonText = "fa fa-check"
+                , copyButtonTerminalText = "fa fa-check"
+                , copyButtonLinkText = "fa fa-copy"
+                , modalText = text
               }
             , Ports.copyToClipboard text
             )
@@ -685,7 +683,8 @@ update msg model =
             in
             ( { model
                 | copyButtonTextInPlace = "fa fa-check"
-                , copyButtonText = "fa fa-copy"
+                , copyButtonTerminalText = "fa fa-copy"
+                , modalText = text
               }
             , Ports.copyToClipboard text
             )

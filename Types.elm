@@ -64,7 +64,8 @@ type alias Model =
     , serverConnected : Bool
     , language : LanguageExtension
     , substitutionKind : SubstitutionKind
-    , copyButtonText : String
+    , copyButtonLinkText : String
+    , copyButtonTerminalText : String
     , copyButtonTextInPlace : String
     , currentRewriteResultId : Int
     , currentMatchResultId : Int
