@@ -268,7 +268,8 @@ loadInitialStaticState flags location =
     , serverConnected = False
     , language = language
     , substitutionKind = substitutionKind
-    , copyButtonText = "Copy"
+    , copyButtonText = "fa fa-copy"
+    , copyButtonTextInPlace = "fa fa-copy"
     , currentRewriteResultId = 0
     , currentMatchResultId = 0
     , modalVisibility = Modal.hidden
@@ -310,7 +311,7 @@ update msg model =
     let
         new_model =
             { model
-                | copyButtonText = "Copy"
+                | copyButtonText = "fa fa-copy"
             }
     in
     case msg of
@@ -332,7 +333,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
+                        | copyButtonText = "fa fa-copy"
                         , currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
@@ -369,7 +370,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
+                        | copyButtonText = "fa fa-copy"
                         , currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
@@ -403,7 +404,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
+                        | copyButtonText = "fa fa-copy"
                         , currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
@@ -434,7 +435,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
+                        | copyButtonText = "fa fa-copy"
                         , currentRewriteResultId = currentRewriteResultId
                     }
             in
@@ -548,7 +549,7 @@ update msg model =
 
         CopyShareLinkClicked ->
             ( { new_model
-                | copyButtonText = "Copied!"
+                | copyButtonText = "fa fa-check"
               }
             , Ports.copyToClipboard model.url
             )
@@ -599,7 +600,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
+                        | copyButtonText = "fa fa-copy"
                         , currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
@@ -636,7 +637,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
+                        | copyButtonText = "fa fa-copy"
                         , currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
@@ -670,14 +671,24 @@ update msg model =
                 text =
                     terminalCommand model ""
             in
-            ( model, Ports.copyToClipboard text )
+            ( { model
+                | copyButtonTextInPlace = "fa fa-copy"
+                , copyButtonText = "fa fa-check"
+              }
+            , Ports.copyToClipboard text
+            )
 
         CopyTerminalCommandInPlaceClicked ->
             let
                 text =
                     terminalCommand model " -i"
             in
-            ( model, Ports.copyToClipboard text )
+            ( { model
+                | copyButtonTextInPlace = "fa fa-check"
+                , copyButtonText = "fa fa-copy"
+              }
+            , Ports.copyToClipboard text
+            )
 
         ShowModal ->
             let
@@ -687,6 +698,7 @@ update msg model =
             ( { model
                 | modalText = text
                 , modalVisibility = Modal.shown
+                , copyButtonTextInPlace = "fa fa-copy"
               }
             , Cmd.none
             )

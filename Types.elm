@@ -65,6 +65,7 @@ type alias Model =
     , language : LanguageExtension
     , substitutionKind : SubstitutionKind
     , copyButtonText : String
+    , copyButtonTextInPlace : String
     , currentRewriteResultId : Int
     , currentMatchResultId : Int
     , modalVisibility : Modal.Visibility

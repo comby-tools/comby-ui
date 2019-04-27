@@ -9,6 +9,7 @@ import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
 import Bootstrap.Grid.Row as Row
 import Bootstrap.Modal as Modal
+import Bootstrap.Text as Text
 import Bootstrap.Utilities.Spacing as Spacing
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -157,22 +158,38 @@ substitutionKindSelection model =
 
 footerShareLink : Model -> Html Msg
 footerShareLink model =
-    h3 [] <|
-        [ Button.button [ Button.small, Button.warning, Button.onClick ShareLinkClicked ] [ text "Share Link" ]
+    div [] <|
+        [ Button.button
+            [ Button.small
+            , Button.warning
+            , Button.onClick ShareLinkClicked
+            ]
+            [ text "Share Link" ]
         ]
             ++ (if model.prettyUrl == "" then
                     []
 
                 else
-                    [ Badge.badgeWarning [ Spacing.ml1, Html.Attributes.id "copyableLink" ] [ text model.prettyUrl ]
-                    , Button.button
-                        [ Button.small
-                        , Button.outlineWarning
-
-                        --, Button.attrs [ class "fa fa-copy" ]
-                        , Button.onClick CopyShareLinkClicked
+                    [ ButtonGroup.buttonGroup
+                        [ ButtonGroup.small
+                        , ButtonGroup.attrs [ Spacing.ml2 ]
                         ]
-                        [ text model.copyButtonText ]
+                        [ ButtonGroup.button
+                            [ Button.warning
+                            , Button.onClick CopyShareLinkClicked
+                            ]
+                            [ text model.prettyUrl ]
+                        , ButtonGroup.button
+                            [ Button.outlineWarning
+                            , Button.onClick CopyShareLinkClicked
+                            , Button.small
+                            , Button.attrs
+                                [ class model.copyButtonText
+                                , id "copyableLink"
+                                ]
+                            ]
+                            []
+                        ]
                     ]
                )
 
@@ -247,7 +264,7 @@ modal model =
                 [ Grid.row []
                     [ Grid.col [ Col.md12 ]
                         [ ButtonGroup.buttonGroup
-                            [ ButtonGroup.small, ButtonGroup.attrs [ class "fullwidth" ] ]
+                            [ ButtonGroup.small, ButtonGroup.attrs [ class "d-flex w-100" ] ]
                             [ ButtonGroup.button
                                 [ Button.secondary
                                 , Button.onClick CopyTerminalCommandClicked
@@ -255,7 +272,7 @@ modal model =
                                 [ text "Output changes to terminal" ]
                             , ButtonGroup.button
                                 [ Button.outlineSecondary
-                                , Button.attrs [ class "fa fa-copy" ]
+                                , Button.attrs [ class (model.copyButtonText ++ " d-flex flex-shrink-1") ]
                                 , Button.onClick CopyTerminalCommandClicked
                                 ]
                                 []
@@ -265,16 +282,16 @@ modal model =
                 , Grid.row []
                     [ Grid.col [ Col.md12 ]
                         [ ButtonGroup.buttonGroup
-                            [ ButtonGroup.small, ButtonGroup.attrs [ class "fullwidth" ] ]
+                            [ ButtonGroup.small, ButtonGroup.attrs [ class "w-100" ] ]
                             [ ButtonGroup.button
                                 [ Button.danger
                                 , Button.attrs [ Spacing.mt1 ]
                                 , Button.onClick CopyTerminalCommandInPlaceClicked
                                 ]
-                                [ text "Change files in place (adds -i)" ]
+                                [ text "Change files in place (adds -i). Make sure you have a backup or version control." ]
                             , ButtonGroup.button
                                 [ Button.outlineDanger
-                                , Button.attrs [ class "fa fa-copy", Spacing.mt1 ]
+                                , Button.attrs [ class model.copyButtonTextInPlace, Spacing.mt1 ]
                                 , Button.onClick CopyTerminalCommandInPlaceClicked
                                 ]
                                 []
@@ -284,6 +301,27 @@ modal model =
                 ]
             ]
         |> Modal.view model.modalVisibility
+
+
+terminalButtonGroup : Model -> Html Msg
+terminalButtonGroup model =
+    div [ class "text-right" ]
+        [ ButtonGroup.buttonGroup [ ButtonGroup.small ]
+            [ ButtonGroup.button
+                [ Button.secondary
+                , Button.small
+                , Button.onClick ShowModal
+                ]
+                [ text "Run in Terminal" ]
+            , ButtonGroup.button
+                [ Button.outlineSecondary
+                , Button.small
+                , Button.attrs [ class model.copyButtonText ]
+                , Button.onClick CopyTerminalCommandClicked
+                ]
+                []
+            ]
+        ]
 
 
 sourcePage : Model -> Html Msg
@@ -315,33 +353,16 @@ sourcePage model =
                                 ]
                             ]
                         , Grid.row []
-                            [ Grid.col [ Col.md12 ]
+                            [ Grid.col [ Col.xs12 ]
                                 [ br [] []
                                 , sourceInput model
                                 ]
                             ]
-                        , br [] []
-                        , Grid.row []
-                            [ Grid.col [ Col.md10 ]
-                                [ footerShareLink model
-                                ]
-                            , Grid.col [ Col.md2 ]
-                                [ ButtonGroup.buttonGroup [ ButtonGroup.small ]
-                                    [ ButtonGroup.button
-                                        [ Button.secondary
-                                        , Button.small
-                                        , Button.onClick ShowModal
-                                        ]
-                                        [ text "Run in Terminal" ]
-                                    , ButtonGroup.button
-                                        [ Button.outlineSecondary
-                                        , Button.small
-                                        , Button.attrs [ class "fa fa-copy" ]
-                                        , Button.onClick CopyTerminalCommandClicked
-                                        ]
-                                        []
-                                    ]
-                                ]
+                        , Grid.row [ Row.betweenXs, Row.attrs [ Spacing.mt3 ] ]
+                            [ Grid.col []
+                                [ footerShareLink model ]
+                            , Grid.col []
+                                [ terminalButtonGroup model ]
                             ]
                         ]
                     ]
