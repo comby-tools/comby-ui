@@ -32,7 +32,7 @@ sourceInput model =
         , Textarea.rows 3
         , Textarea.onInput SourceInputUpdated
         , Textarea.attrs [ placeholder "Paste your source code here" ]
-        , Textarea.value model.sourceInput
+        , Textarea.defaultValue model.sourceInput
         ]
 
 
@@ -43,7 +43,7 @@ matchTemplateInput model =
         , Textarea.rows 3
         , Textarea.onInput MatchTemplateInputUpdated
         , Textarea.attrs [ placeholder "Match Template" ]
-        , Textarea.value model.matchTemplateInput
+        , Textarea.defaultValue model.matchTemplateInput
         ]
 
 
@@ -54,7 +54,7 @@ ruleInput model =
         , Textarea.rows 1
         , Textarea.onInput RuleInputUpdated
         , Textarea.attrs [ placeholder "where true" ]
-        , Textarea.value model.ruleInput
+        , Textarea.defaultValue model.ruleInput
         ]
 
 
@@ -72,7 +72,7 @@ rewriteTemplateInput model =
         , Textarea.rows 3
         , Textarea.onInput RewriteTemplateInputUpdated
         , Textarea.attrs [ placeholder "Rewrite Template" ]
-        , Textarea.value model.rewriteTemplateInput
+        , Textarea.defaultValue model.rewriteTemplateInput
         ]
 
 
@@ -344,17 +344,25 @@ sourcePage model =
                         [ Grid.row []
                             [ Grid.col [ Col.md6 ]
                                 [ highlightableSourceListing model
-                                , br [] []
-                                , matchTemplateInput model
-                                , br [] []
-                                , ruleInput model
                                 ]
                             , Grid.col [ Col.md6 ]
                                 [ highlightableRewriteResult model
-                                , br [] []
-                                , rewriteTemplateInput model
-                                , br [] []
-                                , ruleDisplaySyntaxErrors model
+                                ]
+                            ]
+                        , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+                            [ Grid.col [ Col.md6 ]
+                                [ matchTemplateInput model
+                                ]
+                            , Grid.col [ Col.md6 ]
+                                [ rewriteTemplateInput model
+                                ]
+                            ]
+                        , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+                            [ Grid.col [ Col.md6 ]
+                                [ ruleInput model
+                                ]
+                            , Grid.col [ Col.md6 ]
+                                [ ruleDisplaySyntaxErrors model
                                 ]
                             ]
                         , Grid.row []
