@@ -15108,7 +15108,7 @@ var _user$project$Controller$update = F2(
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId, prettyUrl: ''});
 				var _p9 = A2(_user$project$Controller$log, 'MatchTemplateUpdated', _p10);
 				return {
 					ctor: '_Tuple2',
@@ -15132,7 +15132,7 @@ var _user$project$Controller$update = F2(
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId, prettyUrl: ''});
 				var _p11 = A2(_user$project$Controller$log, 'SourceInputUpdated', _p12);
 				return {
 					ctor: '_Tuple2',
@@ -15156,7 +15156,7 @@ var _user$project$Controller$update = F2(
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId, prettyUrl: ''});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15178,7 +15178,7 @@ var _user$project$Controller$update = F2(
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{currentRewriteResultId: currentRewriteResultId});
+					{currentRewriteResultId: currentRewriteResultId, prettyUrl: ''});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15379,7 +15379,7 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{copyButtonTextInPlace: 'fa fa-check', copyButtonTerminalText: 'fa fa-copy', modalText: text}),
+						{copyButtonTextInPlace: 'fa fa-check', copyButtonTerminalText: 'fa fa-copy', copyButtonLinkText: 'fa fa-copy', modalText: text}),
 					_1: _user$project$Ports$copyToClipboard(text)
 				};
 			default:
@@ -16145,7 +16145,7 @@ var _user$project$View$rewriteTemplateInput = function (model) {
 							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.rewriteTemplateInput),
+							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$defaultValue(model.rewriteTemplateInput),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -16188,7 +16188,7 @@ var _user$project$View$ruleInput = function (model) {
 							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.ruleInput),
+							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$defaultValue(model.ruleInput),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -16217,7 +16217,7 @@ var _user$project$View$matchTemplateInput = function (model) {
 							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.matchTemplateInput),
+							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$defaultValue(model.matchTemplateInput),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -16246,7 +16246,7 @@ var _user$project$View$sourceInput = function (model) {
 							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.sourceInput),
+							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$defaultValue(model.sourceInput),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -16319,29 +16319,7 @@ var _user$project$View$sourcePage = function (model) {
 														{
 															ctor: '::',
 															_0: _user$project$View$highlightableSourceListing(model),
-															_1: {
-																ctor: '::',
-																_0: A2(
-																	_elm_lang$html$Html$br,
-																	{ctor: '[]'},
-																	{ctor: '[]'}),
-																_1: {
-																	ctor: '::',
-																	_0: _user$project$View$matchTemplateInput(model),
-																	_1: {
-																		ctor: '::',
-																		_0: A2(
-																			_elm_lang$html$Html$br,
-																			{ctor: '[]'},
-																			{ctor: '[]'}),
-																		_1: {
-																			ctor: '::',
-																			_0: _user$project$View$ruleInput(model),
-																			_1: {ctor: '[]'}
-																		}
-																	}
-																}
-															}
+															_1: {ctor: '[]'}
 														}),
 													_1: {
 														ctor: '::',
@@ -16355,29 +16333,7 @@ var _user$project$View$sourcePage = function (model) {
 															{
 																ctor: '::',
 																_0: _user$project$View$highlightableRewriteResult(model),
-																_1: {
-																	ctor: '::',
-																	_0: A2(
-																		_elm_lang$html$Html$br,
-																		{ctor: '[]'},
-																		{ctor: '[]'}),
-																	_1: {
-																		ctor: '::',
-																		_0: _user$project$View$rewriteTemplateInput(model),
-																		_1: {
-																			ctor: '::',
-																			_0: A2(
-																				_elm_lang$html$Html$br,
-																				{ctor: '[]'},
-																				{ctor: '[]'}),
-																			_1: {
-																				ctor: '::',
-																				_0: _user$project$View$ruleDisplaySyntaxErrors(model),
-																				_1: {ctor: '[]'}
-																			}
-																		}
-																	}
-																}
+																_1: {ctor: '[]'}
 															}),
 														_1: {ctor: '[]'}
 													}
@@ -16386,29 +16342,46 @@ var _user$project$View$sourcePage = function (model) {
 												ctor: '::',
 												_0: A2(
 													_rundis$elm_bootstrap$Bootstrap_Grid$row,
-													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													},
 													{
 														ctor: '::',
 														_0: A2(
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
 															{
 																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
 																_1: {ctor: '[]'}
 															},
 															{
 																ctor: '::',
-																_0: A2(
-																	_elm_lang$html$Html$br,
-																	{ctor: '[]'},
-																	{ctor: '[]'}),
-																_1: {
-																	ctor: '::',
-																	_0: _user$project$View$sourceInput(model),
-																	_1: {ctor: '[]'}
-																}
+																_0: _user$project$View$matchTemplateInput(model),
+																_1: {ctor: '[]'}
 															}),
-														_1: {ctor: '[]'}
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: _user$project$View$rewriteTemplateInput(model),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
+														}
 													}),
 												_1: {
 													ctor: '::',
@@ -16416,42 +16389,117 @@ var _user$project$View$sourcePage = function (model) {
 														_rundis$elm_bootstrap$Bootstrap_Grid$row,
 														{
 															ctor: '::',
-															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$betweenXs,
-															_1: {
-																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
-																	{
-																		ctor: '::',
-																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
-																		_1: {ctor: '[]'}
-																	}),
-																_1: {ctor: '[]'}
-															}
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
 														},
 														{
 															ctor: '::',
 															_0: A2(
 																_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																{ctor: '[]'},
 																{
 																	ctor: '::',
-																	_0: _user$project$View$footerShareLink(model),
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: _user$project$View$ruleInput(model),
 																	_1: {ctor: '[]'}
 																}),
 															_1: {
 																ctor: '::',
 																_0: A2(
 																	_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																	{ctor: '[]'},
 																	{
 																		ctor: '::',
-																		_0: _user$project$View$terminalButtonGroup(model),
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: _user$project$View$ruleDisplaySyntaxErrors(model),
 																		_1: {ctor: '[]'}
 																	}),
 																_1: {ctor: '[]'}
 															}
 														}),
-													_1: {ctor: '[]'}
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_rundis$elm_bootstrap$Bootstrap_Grid$row,
+															{ctor: '[]'},
+															{
+																ctor: '::',
+																_0: A2(
+																	_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$br,
+																			{ctor: '[]'},
+																			{ctor: '[]'}),
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$View$sourceInput(model),
+																			_1: {ctor: '[]'}
+																		}
+																	}),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_rundis$elm_bootstrap$Bootstrap_Grid$row,
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$betweenXs,
+																	_1: {
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+																			{
+																				ctor: '::',
+																				_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {ctor: '[]'}
+																	}
+																},
+																{
+																	ctor: '::',
+																	_0: A2(
+																		_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																		{ctor: '[]'},
+																		{
+																			ctor: '::',
+																			_0: _user$project$View$footerShareLink(model),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																			{ctor: '[]'},
+																			{
+																				ctor: '::',
+																				_0: _user$project$View$terminalButtonGroup(model),
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {ctor: '[]'}
+																	}
+																}),
+															_1: {ctor: '[]'}
+														}
+													}
 												}
 											}
 										}),
