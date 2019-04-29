@@ -5757,6 +5757,135 @@ var _elm_lang$core$Platform$Task = {ctor: 'Task'};
 var _elm_lang$core$Platform$ProcessId = {ctor: 'ProcessId'};
 var _elm_lang$core$Platform$Router = {ctor: 'Router'};
 
+var _debois$elm_dom$DOM$className = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'className',
+		_1: {ctor: '[]'}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _debois$elm_dom$DOM$scrollTop = A2(_elm_lang$core$Json_Decode$field, 'scrollTop', _elm_lang$core$Json_Decode$float);
+var _debois$elm_dom$DOM$scrollLeft = A2(_elm_lang$core$Json_Decode$field, 'scrollLeft', _elm_lang$core$Json_Decode$float);
+var _debois$elm_dom$DOM$offsetTop = A2(_elm_lang$core$Json_Decode$field, 'offsetTop', _elm_lang$core$Json_Decode$float);
+var _debois$elm_dom$DOM$offsetLeft = A2(_elm_lang$core$Json_Decode$field, 'offsetLeft', _elm_lang$core$Json_Decode$float);
+var _debois$elm_dom$DOM$offsetHeight = A2(_elm_lang$core$Json_Decode$field, 'offsetHeight', _elm_lang$core$Json_Decode$float);
+var _debois$elm_dom$DOM$offsetWidth = A2(_elm_lang$core$Json_Decode$field, 'offsetWidth', _elm_lang$core$Json_Decode$float);
+var _debois$elm_dom$DOM$childNodes = function (decoder) {
+	var loop = F2(
+		function (idx, xs) {
+			return A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (_p0) {
+					return A2(
+						_elm_lang$core$Maybe$withDefault,
+						_elm_lang$core$Json_Decode$succeed(xs),
+						A2(
+							_elm_lang$core$Maybe$map,
+							function (x) {
+								return A2(
+									loop,
+									idx + 1,
+									{ctor: '::', _0: x, _1: xs});
+							},
+							_p0));
+				},
+				_elm_lang$core$Json_Decode$maybe(
+					A2(
+						_elm_lang$core$Json_Decode$field,
+						_elm_lang$core$Basics$toString(idx),
+						decoder)));
+		});
+	return A2(
+		_elm_lang$core$Json_Decode$map,
+		_elm_lang$core$List$reverse,
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'childNodes',
+			A2(
+				loop,
+				0,
+				{ctor: '[]'})));
+};
+var _debois$elm_dom$DOM$childNode = function (idx) {
+	return _elm_lang$core$Json_Decode$at(
+		{
+			ctor: '::',
+			_0: 'childNodes',
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Basics$toString(idx),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _debois$elm_dom$DOM$parentElement = function (decoder) {
+	return A2(_elm_lang$core$Json_Decode$field, 'parentElement', decoder);
+};
+var _debois$elm_dom$DOM$previousSibling = function (decoder) {
+	return A2(_elm_lang$core$Json_Decode$field, 'previousSibling', decoder);
+};
+var _debois$elm_dom$DOM$nextSibling = function (decoder) {
+	return A2(_elm_lang$core$Json_Decode$field, 'nextSibling', decoder);
+};
+var _debois$elm_dom$DOM$offsetParent = F2(
+	function (x, decoder) {
+		return _elm_lang$core$Json_Decode$oneOf(
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$core$Json_Decode$field,
+					'offsetParent',
+					_elm_lang$core$Json_Decode$null(x)),
+				_1: {
+					ctor: '::',
+					_0: A2(_elm_lang$core$Json_Decode$field, 'offsetParent', decoder),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _debois$elm_dom$DOM$position = F2(
+	function (x, y) {
+		return A2(
+			_elm_lang$core$Json_Decode$andThen,
+			function (_p1) {
+				var _p2 = _p1;
+				var _p4 = _p2._1;
+				var _p3 = _p2._0;
+				return A2(
+					_debois$elm_dom$DOM$offsetParent,
+					{ctor: '_Tuple2', _0: _p3, _1: _p4},
+					A2(_debois$elm_dom$DOM$position, _p3, _p4));
+			},
+			A5(
+				_elm_lang$core$Json_Decode$map4,
+				F4(
+					function (scrollLeft, scrollTop, offsetLeft, offsetTop) {
+						return {ctor: '_Tuple2', _0: (x + offsetLeft) - scrollLeft, _1: (y + offsetTop) - scrollTop};
+					}),
+				_debois$elm_dom$DOM$scrollLeft,
+				_debois$elm_dom$DOM$scrollTop,
+				_debois$elm_dom$DOM$offsetLeft,
+				_debois$elm_dom$DOM$offsetTop));
+	});
+var _debois$elm_dom$DOM$boundingClientRect = A4(
+	_elm_lang$core$Json_Decode$map3,
+	F3(
+		function (_p5, width, height) {
+			var _p6 = _p5;
+			return {top: _p6._1, left: _p6._0, width: width, height: height};
+		}),
+	A2(_debois$elm_dom$DOM$position, 0, 0),
+	_debois$elm_dom$DOM$offsetWidth,
+	_debois$elm_dom$DOM$offsetHeight);
+var _debois$elm_dom$DOM$target = function (decoder) {
+	return A2(_elm_lang$core$Json_Decode$field, 'target', decoder);
+};
+var _debois$elm_dom$DOM$Rectangle = F4(
+	function (a, b, c, d) {
+		return {top: a, left: b, width: c, height: d};
+	});
+
 var _elm_lang$core$Task$onError = _elm_lang$core$Native_Scheduler.onError;
 var _elm_lang$core$Task$andThen = _elm_lang$core$Native_Scheduler.andThen;
 var _elm_lang$core$Task$spawnCmd = F2(
@@ -6169,9 +6298,174 @@ var _elm_lang$core$Time$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Time'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Time$init, onEffects: _elm_lang$core$Time$onEffects, onSelfMsg: _elm_lang$core$Time$onSelfMsg, tag: 'sub', subMap: _elm_lang$core$Time$subMap};
 
+var _elm_lang$animation_frame$Native_AnimationFrame = function()
+{
+
+function create()
+{
+	return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
+	{
+		var id = requestAnimationFrame(function() {
+			callback(_elm_lang$core$Native_Scheduler.succeed(Date.now()));
+		});
+
+		return function() {
+			cancelAnimationFrame(id);
+		};
+	});
+}
+
+return {
+	create: create
+};
+
+}();
+
 var _elm_lang$core$Process$kill = _elm_lang$core$Native_Scheduler.kill;
 var _elm_lang$core$Process$sleep = _elm_lang$core$Native_Scheduler.sleep;
 var _elm_lang$core$Process$spawn = _elm_lang$core$Native_Scheduler.spawn;
+
+var _elm_lang$animation_frame$AnimationFrame$rAF = _elm_lang$animation_frame$Native_AnimationFrame.create(
+	{ctor: '_Tuple0'});
+var _elm_lang$animation_frame$AnimationFrame$subscription = _elm_lang$core$Native_Platform.leaf('AnimationFrame');
+var _elm_lang$animation_frame$AnimationFrame$State = F3(
+	function (a, b, c) {
+		return {subs: a, request: b, oldTime: c};
+	});
+var _elm_lang$animation_frame$AnimationFrame$init = _elm_lang$core$Task$succeed(
+	A3(
+		_elm_lang$animation_frame$AnimationFrame$State,
+		{ctor: '[]'},
+		_elm_lang$core$Maybe$Nothing,
+		0));
+var _elm_lang$animation_frame$AnimationFrame$onEffects = F3(
+	function (router, subs, _p0) {
+		var _p1 = _p0;
+		var _p5 = _p1.request;
+		var _p4 = _p1.oldTime;
+		var _p2 = {ctor: '_Tuple2', _0: _p5, _1: subs};
+		if (_p2._0.ctor === 'Nothing') {
+			if (_p2._1.ctor === '[]') {
+				return _elm_lang$core$Task$succeed(
+					A3(
+						_elm_lang$animation_frame$AnimationFrame$State,
+						{ctor: '[]'},
+						_elm_lang$core$Maybe$Nothing,
+						_p4));
+			} else {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (pid) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (time) {
+								return _elm_lang$core$Task$succeed(
+									A3(
+										_elm_lang$animation_frame$AnimationFrame$State,
+										subs,
+										_elm_lang$core$Maybe$Just(pid),
+										time));
+							},
+							_elm_lang$core$Time$now);
+					},
+					_elm_lang$core$Process$spawn(
+						A2(
+							_elm_lang$core$Task$andThen,
+							_elm_lang$core$Platform$sendToSelf(router),
+							_elm_lang$animation_frame$AnimationFrame$rAF)));
+			}
+		} else {
+			if (_p2._1.ctor === '[]') {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (_p3) {
+						return _elm_lang$core$Task$succeed(
+							A3(
+								_elm_lang$animation_frame$AnimationFrame$State,
+								{ctor: '[]'},
+								_elm_lang$core$Maybe$Nothing,
+								_p4));
+					},
+					_elm_lang$core$Process$kill(_p2._0._0));
+			} else {
+				return _elm_lang$core$Task$succeed(
+					A3(_elm_lang$animation_frame$AnimationFrame$State, subs, _p5, _p4));
+			}
+		}
+	});
+var _elm_lang$animation_frame$AnimationFrame$onSelfMsg = F3(
+	function (router, newTime, _p6) {
+		var _p7 = _p6;
+		var _p10 = _p7.subs;
+		var diff = newTime - _p7.oldTime;
+		var send = function (sub) {
+			var _p8 = sub;
+			if (_p8.ctor === 'Time') {
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					_p8._0(newTime));
+			} else {
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					_p8._0(diff));
+			}
+		};
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (pid) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (_p9) {
+						return _elm_lang$core$Task$succeed(
+							A3(
+								_elm_lang$animation_frame$AnimationFrame$State,
+								_p10,
+								_elm_lang$core$Maybe$Just(pid),
+								newTime));
+					},
+					_elm_lang$core$Task$sequence(
+						A2(_elm_lang$core$List$map, send, _p10)));
+			},
+			_elm_lang$core$Process$spawn(
+				A2(
+					_elm_lang$core$Task$andThen,
+					_elm_lang$core$Platform$sendToSelf(router),
+					_elm_lang$animation_frame$AnimationFrame$rAF)));
+	});
+var _elm_lang$animation_frame$AnimationFrame$Diff = function (a) {
+	return {ctor: 'Diff', _0: a};
+};
+var _elm_lang$animation_frame$AnimationFrame$diffs = function (tagger) {
+	return _elm_lang$animation_frame$AnimationFrame$subscription(
+		_elm_lang$animation_frame$AnimationFrame$Diff(tagger));
+};
+var _elm_lang$animation_frame$AnimationFrame$Time = function (a) {
+	return {ctor: 'Time', _0: a};
+};
+var _elm_lang$animation_frame$AnimationFrame$times = function (tagger) {
+	return _elm_lang$animation_frame$AnimationFrame$subscription(
+		_elm_lang$animation_frame$AnimationFrame$Time(tagger));
+};
+var _elm_lang$animation_frame$AnimationFrame$subMap = F2(
+	function (func, sub) {
+		var _p11 = sub;
+		if (_p11.ctor === 'Time') {
+			return _elm_lang$animation_frame$AnimationFrame$Time(
+				function (_p12) {
+					return func(
+						_p11._0(_p12));
+				});
+		} else {
+			return _elm_lang$animation_frame$AnimationFrame$Diff(
+				function (_p13) {
+					return func(
+						_p11._0(_p13));
+				});
+		}
+	});
+_elm_lang$core$Native_Platform.effectManagers['AnimationFrame'] = {pkg: 'elm-lang/animation-frame', init: _elm_lang$animation_frame$AnimationFrame$init, onEffects: _elm_lang$animation_frame$AnimationFrame$onEffects, onSelfMsg: _elm_lang$animation_frame$AnimationFrame$onSelfMsg, tag: 'sub', subMap: _elm_lang$animation_frame$AnimationFrame$subMap};
 
 var _elm_lang$dom$Native_Dom = function() {
 
@@ -10336,6 +10630,232 @@ var _rundis$elm_bootstrap$Bootstrap_Button$button = F2(
 			children);
 	});
 
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$defaultOptions = {
+	size: _elm_lang$core$Maybe$Nothing,
+	vertical: false,
+	attributes: {ctor: '[]'}
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$applyModifier = F2(
+	function (modifier, options) {
+		var _p0 = modifier;
+		switch (_p0.ctor) {
+			case 'Size':
+				return _elm_lang$core$Native_Utils.update(
+					options,
+					{
+						size: _elm_lang$core$Maybe$Just(_p0._0)
+					});
+			case 'Vertical':
+				return _elm_lang$core$Native_Utils.update(
+					options,
+					{vertical: true});
+			default:
+				return _elm_lang$core$Native_Utils.update(
+					options,
+					{
+						attributes: A2(_elm_lang$core$Basics_ops['++'], options.attributes, _p0._0)
+					});
+		}
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$groupAttributes = F2(
+	function (toggle, modifiers) {
+		var options = A3(_elm_lang$core$List$foldl, _rundis$elm_bootstrap$Bootstrap_ButtonGroup$applyModifier, _rundis$elm_bootstrap$Bootstrap_ButtonGroup$defaultOptions, modifiers);
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			{
+				ctor: '::',
+				_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'group'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$classList(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'btn-group', _1: true},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'btn-group-toggle', _1: toggle},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'btn-group-vertical', _1: options.vertical},
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-toggle', 'buttons'),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				function () {
+					var _p1 = A2(_elm_lang$core$Maybe$andThen, _rundis$elm_bootstrap$Bootstrap_General_Internal$screenSizeOption, options.size);
+					if (_p1.ctor === 'Just') {
+						return {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class(
+								A2(_elm_lang$core$Basics_ops['++'], 'btn-group-', _p1._0)),
+							_1: {ctor: '[]'}
+						};
+					} else {
+						return {ctor: '[]'};
+					}
+				}(),
+				options.attributes));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$renderGroup = function (_p2) {
+	var _p3 = _p2;
+	return _p3._0;
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$toolbar = F2(
+	function (attributes, items) {
+		return A2(
+			_elm_lang$html$Html$div,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'toolbar'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('btn-toolbar'),
+						_1: {ctor: '[]'}
+					}
+				},
+				attributes),
+			A2(_elm_lang$core$List$map, _rundis$elm_bootstrap$Bootstrap_ButtonGroup$renderGroup, items));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$Options = F3(
+	function (a, b, c) {
+		return {size: a, vertical: b, attributes: c};
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$Attrs = function (a) {
+	return {ctor: 'Attrs', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs = function (attrs) {
+	return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$Attrs(attrs);
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$Vertical = {ctor: 'Vertical'};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$vertical = _rundis$elm_bootstrap$Bootstrap_ButtonGroup$Vertical;
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$Size = function (a) {
+	return {ctor: 'Size', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small = _rundis$elm_bootstrap$Bootstrap_ButtonGroup$Size(_rundis$elm_bootstrap$Bootstrap_General_Internal$SM);
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$large = _rundis$elm_bootstrap$Bootstrap_ButtonGroup$Size(_rundis$elm_bootstrap$Bootstrap_General_Internal$LG);
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$GroupItem = function (a) {
+	return {ctor: 'GroupItem', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroupItem = F2(
+	function (options, items) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$GroupItem(
+			A2(
+				_elm_lang$html$Html$div,
+				A2(_rundis$elm_bootstrap$Bootstrap_ButtonGroup$groupAttributes, false, options),
+				A2(
+					_elm_lang$core$List$map,
+					function (_p4) {
+						var _p5 = _p4;
+						return _p5._0;
+					},
+					items)));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup = F2(
+	function (options, items) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$renderGroup(
+			A2(_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroupItem, options, items));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$linkButtonGroupItem = F2(
+	function (options, items) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$GroupItem(
+			A2(
+				_elm_lang$html$Html$div,
+				A2(_rundis$elm_bootstrap$Bootstrap_ButtonGroup$groupAttributes, false, options),
+				A2(
+					_elm_lang$core$List$map,
+					function (_p6) {
+						var _p7 = _p6;
+						return _p7._0;
+					},
+					items)));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$linkButtonGroup = F2(
+	function (options, items) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$renderGroup(
+			A2(_rundis$elm_bootstrap$Bootstrap_ButtonGroup$linkButtonGroupItem, options, items));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButtonGroupItem = F2(
+	function (options, items) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$GroupItem(
+			A2(
+				_elm_lang$html$Html$div,
+				A2(_rundis$elm_bootstrap$Bootstrap_ButtonGroup$groupAttributes, true, options),
+				A2(
+					_elm_lang$core$List$map,
+					function (_p8) {
+						var _p9 = _p8;
+						return _p9._0;
+					},
+					items)));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButtonGroup = F2(
+	function (options, items) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$renderGroup(
+			A2(_rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButtonGroupItem, options, items));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$checkboxButtonGroupItem = F2(
+	function (options, items) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$GroupItem(
+			A2(
+				_elm_lang$html$Html$div,
+				A2(_rundis$elm_bootstrap$Bootstrap_ButtonGroup$groupAttributes, true, options),
+				A2(
+					_elm_lang$core$List$map,
+					function (_p10) {
+						var _p11 = _p10;
+						return _p11._0;
+					},
+					items)));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$checkboxButtonGroup = F2(
+	function (options, items) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$renderGroup(
+			A2(_rundis$elm_bootstrap$Bootstrap_ButtonGroup$checkboxButtonGroupItem, options, items));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$ButtonItem = function (a) {
+	return {ctor: 'ButtonItem', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$button = F2(
+	function (options, children) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$ButtonItem(
+			A2(_rundis$elm_bootstrap$Bootstrap_Button$button, options, children));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$LinkButtonItem = function (a) {
+	return {ctor: 'LinkButtonItem', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$linkButton = F2(
+	function (options, children) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$LinkButtonItem(
+			A2(_rundis$elm_bootstrap$Bootstrap_Button$linkButton, options, children));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$RadioButtonItem = function (a) {
+	return {ctor: 'RadioButtonItem', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButton = F3(
+	function (checked, options, children) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$RadioButtonItem(
+			A3(_rundis$elm_bootstrap$Bootstrap_Button$radioButton, checked, options, children));
+	});
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$CheckboxButtonItem = function (a) {
+	return {ctor: 'CheckboxButtonItem', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_ButtonGroup$checkboxButton = F3(
+	function (checked, options, children) {
+		return _rundis$elm_bootstrap$Bootstrap_ButtonGroup$CheckboxButtonItem(
+			A3(_rundis$elm_bootstrap$Bootstrap_Button$checkboxButton, checked, options, children));
+	});
+
 var _rundis$elm_bootstrap$Bootstrap_Grid_Internal$verticalAlignOption = function (align) {
 	var _p0 = align;
 	switch (_p0.ctor) {
@@ -12508,6 +13028,656 @@ var _rundis$elm_bootstrap$Bootstrap_Grid$col = F2(
 			{options: options, children: children});
 	});
 
+var _rundis$elm_bootstrap$Bootstrap_Modal$closeButton = function (closeMsg) {
+	return A2(
+		_elm_lang$html$Html$button,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('close'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(closeMsg),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text('×'),
+			_1: {ctor: '[]'}
+		});
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$renderFooter = function (maybeFooter) {
+	var _p0 = maybeFooter;
+	if (_p0.ctor === 'Just') {
+		var _p1 = _p0._0._0;
+		return _elm_lang$core$Maybe$Just(
+			A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('modal-footer'),
+					_1: _p1.attributes
+				},
+				_p1.children));
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$renderBody = function (maybeBody) {
+	var _p2 = maybeBody;
+	if (_p2.ctor === 'Just') {
+		var _p3 = _p2._0._0;
+		return _elm_lang$core$Maybe$Just(
+			A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('modal-body'),
+					_1: _p3.attributes
+				},
+				_p3.children));
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$modalClass = function (size) {
+	var _p4 = _rundis$elm_bootstrap$Bootstrap_General_Internal$screenSizeOption(size);
+	if (_p4.ctor === 'Just') {
+		return {
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class(
+				A2(_elm_lang$core$Basics_ops['++'], 'modal-', _p4._0)),
+			_1: {ctor: '[]'}
+		};
+	} else {
+		return {ctor: '[]'};
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$modalAttributes = function (options) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$classList(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'modal-dialog', _1: true},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'modal-dialog-centered', _1: options.centered},
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'pointer-events', _1: 'auto'},
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		},
+		A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			A2(_elm_lang$core$Maybe$map, _rundis$elm_bootstrap$Bootstrap_Modal$modalClass, options.modalSize)));
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$isFade = function (config) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		false,
+		A2(
+			_elm_lang$core$Maybe$map,
+			function (_p5) {
+				return true;
+			},
+			config.withAnimation));
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$display = F2(
+	function (visibility, config) {
+		var _p6 = visibility;
+		switch (_p6.ctor) {
+			case 'Show':
+				return {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'pointer-events', _1: 'none'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'display', _1: 'block'},
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'modal', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'fade',
+										_1: _rundis$elm_bootstrap$Bootstrap_Modal$isFade(config)
+									},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'show', _1: true},
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				};
+			case 'StartClose':
+				return {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'pointer-events', _1: 'none'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'display', _1: 'block'},
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'modal', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'fade', _1: true},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'show', _1: true},
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				};
+			case 'FadeClose':
+				return {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'pointer-events', _1: 'none'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'display', _1: 'block'},
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'modal', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'fade', _1: true},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'show', _1: false},
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html_Events$on,
+								'transitionend',
+								_elm_lang$core$Json_Decode$succeed(config.closeMsg)),
+							_1: {ctor: '[]'}
+						}
+					}
+				};
+			default:
+				return {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'height', _1: '0px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'display', _1: 'block'},
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'modal', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'fade',
+										_1: _rundis$elm_bootstrap$Bootstrap_Modal$isFade(config)
+									},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'show', _1: false},
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				};
+		}
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$containerClickDecoder = function (closeMsg) {
+	return A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (c) {
+			return A2(_elm_lang$core$String$contains, 'elm-bootstrap-modal', c) ? _elm_lang$core$Json_Decode$succeed(closeMsg) : _elm_lang$core$Json_Decode$fail('ignoring');
+		},
+		_debois$elm_dom$DOM$target(_debois$elm_dom$DOM$className));
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$ConfigRec = F6(
+	function (a, b, c, d, e, f) {
+		return {closeMsg: a, withAnimation: b, header: c, body: d, footer: e, options: f};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$Options = F3(
+	function (a, b, c) {
+		return {modalSize: a, hideOnBackdropClick: b, centered: c};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$Item = F2(
+	function (a, b) {
+		return {attributes: a, children: b};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$Hide = {ctor: 'Hide'};
+var _rundis$elm_bootstrap$Bootstrap_Modal$hidden = _rundis$elm_bootstrap$Bootstrap_Modal$Hide;
+var _rundis$elm_bootstrap$Bootstrap_Modal$FadeClose = {ctor: 'FadeClose'};
+var _rundis$elm_bootstrap$Bootstrap_Modal$subscriptions = F2(
+	function (visibility, animateMsg) {
+		var _p7 = visibility;
+		if (_p7.ctor === 'StartClose') {
+			return _elm_lang$animation_frame$AnimationFrame$times(
+				function (_p8) {
+					return animateMsg(_rundis$elm_bootstrap$Bootstrap_Modal$FadeClose);
+				});
+		} else {
+			return _elm_lang$core$Platform_Sub$none;
+		}
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$StartClose = {ctor: 'StartClose'};
+var _rundis$elm_bootstrap$Bootstrap_Modal$hiddenAnimated = _rundis$elm_bootstrap$Bootstrap_Modal$StartClose;
+var _rundis$elm_bootstrap$Bootstrap_Modal$getCloseMsg = function (config) {
+	var _p9 = config.withAnimation;
+	if (_p9.ctor === 'Just') {
+		return _p9._0(_rundis$elm_bootstrap$Bootstrap_Modal$StartClose);
+	} else {
+		return config.closeMsg;
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$renderHeader = function (_p10) {
+	var _p11 = _p10;
+	var _p12 = _p11.header;
+	if (_p12.ctor === 'Just') {
+		var _p13 = _p12._0._0;
+		return _elm_lang$core$Maybe$Just(
+			A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('modal-header'),
+					_1: _p13.attributes
+				},
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_p13.children,
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Modal$closeButton(
+							_rundis$elm_bootstrap$Bootstrap_Modal$getCloseMsg(_p11)),
+						_1: {ctor: '[]'}
+					})));
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$backdrop = F2(
+	function (visibility, config) {
+		var attributes = function () {
+			var _p14 = visibility;
+			switch (_p14.ctor) {
+				case 'Show':
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$classList(
+								{
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'modal-backdrop', _1: true},
+									_1: {
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple2',
+											_0: 'fade',
+											_1: _rundis$elm_bootstrap$Bootstrap_Modal$isFade(config)
+										},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'show', _1: true},
+											_1: {ctor: '[]'}
+										}
+									}
+								}),
+							_1: {ctor: '[]'}
+						},
+						config.options.hideOnBackdropClick ? {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onClick(
+								_rundis$elm_bootstrap$Bootstrap_Modal$getCloseMsg(config)),
+							_1: {ctor: '[]'}
+						} : {ctor: '[]'});
+				case 'StartClose':
+					return {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'modal-backdrop', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'fade', _1: true},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'show', _1: true},
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					};
+				case 'FadeClose':
+					return {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'modal-backdrop', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'fade', _1: true},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'show', _1: false},
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					};
+				default:
+					return {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'modal-backdrop', _1: false},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'fade',
+										_1: _rundis$elm_bootstrap$Bootstrap_Modal$isFade(config)
+									},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'show', _1: false},
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					};
+			}
+		}();
+		return {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				attributes,
+				{ctor: '[]'}),
+			_1: {ctor: '[]'}
+		};
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$view = F2(
+	function (visibility, _p15) {
+		var _p16 = _p15;
+		var _p18 = _p16._0.options;
+		var _p17 = _p16._0;
+		return A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$tabindex(-1),
+								_1: {ctor: '[]'}
+							},
+							A2(_rundis$elm_bootstrap$Bootstrap_Modal$display, visibility, _p17)),
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									{
+										ctor: '::',
+										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'document'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('elm-bootstrap-modal'),
+											_1: {ctor: '[]'}
+										}
+									},
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_rundis$elm_bootstrap$Bootstrap_Modal$modalAttributes(_p18),
+										_p18.hideOnBackdropClick ? {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html_Events$on,
+												'click',
+												_rundis$elm_bootstrap$Bootstrap_Modal$containerClickDecoder(_p17.closeMsg)),
+											_1: {ctor: '[]'}
+										} : {ctor: '[]'})),
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('modal-content'),
+											_1: {ctor: '[]'}
+										},
+										A2(
+											_elm_lang$core$List$filterMap,
+											_elm_lang$core$Basics$identity,
+											{
+												ctor: '::',
+												_0: _rundis$elm_bootstrap$Bootstrap_Modal$renderHeader(_p17),
+												_1: {
+													ctor: '::',
+													_0: _rundis$elm_bootstrap$Bootstrap_Modal$renderBody(_p16._0.body),
+													_1: {
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Modal$renderFooter(_p16._0.footer),
+														_1: {ctor: '[]'}
+													}
+												}
+											})),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				A2(_rundis$elm_bootstrap$Bootstrap_Modal$backdrop, visibility, _p17)));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$Show = {ctor: 'Show'};
+var _rundis$elm_bootstrap$Bootstrap_Modal$shown = _rundis$elm_bootstrap$Bootstrap_Modal$Show;
+var _rundis$elm_bootstrap$Bootstrap_Modal$Config = function (a) {
+	return {ctor: 'Config', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$small = function (_p19) {
+	var _p20 = _p19;
+	return _rundis$elm_bootstrap$Bootstrap_Modal$Config(
+		_elm_lang$core$Native_Utils.update(
+			_p20._0,
+			{
+				options: _elm_lang$core$Native_Utils.update(
+					_p20._0.options,
+					{
+						modalSize: _elm_lang$core$Maybe$Just(_rundis$elm_bootstrap$Bootstrap_General_Internal$SM)
+					})
+			}));
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$large = function (_p21) {
+	var _p22 = _p21;
+	return _rundis$elm_bootstrap$Bootstrap_Modal$Config(
+		_elm_lang$core$Native_Utils.update(
+			_p22._0,
+			{
+				options: _elm_lang$core$Native_Utils.update(
+					_p22._0.options,
+					{
+						modalSize: _elm_lang$core$Maybe$Just(_rundis$elm_bootstrap$Bootstrap_General_Internal$LG)
+					})
+			}));
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$hideOnBackdropClick = F2(
+	function (hide, _p23) {
+		var _p24 = _p23;
+		return _rundis$elm_bootstrap$Bootstrap_Modal$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p24._0,
+				{
+					options: _elm_lang$core$Native_Utils.update(
+						_p24._0.options,
+						{hideOnBackdropClick: hide})
+				}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$withAnimation = F2(
+	function (animateMsg, _p25) {
+		var _p26 = _p25;
+		return _rundis$elm_bootstrap$Bootstrap_Modal$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p26._0,
+				{
+					withAnimation: _elm_lang$core$Maybe$Just(animateMsg)
+				}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$config = function (closeMsg) {
+	return _rundis$elm_bootstrap$Bootstrap_Modal$Config(
+		{
+			closeMsg: closeMsg,
+			withAnimation: _elm_lang$core$Maybe$Nothing,
+			options: {modalSize: _elm_lang$core$Maybe$Nothing, hideOnBackdropClick: true, centered: true},
+			header: _elm_lang$core$Maybe$Nothing,
+			body: _elm_lang$core$Maybe$Nothing,
+			footer: _elm_lang$core$Maybe$Nothing
+		});
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$Header = function (a) {
+	return {ctor: 'Header', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$header = F3(
+	function (attributes, children, _p27) {
+		var _p28 = _p27;
+		return _rundis$elm_bootstrap$Bootstrap_Modal$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p28._0,
+				{
+					header: _elm_lang$core$Maybe$Just(
+						_rundis$elm_bootstrap$Bootstrap_Modal$Header(
+							{attributes: attributes, children: children}))
+				}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$titledHeader = F3(
+	function (itemFn, attributes, children) {
+		return A2(
+			_rundis$elm_bootstrap$Bootstrap_Modal$header,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					itemFn,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('modal-title'),
+						_1: attributes
+					},
+					children),
+				_1: {ctor: '[]'}
+			});
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$h1 = _rundis$elm_bootstrap$Bootstrap_Modal$titledHeader(_elm_lang$html$Html$h1);
+var _rundis$elm_bootstrap$Bootstrap_Modal$h2 = _rundis$elm_bootstrap$Bootstrap_Modal$titledHeader(_elm_lang$html$Html$h2);
+var _rundis$elm_bootstrap$Bootstrap_Modal$h3 = _rundis$elm_bootstrap$Bootstrap_Modal$titledHeader(_elm_lang$html$Html$h3);
+var _rundis$elm_bootstrap$Bootstrap_Modal$h4 = _rundis$elm_bootstrap$Bootstrap_Modal$titledHeader(_elm_lang$html$Html$h4);
+var _rundis$elm_bootstrap$Bootstrap_Modal$h5 = _rundis$elm_bootstrap$Bootstrap_Modal$titledHeader(_elm_lang$html$Html$h5);
+var _rundis$elm_bootstrap$Bootstrap_Modal$h6 = _rundis$elm_bootstrap$Bootstrap_Modal$titledHeader(_elm_lang$html$Html$h6);
+var _rundis$elm_bootstrap$Bootstrap_Modal$Body = function (a) {
+	return {ctor: 'Body', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$body = F3(
+	function (attributes, children, _p29) {
+		var _p30 = _p29;
+		return _rundis$elm_bootstrap$Bootstrap_Modal$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p30._0,
+				{
+					body: _elm_lang$core$Maybe$Just(
+						_rundis$elm_bootstrap$Bootstrap_Modal$Body(
+							{attributes: attributes, children: children}))
+				}));
+	});
+var _rundis$elm_bootstrap$Bootstrap_Modal$Footer = function (a) {
+	return {ctor: 'Footer', _0: a};
+};
+var _rundis$elm_bootstrap$Bootstrap_Modal$footer = F3(
+	function (attributes, children, _p31) {
+		var _p32 = _p31;
+		return _rundis$elm_bootstrap$Bootstrap_Modal$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p32._0,
+				{
+					footer: _elm_lang$core$Maybe$Just(
+						_rundis$elm_bootstrap$Bootstrap_Modal$Footer(
+							{attributes: attributes, children: children}))
+				}));
+	});
+
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$py5Xl = _elm_lang$html$Html_Attributes$class('py-xl-5');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$py4Xl = _elm_lang$html$Html_Attributes$class('py-xl-4');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$py3Xl = _elm_lang$html$Html_Attributes$class('py-xl-3');
@@ -12964,8 +14134,8 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
-var _user$project$Configuration$thisDomain = 'https://comby.live';
+var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8887';
+var _user$project$Configuration$thisDomain = 'https://staging.comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
 	function (source, match, rule, rewrite, language, substitutionKind, id) {
@@ -13186,7 +14356,17 @@ var _user$project$Types$Model = function (a) {
 														return function (o) {
 															return function (p) {
 																return function (q) {
-																	return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonText: o, currentRewriteResultId: p, currentMatchResultId: q};
+																	return function (r) {
+																		return function (s) {
+																			return function (t) {
+																				return function (u) {
+																					return function (v) {
+																						return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonLinkText: o, copyButtonTerminalText: p, copyButtonTextInPlace: q, currentRewriteResultId: r, currentMatchResultId: s, modalTerminalVisibility: t, modalText: u, modalAboutVisibility: v};
+																					};
+																				};
+																			};
+																		};
+																	};
 																};
 															};
 														};
@@ -13234,6 +14414,12 @@ var _user$project$Types$Assembly = {ctor: 'Assembly'};
 var _user$project$Types$Generic = {ctor: 'Generic'};
 var _user$project$Types$NewlineSeparated = {ctor: 'NewlineSeparated'};
 var _user$project$Types$InPlace = {ctor: 'InPlace'};
+var _user$project$Types$CopyTerminalCommandInPlaceClicked = {ctor: 'CopyTerminalCommandInPlaceClicked'};
+var _user$project$Types$CopyTerminalCommandClicked = {ctor: 'CopyTerminalCommandClicked'};
+var _user$project$Types$ShowAboutModal = {ctor: 'ShowAboutModal'};
+var _user$project$Types$CloseAboutModal = {ctor: 'CloseAboutModal'};
+var _user$project$Types$ShowTerminalModal = {ctor: 'ShowTerminalModal'};
+var _user$project$Types$CloseTerminalModal = {ctor: 'CloseTerminalModal'};
 var _user$project$Types$ShortenUrlResult = function (a) {
 	return {ctor: 'ShortenUrlResult', _0: a};
 };
@@ -13653,8 +14839,8 @@ var _user$project$Ports$clear = _elm_lang$core$Native_Platform.outgoingPort(
 	function (v) {
 		return null;
 	});
-var _user$project$Ports$copyUrl = _elm_lang$core$Native_Platform.outgoingPort(
-	'copyUrl',
+var _user$project$Ports$copyToClipboard = _elm_lang$core$Native_Platform.outgoingPort(
+	'copyToClipboard',
 	function (v) {
 		return v;
 	});
@@ -13725,9 +14911,14 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			serverConnected: false,
 			language: language,
 			substitutionKind: substitutionKind,
-			copyButtonText: 'Copy',
+			copyButtonLinkText: 'fa fa-copy',
+			copyButtonTerminalText: 'fa fa-copy',
+			copyButtonTextInPlace: 'fa fa-copy',
 			currentRewriteResultId: 0,
-			currentMatchResultId: 0
+			currentMatchResultId: 0,
+			modalTerminalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
+			modalText: '',
+			modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden
 		};
 	});
 var _user$project$Controller$jsonFromModel = function (model) {
@@ -13740,11 +14931,78 @@ var _user$project$Controller$jsonFromModel = function (model) {
 };
 var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/rewrite');
 var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
+var _user$project$Controller$terminalCommand = F2(
+	function (model, extra_option) {
+		var zeroInstall = A2(_elm_lang$core$Basics_ops['++'], '# the next line installs comby if you need it :)\n', 'bash <(curl -sL 0.comby.dev) && \\\n');
+		var _p1 = _elm_lang$core$Native_Utils.eq(model.ruleInput, 'where true') ? {ctor: '_Tuple2', _0: '', _1: ''} : {
+			ctor: '_Tuple2',
+			_0: A2(
+				_elm_lang$core$Basics_ops['++'],
+				'COMBY_RULE=$(cat <<\"RULE\"\n',
+				A2(_elm_lang$core$Basics_ops['++'], model.ruleInput, '\nRULE\n)\n')),
+			_1: ' -rule $COMBY_RULE'
+		};
+		var ruleEnv = _p1._0;
+		var rule = _p1._1;
+		var _p2 = _elm_lang$core$Native_Utils.eq(model.rewriteTemplateInput, '') ? {ctor: '_Tuple2', _0: '', _1: '\'\''} : {
+			ctor: '_Tuple2',
+			_0: A2(
+				_elm_lang$core$Basics_ops['++'],
+				'COMBY_R=$(cat <<\"REWRITE\"\n',
+				A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\n')),
+			_1: '$COMBY_R'
+		};
+		var rewriteTemplateEnv = _p2._0;
+		var rewriteVar = _p2._1;
+		var matchTemplate = A2(
+			_elm_lang$core$Basics_ops['++'],
+			'COMBY_M=$(cat <<\"MATCH\"\n',
+			A2(_elm_lang$core$Basics_ops['++'], model.matchTemplateInput, '\nMATCH\n)\n'));
+		var languageFilter = function () {
+			var s = _user$project$LanguageExtension$toString(model.language);
+			return _elm_lang$core$Native_Utils.eq(s, '.generic') ? '*' : s;
+		}();
+		var text = _elm_lang$core$Native_Utils.eq(model.matchTemplateInput, '') ? 'First enter a match template :)' : A2(
+			_elm_lang$core$Basics_ops['++'],
+			matchTemplate,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				rewriteTemplateEnv,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					ruleEnv,
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						zeroInstall,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'comby $COMBY_M ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								rewriteVar,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									' ',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										rule,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											' ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												languageFilter,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													' ',
+													A2(_elm_lang$core$Basics_ops['++'], '-stats', extra_option))))))))))));
+		return text;
+	});
 var _user$project$Controller$debug = false;
 var _user$project$Controller$log = F2(
 	function (s, a) {
 		if (_user$project$Controller$debug) {
-			var _p1 = A2(_elm_lang$core$Debug$log, s, a);
+			var _p3 = A2(_elm_lang$core$Debug$log, s, a);
 			return {ctor: '_Tuple0'};
 		} else {
 			return {ctor: '_Tuple0'};
@@ -13763,7 +15021,7 @@ var _user$project$Controller$getShortUrl = function (model) {
 		_elm_lang$core$Json_Encode$encode,
 		0,
 		_elm_lang$core$Json_Encode$string(urlToShorten));
-	var _p2 = A2(_user$project$Controller$log, 'getShortUrl', v);
+	var _p4 = A2(_user$project$Controller$log, 'getShortUrl', v);
 	var myRequest = _elm_lang$http$Http$request(
 		{
 			method: 'POST',
@@ -13793,7 +15051,7 @@ var _user$project$Controller$getMatches = F5(
 			0) ? 'where true' : ruleInput;
 		var language = _user$project$LanguageExtension$toString(languageInput);
 		var json = A5(_user$project$JsonRequest$jsonMatchRequest, sourceInput, matchTemplateInput, rule, language, id);
-		var _p3 = A2(_user$project$Controller$log, 'getMatches:', json);
+		var _p5 = A2(_user$project$Controller$log, 'getMatches:', json);
 		return A2(
 			_elm_lang$http$Http$send,
 			_user$project$Types$MatchesResult,
@@ -13811,7 +15069,7 @@ var _user$project$Controller$getRewrite = F7(
 			0) ? 'where true' : ruleInput;
 		var language = _user$project$LanguageExtension$toString(languageInput);
 		var json = A7(_user$project$JsonRequest$jsonRewriteRequest, sourceInput, matchTemplateInput, rule, rewriteTemplateInput, language, substitutionKind, id);
-		var _p4 = A2(_user$project$Controller$log, 'getRewrite', json);
+		var _p6 = A2(_user$project$Controller$log, 'getRewrite', json);
 		return A2(
 			_elm_lang$http$Http$send,
 			_user$project$Types$RewriteResult,
@@ -13824,7 +15082,7 @@ var _user$project$Controller$getRewrite = F7(
 var _user$project$Controller$init = F2(
 	function (flags, location) {
 		var model = A2(_user$project$Controller$loadInitialStaticState, flags, location);
-		var _p5 = A2(_user$project$Controller$log, 'Flags', flags);
+		var _p7 = A2(_user$project$Controller$log, 'Flags', flags);
 		return {
 			ctor: '_Tuple2',
 			_0: model,
@@ -13844,120 +15102,120 @@ var _user$project$Controller$update = F2(
 	function (msg, model) {
 		var new_model = _elm_lang$core$Native_Utils.update(
 			model,
-			{copyButtonText: 'Copy'});
-		var _p6 = msg;
-		switch (_p6.ctor) {
+			{copyButtonLinkText: 'fa fa-copy', copyButtonTerminalText: 'fa fa-copy'});
+		var _p8 = msg;
+		switch (_p8.ctor) {
 			case 'OnLocationChange':
 				return {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'MatchTemplateInputUpdated':
-				var _p8 = _p6._0;
+				var _p10 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p7 = A2(_user$project$Controller$log, 'MatchTemplateUpdated', _p8);
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId, prettyUrl: ''});
+				var _p9 = A2(_user$project$Controller$log, 'MatchTemplateUpdated', _p10);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{matchTemplateInput: _p8}),
+						{matchTemplateInput: _p10}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, _p8, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, _p10, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, _p8, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, _p10, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'SourceInputUpdated':
-				var _p10 = _p6._0;
+				var _p12 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p9 = A2(_user$project$Controller$log, 'SourceInputUpdated', _p10);
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId, prettyUrl: ''});
+				var _p11 = A2(_user$project$Controller$log, 'SourceInputUpdated', _p12);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{sourceInput: _p10}),
+						{sourceInput: _p12}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, _p10, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, _p12, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, _p10, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, _p12, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'RuleInputUpdated':
-				var _p11 = _p6._0;
+				var _p13 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId, prettyUrl: ''});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{ruleInput: _p11}),
+						{ruleInput: _p13}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, _p11, new_model.language, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, _p13, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, _p11, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, _p13, new_model.rewriteTemplateInput, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
 			case 'RewriteTemplateInputUpdated':
-				var _p12 = _p6._0;
+				var _p14 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentRewriteResultId: currentRewriteResultId});
+					{currentRewriteResultId: currentRewriteResultId, prettyUrl: ''});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{rewriteTemplateInput: _p12}),
-					_1: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p12, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId)
+						{rewriteTemplateInput: _p14}),
+					_1: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p14, new_model.language, new_model.substitutionKind, new_model.currentRewriteResultId)
 				};
 			case 'MatchesResult':
-				if (_p6._0.ctor === 'Ok') {
-					var _p16 = _p6._0._0;
-					var _p13 = A2(_user$project$Controller$log, 'current id match is', model.currentMatchResultId);
-					var _p14 = A2(_user$project$Controller$log, 'Resp Match id', _p16.id);
-					var _p15 = A2(_user$project$Controller$log, 'MatchResult', _p16);
-					return (_elm_lang$core$Native_Utils.cmp(_p16.id, model.currentMatchResultId) > -1) ? {
+				if (_p8._0.ctor === 'Ok') {
+					var _p18 = _p8._0._0;
+					var _p15 = A2(_user$project$Controller$log, 'current id match is', model.currentMatchResultId);
+					var _p16 = A2(_user$project$Controller$log, 'Resp Match id', _p18.id);
+					var _p17 = A2(_user$project$Controller$log, 'MatchResult', _p18);
+					return (_elm_lang$core$Native_Utils.cmp(_p18.id, model.currentMatchResultId) > -1) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{matchResult: _p16, serverConnected: true, ruleSyntaxErrors: '', currentMatchResultId: _p16.id}),
-						_1: _user$project$Ports$highlightMatchRanges(_p16)
+							{matchResult: _p18, serverConnected: true, ruleSyntaxErrors: '', currentMatchResultId: _p18.id}),
+						_1: _user$project$Ports$highlightMatchRanges(_p18)
 					} : {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 				} else {
-					var _p21 = _p6._0._0;
-					var _p17 = A2(_user$project$Controller$log, 'MatchResultError', _p21);
-					var _p18 = _p21;
-					if (_p18.ctor === 'BadStatus') {
-						var _p20 = _p18._0;
-						var _p19 = A2(_user$project$Controller$log, 'MatchResultError body', _p20.body);
+					var _p23 = _p8._0._0;
+					var _p19 = A2(_user$project$Controller$log, 'MatchResultError', _p23);
+					var _p20 = _p23;
+					if (_p20.ctor === 'BadStatus') {
+						var _p22 = _p20._0;
+						var _p21 = A2(_user$project$Controller$log, 'MatchResultError body', _p22.body);
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{ruleSyntaxErrors: _p20.body}),
+								{ruleSyntaxErrors: _p22.body}),
 							_1: _user$project$Ports$highlightMatchRanges(_user$project$Mock$match)
 						};
 					} else {
@@ -13969,30 +15227,30 @@ var _user$project$Controller$update = F2(
 					}
 				}
 			case 'RewriteResult':
-				if (_p6._0.ctor === 'Ok') {
-					var _p25 = _p6._0._0;
-					var _p22 = A2(_user$project$Controller$log, 'current rewrite id is', model.currentMatchResultId);
-					var _p23 = A2(_user$project$Controller$log, 'Resp Rewrite id', _p25.id);
-					var _p24 = A2(_user$project$Controller$log, 'RewriteResult', _p25);
-					return (_elm_lang$core$Native_Utils.cmp(_p25.id, model.currentRewriteResultId) > -1) ? {
+				if (_p8._0.ctor === 'Ok') {
+					var _p27 = _p8._0._0;
+					var _p24 = A2(_user$project$Controller$log, 'current rewrite id is', model.currentMatchResultId);
+					var _p25 = A2(_user$project$Controller$log, 'Resp Rewrite id', _p27.id);
+					var _p26 = A2(_user$project$Controller$log, 'RewriteResult', _p27);
+					return (_elm_lang$core$Native_Utils.cmp(_p27.id, model.currentRewriteResultId) > -1) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							new_model,
-							{rewriteResult: _p25, serverConnected: true, ruleSyntaxErrors: '', currentRewriteResultId: _p25.id}),
-						_1: _user$project$Ports$highlightRewriteRanges(_p25)
+							{rewriteResult: _p27, serverConnected: true, ruleSyntaxErrors: '', currentRewriteResultId: _p27.id}),
+						_1: _user$project$Ports$highlightRewriteRanges(_p27)
 					} : {ctor: '_Tuple2', _0: new_model, _1: _elm_lang$core$Platform_Cmd$none};
 				} else {
-					var _p30 = _p6._0._0;
-					var _p26 = A2(_user$project$Controller$log, 'RewriteResultError', _p30);
-					var _p27 = _p30;
-					if (_p27.ctor === 'BadStatus') {
-						var _p29 = _p27._0;
-						var _p28 = A2(_user$project$Controller$log, 'RewriteResultError body', _p29.body);
+					var _p32 = _p8._0._0;
+					var _p28 = A2(_user$project$Controller$log, 'RewriteResultError', _p32);
+					var _p29 = _p32;
+					if (_p29.ctor === 'BadStatus') {
+						var _p31 = _p29._0;
+						var _p30 = A2(_user$project$Controller$log, 'RewriteResultError body', _p31.body);
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{ruleSyntaxErrors: _p29.body}),
+								{ruleSyntaxErrors: _p31.body}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
@@ -14010,22 +15268,22 @@ var _user$project$Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{copyButtonText: 'Copied!'}),
-					_1: _user$project$Ports$copyUrl(model.url)
+						{copyButtonLinkText: 'fa fa-check'}),
+					_1: _user$project$Ports$copyToClipboard(model.url)
 				};
 			case 'ShortenUrlResult':
-				if (_p6._0.ctor === 'Ok') {
-					var _p31 = A2(
+				if (_p8._0.ctor === 'Ok') {
+					var _p33 = A2(
 						_elm_lang$core$Json_Decode$decodeString,
 						A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string),
-						_p6._0._0);
-					if (_p31.ctor === 'Ok') {
-						var _p32 = _p31._0;
+						_p8._0._0);
+					if (_p33.ctor === 'Ok') {
+						var _p34 = _p33._0;
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								new_model,
-								{url: _p32, prettyUrl: _p32}),
+								{url: _p34, prettyUrl: _p34}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					} else {
@@ -14047,7 +15305,7 @@ var _user$project$Controller$update = F2(
 						_elm_lang$core$Basics_ops['++'],
 						_user$project$Configuration$thisDomain,
 						A2(_elm_lang$core$Basics_ops['++'], '/', urlPath));
-					var _p33 = A2(_user$project$Controller$log, 'Generate URL Error. Using long URL', _p6._0._0);
+					var _p35 = A2(_user$project$Controller$log, 'Generate URL Error. Using long URL', _p8._0._0);
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -14057,54 +15315,657 @@ var _user$project$Controller$update = F2(
 					};
 				}
 			case 'LanguageInputUpdated':
-				var _p34 = _p6._0;
+				var _p36 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{language: _p34}),
+						{language: _p36}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
-							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p34, new_model.currentMatchResultId),
+							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, _p36, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p34, new_model.substitutionKind, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, _p36, new_model.substitutionKind, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
-			default:
-				var _p36 = _p6._0;
+			case 'SubstitutionKindInputUpdated':
+				var _p38 = _p8._0;
 				var currentRewriteResultId = model.currentRewriteResultId + 1;
 				var currentMatchResultId = model.currentMatchResultId + 1;
 				var new_model = _elm_lang$core$Native_Utils.update(
 					model,
-					{copyButtonText: 'Copy', currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
-				var _p35 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p36);
+					{currentMatchResultId: currentMatchResultId, currentRewriteResultId: currentRewriteResultId});
+				var _p37 = A2(_user$project$Controller$log, 'SubstitutionKindInputUpdated', _p38);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						new_model,
-						{substitutionKind: _p36}),
+						{substitutionKind: _p38}),
 					_1: _elm_lang$core$Platform_Cmd$batch(
 						{
 							ctor: '::',
 							_0: A5(_user$project$Controller$getMatches, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.language, new_model.currentMatchResultId),
 							_1: {
 								ctor: '::',
-								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p36, new_model.currentRewriteResultId),
+								_0: A7(_user$project$Controller$getRewrite, new_model.sourceInput, new_model.matchTemplateInput, new_model.ruleInput, new_model.rewriteTemplateInput, new_model.language, _p38, new_model.currentRewriteResultId),
 								_1: {ctor: '[]'}
 							}
 						})
 				};
+			case 'CopyTerminalCommandClicked':
+				var text = A2(_user$project$Controller$terminalCommand, model, '');
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{copyButtonTextInPlace: 'fa fa-copy', copyButtonTerminalText: 'fa fa-check', copyButtonLinkText: 'fa fa-copy', modalText: text}),
+					_1: _user$project$Ports$copyToClipboard(text)
+				};
+			case 'CopyTerminalCommandInPlaceClicked':
+				var text = A2(_user$project$Controller$terminalCommand, model, ' -i');
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{copyButtonTextInPlace: 'fa fa-check', copyButtonTerminalText: 'fa fa-copy', copyButtonLinkText: 'fa fa-copy', modalText: text}),
+					_1: _user$project$Ports$copyToClipboard(text)
+				};
+			case 'ShowTerminalModal':
+				var text = A2(_user$project$Controller$terminalCommand, model, '');
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{modalText: text, modalTerminalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$shown, copyButtonTextInPlace: 'fa fa-copy'}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'CloseTerminalModal':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{modalTerminalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ShowAboutModal':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$shown}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
+
+var _user$project$View$terminalButtonGroup = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('text-right'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
+				{
+					ctor: '::',
+					_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+							_1: {
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+								_1: {
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShowTerminalModal),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$i,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-chevron-right'),
+									_1: {ctor: '[]'}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Run in Terminal'),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+							{
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineSecondary,
+								_1: {
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+									_1: {
+										ctor: '::',
+										_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTerminalText),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$View$terminalModal = function (model) {
+	var language = function () {
+		var s = _user$project$LanguageExtension$toString(model.language);
+		return _elm_lang$core$Native_Utils.eq(s, '.generic') ? '' : s;
+	}();
+	return A2(
+		_rundis$elm_bootstrap$Bootstrap_Modal$view,
+		model.modalTerminalVisibility,
+		A3(
+			_rundis$elm_bootstrap$Bootstrap_Modal$footer,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_rundis$elm_bootstrap$Bootstrap_Grid$containerFluid,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(
+							_rundis$elm_bootstrap$Bootstrap_Grid$row,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_rundis$elm_bootstrap$Bootstrap_Grid$col,
+									{
+										ctor: '::',
+										_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
+											{
+												ctor: '::',
+												_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+												_1: {
+													ctor: '::',
+													_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs(
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$class('w-100'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+													{
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+														_1: {
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																	_1: {
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class('w-100'),
+																		_1: {ctor: '[]'}
+																	}
+																}),
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
+																_1: {ctor: '[]'}
+															}
+														}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Copy above command. Output will print to terminal.'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineSecondary,
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTerminalText),
+																		_1: {
+																			ctor: '::',
+																			_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																			_1: {ctor: '[]'}
+																		}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandClicked),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														{ctor: '[]'}),
+													_1: {ctor: '[]'}
+												}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_rundis$elm_bootstrap$Bootstrap_Grid$row,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_rundis$elm_bootstrap$Bootstrap_Grid$col,
+										{
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
+												{
+													ctor: '::',
+													_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+													_1: {
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs(
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('w-100'),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												},
+												{
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Button$danger,
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																		_1: {
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('w-100'),
+																			_1: {ctor: '[]'}
+																		}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandInPlaceClicked),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('Add -i option to the command. Files will change in place. Make sure you have a backup or version control.'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineDanger,
+																_1: {
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTextInPlace),
+																			_1: {
+																				ctor: '::',
+																				_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyTerminalCommandInPlaceClicked),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															},
+															{ctor: '[]'}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			},
+			A3(
+				_rundis$elm_bootstrap$Bootstrap_Modal$body,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_rundis$elm_bootstrap$Bootstrap_Grid$containerFluid,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_rundis$elm_bootstrap$Bootstrap_Grid$row,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_rundis$elm_bootstrap$Bootstrap_Grid$col,
+										{
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
+											_1: {ctor: '[]'}
+										},
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_rundis$elm_bootstrap$Bootstrap_Grid$col,
+											{
+												ctor: '::',
+												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md7,
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$pre,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$code,
+															{ctor: '[]'},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text(model.modalText),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				A3(
+					_rundis$elm_bootstrap$Bootstrap_Modal$h5,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'Paste the command in your terminal to run on all ',
+								A2(_elm_lang$core$Basics_ops['++'], language, ' files in the current directory'))),
+						_1: {ctor: '[]'}
+					},
+					_rundis$elm_bootstrap$Bootstrap_Modal$large(
+						_rundis$elm_bootstrap$Bootstrap_Modal$config(_user$project$Types$CloseTerminalModal))))));
+};
+var _user$project$View$aboutModal = function (model) {
+	return A2(
+		_rundis$elm_bootstrap$Bootstrap_Modal$view,
+		model.modalAboutVisibility,
+		A3(
+			_rundis$elm_bootstrap$Bootstrap_Modal$body,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$p,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('This is '),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href('https://github.com/comby-tools/comby-ui'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('comby-ui'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(', a friendly interface for creating code rewrite patterns. The backend is powered by '),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$a,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$href('https://github.com/comby-tools/comby'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('comby'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('.'),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$p,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('This web app is made possible by '),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$a,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$href('https://elm-lang.org/'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Elm'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(' and many wonderful libraries. '),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$a,
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$href('https://github.com/comby-tools/comby-ui/tree/master/third-party-licenses'),
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Credits.'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			},
+			A3(
+				_rundis$elm_bootstrap$Bootstrap_Modal$h5,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('About'),
+					_1: {ctor: '[]'}
+				},
+				_rundis$elm_bootstrap$Bootstrap_Modal$small(
+					_rundis$elm_bootstrap$Bootstrap_Modal$config(_user$project$Types$CloseAboutModal)))));
+};
+var _user$project$View$halves = function (l) {
+	var n = ((_elm_lang$core$List$length(l) / 2) | 0) + 2;
+	var newl = A2(
+		_elm_lang$core$List$indexedMap,
+		F2(
+			function (i, x) {
+				return {ctor: '_Tuple2', _0: i, _1: x};
+			}),
+		l);
+	var _p0 = A2(
+		_elm_lang$core$List$partition,
+		function (_p1) {
+			var _p2 = _p1;
+			return _elm_lang$core$Native_Utils.cmp(_p2._0, n) < 0;
+		},
+		newl);
+	var left = _p0._0;
+	var right = _p0._1;
+	return {
+		ctor: '_Tuple2',
+		_0: A2(
+			_elm_lang$core$List$map,
+			function (_p3) {
+				var _p4 = _p3;
+				return _p4._1;
+			},
+			left),
+		_1: A2(
+			_elm_lang$core$List$map,
+			function (_p5) {
+				var _p6 = _p5;
+				return _p6._1;
+			},
+			right)
+	};
+};
+var _user$project$View$footerAbout = A2(
+	_rundis$elm_bootstrap$Bootstrap_Button$button,
+	{
+		ctor: '::',
+		_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+		_1: {
+			ctor: '::',
+			_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShowAboutModal),
+			_1: {ctor: '[]'}
+		}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$i,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('fa fa-info-circle text-secondary'),
+				_1: {ctor: '[]'}
+			},
+			{ctor: '[]'}),
+		_1: {ctor: '[]'}
+	});
+<<<<<<< HEAD
 
 var _user$project$View$halves = function (l) {
 	var n = ((_elm_lang$core$List$length(l) / 2) | 0) + 2;
@@ -14142,107 +16003,132 @@ var _user$project$View$halves = function (l) {
 			right)
 	};
 };
+=======
+>>>>>>> staging
 var _user$project$View$footerServerConnected = function (model) {
-	return A2(
-		_rundis$elm_bootstrap$Bootstrap_Grid$col,
+	return model.serverConnected ? A2(
+		_rundis$elm_bootstrap$Bootstrap_Badge$pillSuccess,
 		{
 			ctor: '::',
-			_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: model.serverConnected ? A2(
-				_rundis$elm_bootstrap$Bootstrap_Badge$pillSuccess,
-				{
-					ctor: '::',
-					_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml1,
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('green-pill'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('float-right'),
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('Server Connected'),
-					_1: {ctor: '[]'}
-				}) : A2(
-				_rundis$elm_bootstrap$Bootstrap_Badge$pillDanger,
-				{
-					ctor: '::',
-					_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml1,
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('red-pill'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('float-right'),
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('No Server Connected'),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		});
-};
-var _user$project$View$footerShareLink = function (model) {
-	return A2(
-		_rundis$elm_bootstrap$Bootstrap_Grid$col,
-		{
-			ctor: '::',
-			_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md8,
-			_1: {ctor: '[]'}
+			_0: _elm_lang$html$Html_Attributes$class('green-pill'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('float-right'),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$h3,
-				{ctor: '[]'},
-				A2(
-					_elm_lang$core$Basics_ops['++'],
+				_elm_lang$html$Html$i,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-server'),
+					_1: {ctor: '[]'}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Server Connected'),
+				_1: {ctor: '[]'}
+			}
+		}) : A2(
+		_rundis$elm_bootstrap$Bootstrap_Badge$pillDanger,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('red-pill'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('float-right'),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$i,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-server'),
+					_1: {ctor: '[]'}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('No Server Connected'),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$View$footerShareLink = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			{
+				ctor: '::',
+				_0: A2(
+					_rundis$elm_bootstrap$Bootstrap_Button$button,
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+						_1: {
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Button$warning,
+							_1: {
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShareLinkClicked),
+								_1: {ctor: '[]'}
+							}
+						}
+					},
 					{
 						ctor: '::',
 						_0: A2(
-							_rundis$elm_bootstrap$Bootstrap_Button$button,
+							_elm_lang$html$Html$i,
 							{
 								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
-								_1: {
-									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Button$warning,
-									_1: {
-										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShareLinkClicked),
-										_1: {ctor: '[]'}
-									}
-								}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('Share Link'),
+								_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-link'),
 								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
+							},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Share Link'),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			},
+			_elm_lang$core$Native_Utils.eq(model.prettyUrl, '') ? {ctor: '[]'} : {
+				ctor: '::',
+				_0: A2(
+					_rundis$elm_bootstrap$Bootstrap_ButtonGroup$buttonGroup,
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+						_1: {
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$attrs(
+								{
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml2,
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
 					},
-					_elm_lang$core$Native_Utils.eq(model.prettyUrl, '') ? {ctor: '[]'} : {
+					{
 						ctor: '::',
 						_0: A2(
-							_rundis$elm_bootstrap$Bootstrap_Badge$badgeWarning,
+							_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
 							{
 								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$ml1,
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$warning,
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$id('copyableLink'),
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyShareLinkClicked),
 									_1: {ctor: '[]'}
 								}
 							},
@@ -14254,35 +16140,39 @@ var _user$project$View$footerShareLink = function (model) {
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_rundis$elm_bootstrap$Bootstrap_Button$button,
+								_rundis$elm_bootstrap$Bootstrap_ButtonGroup$button,
 								{
 									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineWarning,
 									_1: {
 										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Button$outlineWarning,
+										_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyShareLinkClicked),
 										_1: {
 											ctor: '::',
-											_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
-												{ctor: '[]'}),
+											_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
 											_1: {
 												ctor: '::',
-												_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$CopyShareLinkClicked),
+												_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$class(model.copyButtonLinkText),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$id('copyableLink'),
+															_1: {ctor: '[]'}
+														}
+													}),
 												_1: {ctor: '[]'}
 											}
 										}
 									}
 								},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(model.copyButtonText),
-									_1: {ctor: '[]'}
-								}),
+								{ctor: '[]'}),
 							_1: {ctor: '[]'}
 						}
-					})),
-			_1: {ctor: '[]'}
-		});
+					}),
+				_1: {ctor: '[]'}
+			}));
 };
 var _user$project$View$substitutionKindSelection = function (model) {
 	return A2(
@@ -14495,7 +16385,7 @@ var _user$project$View$rewriteTemplateInput = function (model) {
 							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.rewriteTemplateInput),
+							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$defaultValue(model.rewriteTemplateInput),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -14538,7 +16428,7 @@ var _user$project$View$ruleInput = function (model) {
 							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.ruleInput),
+							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$defaultValue(model.ruleInput),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -14567,7 +16457,7 @@ var _user$project$View$matchTemplateInput = function (model) {
 							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.matchTemplateInput),
+							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$defaultValue(model.matchTemplateInput),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -14596,7 +16486,7 @@ var _user$project$View$sourceInput = function (model) {
 							}),
 						_1: {
 							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$value(model.sourceInput),
+							_0: _rundis$elm_bootstrap$Bootstrap_Form_Textarea$defaultValue(model.sourceInput),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -14614,6 +16504,7 @@ var _user$project$View$sourcePage = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
+<<<<<<< HEAD
 				_elm_lang$html$Html$br,
 				{ctor: '[]'},
 				{ctor: '[]'}),
@@ -14650,10 +16541,96 @@ var _user$project$View$sourcePage = function (model) {
 												_1: {ctor: '[]'}
 											},
 											{
+=======
+				_rundis$elm_bootstrap$Bootstrap_Grid$row,
+				{
+					ctor: '::',
+					_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_rundis$elm_bootstrap$Bootstrap_Grid$col,
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md10,
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_rundis$elm_bootstrap$Bootstrap_Grid$row,
+								{
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$rightMd,
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_rundis$elm_bootstrap$Bootstrap_Grid$col,
+										{
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md11,
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_rundis$elm_bootstrap$Bootstrap_Grid$row,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_Grid$col,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: _user$project$View$highlightableSourceListing(model),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_rundis$elm_bootstrap$Bootstrap_Grid$col,
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: _user$project$View$highlightableRewriteResult(model),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {
+>>>>>>> staging
 												ctor: '::',
 												_0: A2(
 													_rundis$elm_bootstrap$Bootstrap_Grid$row,
-													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													},
 													{
 														ctor: '::',
 														_0: A2(
@@ -14665,30 +16642,8 @@ var _user$project$View$sourcePage = function (model) {
 															},
 															{
 																ctor: '::',
-																_0: _user$project$View$highlightableSourceListing(model),
-																_1: {
-																	ctor: '::',
-																	_0: A2(
-																		_elm_lang$html$Html$br,
-																		{ctor: '[]'},
-																		{ctor: '[]'}),
-																	_1: {
-																		ctor: '::',
-																		_0: _user$project$View$matchTemplateInput(model),
-																		_1: {
-																			ctor: '::',
-																			_0: A2(
-																				_elm_lang$html$Html$br,
-																				{ctor: '[]'},
-																				{ctor: '[]'}),
-																			_1: {
-																				ctor: '::',
-																				_0: _user$project$View$ruleInput(model),
-																				_1: {ctor: '[]'}
-																			}
-																		}
-																	}
-																}
+																_0: _user$project$View$matchTemplateInput(model),
+																_1: {ctor: '[]'}
 															}),
 														_1: {
 															ctor: '::',
@@ -14701,30 +16656,8 @@ var _user$project$View$sourcePage = function (model) {
 																},
 																{
 																	ctor: '::',
-																	_0: _user$project$View$highlightableRewriteResult(model),
-																	_1: {
-																		ctor: '::',
-																		_0: A2(
-																			_elm_lang$html$Html$br,
-																			{ctor: '[]'},
-																			{ctor: '[]'}),
-																		_1: {
-																			ctor: '::',
-																			_0: _user$project$View$rewriteTemplateInput(model),
-																			_1: {
-																				ctor: '::',
-																				_0: A2(
-																					_elm_lang$html$Html$br,
-																					{ctor: '[]'},
-																					{ctor: '[]'}),
-																				_1: {
-																					ctor: '::',
-																					_0: _user$project$View$ruleDisplaySyntaxErrors(model),
-																					_1: {ctor: '[]'}
-																				}
-																			}
-																		}
-																	}
+																	_0: _user$project$View$rewriteTemplateInput(model),
+																	_1: {ctor: '[]'}
 																}),
 															_1: {ctor: '[]'}
 														}
@@ -14733,65 +16666,121 @@ var _user$project$View$sourcePage = function (model) {
 													ctor: '::',
 													_0: A2(
 														_rundis$elm_bootstrap$Bootstrap_Grid$row,
-														{ctor: '[]'},
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
+														},
 														{
 															ctor: '::',
 															_0: A2(
 																_rundis$elm_bootstrap$Bootstrap_Grid$col,
 																{
 																	ctor: '::',
-																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md12,
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
 																	_1: {ctor: '[]'}
 																},
 																{
 																	ctor: '::',
-																	_0: A2(
-																		_elm_lang$html$Html$br,
-																		{ctor: '[]'},
-																		{ctor: '[]'}),
-																	_1: {
-																		ctor: '::',
-																		_0: _user$project$View$sourceInput(model),
-																		_1: {ctor: '[]'}
-																	}
+																	_0: _user$project$View$ruleInput(model),
+																	_1: {ctor: '[]'}
 																}),
-															_1: {ctor: '[]'}
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: _user$project$View$ruleDisplaySyntaxErrors(model),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}
 														}),
 													_1: {
 														ctor: '::',
 														_0: A2(
-															_elm_lang$html$Html$br,
+															_rundis$elm_bootstrap$Bootstrap_Grid$row,
 															{ctor: '[]'},
-															{ctor: '[]'}),
+															{
+																ctor: '::',
+																_0: A2(
+																	_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$br,
+																			{ctor: '[]'},
+																			{ctor: '[]'}),
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$View$sourceInput(model),
+																			_1: {ctor: '[]'}
+																		}
+																	}),
+																_1: {ctor: '[]'}
+															}),
 														_1: {
 															ctor: '::',
 															_0: A2(
 																_rundis$elm_bootstrap$Bootstrap_Grid$row,
-																{ctor: '[]'},
 																{
 																	ctor: '::',
-																	_0: _user$project$View$footerShareLink(model),
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$betweenXs,
+																	_1: {
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+																			{
+																				ctor: '::',
+																				_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {ctor: '[]'}
+																	}
+																},
+																{
+																	ctor: '::',
+																	_0: A2(
+																		_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																		{ctor: '[]'},
+																		{
+																			ctor: '::',
+																			_0: _user$project$View$footerShareLink(model),
+																			_1: {ctor: '[]'}
+																		}),
 																	_1: {
 																		ctor: '::',
 																		_0: A2(
 																			_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																			{ctor: '[]'},
 																			{
 																				ctor: '::',
-																				_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
+																				_0: _user$project$View$terminalButtonGroup(model),
 																				_1: {ctor: '[]'}
-																			},
-																			{ctor: '[]'}),
-																		_1: {
-																			ctor: '::',
-																			_0: _user$project$View$footerServerConnected(model),
-																			_1: {ctor: '[]'}
-																		}
+																			}),
+																		_1: {ctor: '[]'}
 																	}
 																}),
 															_1: {ctor: '[]'}
 														}
 													}
 												}
+<<<<<<< HEAD
 											}),
 										_1: {ctor: '[]'}
 									}),
@@ -14804,20 +16793,84 @@ var _user$project$View$sourcePage = function (model) {
 								{
 									ctor: '::',
 									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
+=======
+											}
+										}),
+>>>>>>> staging
 									_1: {ctor: '[]'}
-								},
-								{
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_rundis$elm_bootstrap$Bootstrap_Grid$col,
+							{
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _user$project$View$substitutionKindSelection(model),
+								_1: {
 									ctor: '::',
+<<<<<<< HEAD
 									_0: _user$project$View$substitutionKindSelection(model),
+=======
+									_0: A2(
+										_elm_lang$html$Html$h6,
+										{
+											ctor: '::',
+											_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Language'),
+											_1: {ctor: '[]'}
+										}),
+>>>>>>> staging
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_elm_lang$html$Html$br,
+											_rundis$elm_bootstrap$Bootstrap_Grid$row,
 											{ctor: '[]'},
-											{ctor: '[]'}),
+											{
+												ctor: '::',
+												_0: A2(
+													_rundis$elm_bootstrap$Bootstrap_Grid$col,
+													{
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: A3(_user$project$View$languageSelection, '', model, left),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_Grid$col,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: A3(_user$project$View$languageSelection, '', model, right),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
+											}),
 										_1: {
 											ctor: '::',
 											_0: A2(
+<<<<<<< HEAD
 												_elm_lang$html$Html$h6,
 												{ctor: '[]'},
 												{
@@ -14831,16 +16884,57 @@ var _user$project$View$sourcePage = function (model) {
 													_rundis$elm_bootstrap$Bootstrap_Grid$row,
 													{ctor: '[]'},
 													{
+=======
+												_rundis$elm_bootstrap$Bootstrap_Grid$row,
+												{
+													ctor: '::',
+													_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt5,
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$middleXs,
+														_1: {ctor: '[]'}
+													}
+												},
+												{
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_Grid$col,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd3,
+																_1: {ctor: '[]'}
+															}
+														},
+														{
+															ctor: '::',
+															_0: _user$project$View$footerServerConnected(model),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+>>>>>>> staging
 														ctor: '::',
 														_0: A2(
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
 															{
 																ctor: '::',
+<<<<<<< HEAD
 																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+=======
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
+>>>>>>> staging
 																_1: {ctor: '[]'}
 															},
 															{
 																ctor: '::',
+<<<<<<< HEAD
 																_0: A3(_user$project$View$languageSelection, '', model, left),
 																_1: {ctor: '[]'}
 															}),
@@ -14863,18 +16957,28 @@ var _user$project$View$sourcePage = function (model) {
 													}),
 												_1: {ctor: '[]'}
 											}
+=======
+																_0: _user$project$View$footerAbout,
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {ctor: '[]'}
+>>>>>>> staging
 										}
 									}
-								}),
-							_1: {ctor: '[]'}
-						}
-					}),
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$View$terminalModal(model),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$br,
-						{ctor: '[]'},
-						{ctor: '[]'}),
+					_0: _user$project$View$aboutModal(model),
 					_1: {ctor: '[]'}
 				}
 			}

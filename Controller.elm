@@ -1,5 +1,6 @@
 module Controller exposing (getMatches, getRewrite, init, loadInitialStaticState, log, matchEndpoint, rewriteEndpoint, subscriptions, update)
 
+import Bootstrap.Modal as Modal
 import Configuration
 import Http exposing (..)
 import Json.Decode exposing (..)
@@ -18,6 +19,61 @@ import Types exposing (..)
 debug : Bool
 debug =
     False
+
+
+terminalCommand : Model -> String -> String
+terminalCommand model extra_option =
+    let
+        languageFilter =
+            let
+                s =
+                    LanguageExtension.toString model.language
+            in
+            if s == ".generic" then
+                "*"
+
+            else
+                s
+
+        matchTemplate =
+            "COMBY_M=$(cat <<\"MATCH\"\n"
+                ++ model.matchTemplateInput
+                ++ "\nMATCH\n)\n"
+
+        ( rewriteTemplateEnv, rewriteVar ) =
+            if model.rewriteTemplateInput == "" then
+                ( "", "''" )
+
+            else
+                ( "COMBY_R=$(cat <<\"REWRITE\"\n"
+                    ++ model.rewriteTemplateInput
+                    ++ "\nREWRITE\n)\n"
+                , "$COMBY_R"
+                )
+
+        ( ruleEnv, rule ) =
+            if model.ruleInput == "where true" then
+                ( "", "" )
+
+            else
+                ( "COMBY_RULE=$(cat <<\"RULE\"\n"
+                    ++ model.ruleInput
+                    ++ "\nRULE\n)\n"
+                , " -rule $COMBY_RULE"
+                )
+
+        zeroInstall =
+            "# the next line installs comby if you need it :)\n"
+                ++ "bash <(curl -sL 0.comby.dev) && \\\n"
+
+        text =
+            if model.matchTemplateInput == "" then
+                "First enter a match template :)"
+
+            else
+                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby $COMBY_M " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extra_option
+    in
+    text
 
 
 matchEndpoint : String
@@ -43,6 +99,7 @@ log s a =
         ()
 
 
+jsonFromModel : Model -> String
 jsonFromModel model =
     let
         languageInput =
@@ -211,9 +268,14 @@ loadInitialStaticState flags location =
     , serverConnected = False
     , language = language
     , substitutionKind = substitutionKind
-    , copyButtonText = "Copy"
+    , copyButtonLinkText = "fa fa-copy"
+    , copyButtonTerminalText = "fa fa-copy"
+    , copyButtonTextInPlace = "fa fa-copy"
     , currentRewriteResultId = 0
     , currentMatchResultId = 0
+    , modalTerminalVisibility = Modal.hidden
+    , modalText = ""
+    , modalAboutVisibility = Modal.hidden
     }
 
 
@@ -251,7 +313,8 @@ update msg model =
     let
         new_model =
             { model
-                | copyButtonText = "Copy"
+                | copyButtonLinkText = "fa fa-copy"
+                , copyButtonTerminalText = "fa fa-copy"
             }
     in
     case msg of
@@ -273,9 +336,9 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
+                        , prettyUrl = ""
                     }
             in
             ( { new_model | matchTemplateInput = matchTemplateInput }
@@ -310,9 +373,9 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
+                        , prettyUrl = ""
                     }
             in
             ( { new_model | sourceInput = sourceInput }
@@ -344,12 +407,14 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
+                        , prettyUrl = ""
                     }
             in
-            ( { new_model | ruleInput = ruleInput }
+            ( { new_model
+                | ruleInput = ruleInput
+              }
             , Cmd.batch
                 [ getMatches
                     new_model.sourceInput
@@ -375,8 +440,8 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
-                        , currentRewriteResultId = currentRewriteResultId
+                        | currentRewriteResultId = currentRewriteResultId
+                        , prettyUrl = ""
                     }
             in
             ( { new_model | rewriteTemplateInput = rewriteTemplateInput }
@@ -489,9 +554,9 @@ update msg model =
 
         CopyShareLinkClicked ->
             ( { new_model
-                | copyButtonText = "Copied!"
+                | copyButtonLinkText = "fa fa-check"
               }
-            , Ports.copyUrl model.url
+            , Ports.copyToClipboard model.url
             )
 
         ShortenUrlResult (Ok url) ->
@@ -540,8 +605,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
             in
@@ -577,8 +641,7 @@ update msg model =
 
                 new_model =
                     { model
-                        | copyButtonText = "Copy"
-                        , currentMatchResultId = currentMatchResultId
+                        | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
                     }
             in
@@ -601,7 +664,60 @@ update msg model =
                 ]
             )
 
+        CopyTerminalCommandClicked ->
+            let
+                text =
+                    terminalCommand model ""
+            in
+            ( { model
+                | copyButtonTextInPlace = "fa fa-copy"
+                , copyButtonTerminalText = "fa fa-check"
+                , copyButtonLinkText = "fa fa-copy"
+                , modalText = text
+              }
+            , Ports.copyToClipboard text
+            )
+
+        CopyTerminalCommandInPlaceClicked ->
+            let
+                text =
+                    terminalCommand model " -i"
+            in
+            ( { model
+                | copyButtonTextInPlace = "fa fa-check"
+                , copyButtonTerminalText = "fa fa-copy"
+                , copyButtonLinkText = "fa fa-copy"
+                , modalText = text
+              }
+            , Ports.copyToClipboard text
+            )
+
+        ShowTerminalModal ->
+            let
+                text =
+                    terminalCommand model ""
+            in
+            ( { model
+                | modalText = text
+                , modalTerminalVisibility = Modal.shown
+                , copyButtonTextInPlace = "fa fa-copy"
+              }
+            , Cmd.none
+            )
+
+        CloseTerminalModal ->
+            ( { model | modalTerminalVisibility = Modal.hidden }
+            , Cmd.none
+            )
+
+        ShowAboutModal ->
+            ( { model | modalAboutVisibility = Modal.shown }, Cmd.none )
+
+        CloseAboutModal ->
+            ( { model | modalAboutVisibility = Modal.hidden }, Cmd.none )
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.batch []
+    Sub.batch
+        []
