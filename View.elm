@@ -164,7 +164,9 @@ footerShareLink model =
             , Button.warning
             , Button.onClick ShareLinkClicked
             ]
-            [ text "Share Link" ]
+            [ i [ class "fa-fw fas fa-link" ] []
+            , text "Share Link"
+            ]
         ]
             ++ (if model.prettyUrl == "" then
                     []
@@ -198,19 +200,29 @@ footerServerConnected : Model -> Html Msg
 footerServerConnected model =
     if model.serverConnected then
         Badge.pillSuccess
-            [ Spacing.ml1
-            , Html.Attributes.class "green-pill"
+            [ Html.Attributes.class "green-pill"
             , Html.Attributes.class "float-right"
             ]
-            [ text "Server Connected" ]
+            [ i [ class "fa-fw fas fa-server" ] []
+            , text "Server Connected"
+            ]
 
     else
         Badge.pillDanger
-            [ Spacing.ml1
-            , Html.Attributes.class "red-pill"
+            [ Html.Attributes.class "red-pill"
             , Html.Attributes.class "float-right"
             ]
-            [ text "No Server Connected" ]
+            [ i [ class "fa-fw fas fa-server" ] []
+            , text "No Server Connected"
+            ]
+
+
+footerAbout : Html Msg
+footerAbout =
+    Button.button
+        [ Button.small
+        ]
+        [ i [ class "fa fa-info-circle text-secondary" ] [] ]
 
 
 halves : List LanguageExtension -> ( List LanguageExtension, List LanguageExtension )
@@ -229,8 +241,13 @@ halves l =
     ( List.map (\( _, x ) -> x) left, List.map (\( _, x ) -> x) right )
 
 
-modal : Model -> Html Msg
-modal model =
+aboutModal : Html Msg
+aboutModal =
+    div [] []
+
+
+terminalModal : Model -> Html Msg
+terminalModal model =
     let
         language =
             let
@@ -317,7 +334,9 @@ terminalButtonGroup model =
                 , Button.small
                 , Button.onClick ShowModal
                 ]
-                [ text "Run in Terminal" ]
+                [ i [ class "fa-fw fas fa-chevron-right" ] []
+                , text "Run in Terminal"
+                ]
             , ButtonGroup.button
                 [ Button.outlineSecondary
                 , Button.small
@@ -387,13 +406,15 @@ sourcePage model =
                     [ Grid.col [ Col.md6 ] [ languageSelection "" model left ]
                     , Grid.col [ Col.md6 ] [ languageSelection "" model right ]
                     ]
-                , Grid.row [ Row.centerMd, Row.attrs [ Spacing.mt5 ] ]
-                    [ Grid.col [ Col.mdAuto ]
+                , Grid.row [ Row.attrs [ Spacing.mt5 ], Row.middleXs ]
+                    [ Grid.col [ Col.md6, Col.offsetMd3 ]
                         [ footerServerConnected model ]
+                    , Grid.col [ Col.md3 ]
+                        [ footerAbout ]
                     ]
                 ]
             ]
-        , modal model
+        , terminalModal model
         ]
 
 
