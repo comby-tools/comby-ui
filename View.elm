@@ -258,7 +258,7 @@ aboutModal model =
                     ]
                 , p []
                     [ text "This web app is made possible by Elm and many wonderful supporting libraries. "
-                    , a [ href "https://github.com/comby-tools/comby-ui/third-party-licenses" ] [ text "Credits." ]
+                    , a [ href "https://github.com/comby-tools/comby-ui/tree/master/third-party-licenses" ] [ text "Credits." ]
                     ]
                 ]
             ]
