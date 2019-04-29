@@ -337,6 +337,7 @@ update msg model =
                     { model
                         | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
+                        , prettyUrl = ""
                     }
             in
             ( { new_model | matchTemplateInput = matchTemplateInput }
@@ -373,6 +374,7 @@ update msg model =
                     { model
                         | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
+                        , prettyUrl = ""
                     }
             in
             ( { new_model | sourceInput = sourceInput }
@@ -406,9 +408,12 @@ update msg model =
                     { model
                         | currentMatchResultId = currentMatchResultId
                         , currentRewriteResultId = currentRewriteResultId
+                        , prettyUrl = ""
                     }
             in
-            ( { new_model | ruleInput = ruleInput }
+            ( { new_model
+                | ruleInput = ruleInput
+              }
             , Cmd.batch
                 [ getMatches
                     new_model.sourceInput
@@ -435,6 +440,7 @@ update msg model =
                 new_model =
                     { model
                         | currentRewriteResultId = currentRewriteResultId
+                        , prettyUrl = ""
                     }
             in
             ( { new_model | rewriteTemplateInput = rewriteTemplateInput }
@@ -684,6 +690,7 @@ update msg model =
             ( { model
                 | copyButtonTextInPlace = "fa fa-check"
                 , copyButtonTerminalText = "fa fa-copy"
+                , copyButtonLinkText = "fa fa-copy"
                 , modalText = text
               }
             , Ports.copyToClipboard text
