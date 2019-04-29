@@ -15853,22 +15853,41 @@ var _user$project$View$aboutModal = function (model) {
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('This web app is made possible by Elm and many wonderful supporting libraries. '),
+									_0: _elm_lang$html$Html$text('This web app is made possible by '),
 									_1: {
 										ctor: '::',
 										_0: A2(
 											_elm_lang$html$Html$a,
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$href('https://github.com/comby-tools/comby-ui/tree/master/third-party-licenses'),
+												_0: _elm_lang$html$Html_Attributes$href('https://elm-lang.org/'),
 												_1: {ctor: '[]'}
 											},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('Credits.'),
+												_0: _elm_lang$html$Html$text('Elm'),
 												_1: {ctor: '[]'}
 											}),
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(' and many wonderful libraries. '),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$a,
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$href('https://github.com/comby-tools/comby-ui/tree/master/third-party-licenses'),
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Credits.'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
+										}
 									}
 								}),
 							_1: {ctor: '[]'}
