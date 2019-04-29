@@ -221,6 +221,7 @@ footerAbout : Html Msg
 footerAbout =
     Button.button
         [ Button.small
+        , Button.onClick ShowAboutModal
         ]
         [ i [ class "fa fa-info-circle text-secondary" ] [] ]
 
@@ -241,9 +242,27 @@ halves l =
     ( List.map (\( _, x ) -> x) left, List.map (\( _, x ) -> x) right )
 
 
-aboutModal : Html Msg
-aboutModal =
-    div [] []
+aboutModal : Model -> Html Msg
+aboutModal model =
+    Modal.config CloseAboutModal
+        |> Modal.small
+        |> Modal.h5 [] [ text "About" ]
+        |> Modal.body []
+            [ div []
+                [ p []
+                    [ text "This is "
+                    , a [ href "https://github.com/comby-tools/comby-ui" ] [ text "comby-ui" ]
+                    , text ", a friendly interface for creating code rewrite patterns. The backend is powered by "
+                    , a [ href "https://github.com/comby-tools/comby" ] [ text "comby" ]
+                    , text "."
+                    ]
+                , p []
+                    [ text "This web app is made possible by Elm and many wonderful supporting libraries. "
+                    , a [ href "https://github.com/comby-tools/comby-ui/third-party-licenses" ] [ text "Credits." ]
+                    ]
+                ]
+            ]
+        |> Modal.view model.modalAboutVisibility
 
 
 terminalModal : Model -> Html Msg
@@ -260,7 +279,7 @@ terminalModal model =
             else
                 s
     in
-    Modal.config CloseModal
+    Modal.config CloseTerminalModal
         |> Modal.large
         |> Modal.h5 [] [ text ("Paste the command in your terminal to run on all " ++ language ++ " files in the current directory") ]
         |> Modal.body []
@@ -322,7 +341,7 @@ terminalModal model =
                     ]
                 ]
             ]
-        |> Modal.view model.modalVisibility
+        |> Modal.view model.modalTerminalVisibility
 
 
 terminalButtonGroup : Model -> Html Msg
@@ -332,7 +351,7 @@ terminalButtonGroup model =
             [ ButtonGroup.button
                 [ Button.secondary
                 , Button.small
-                , Button.onClick ShowModal
+                , Button.onClick ShowTerminalModal
                 ]
                 [ i [ class "fa-fw fas fa-chevron-right" ] []
                 , text "Run in Terminal"
@@ -415,6 +434,7 @@ sourcePage model =
                 ]
             ]
         , terminalModal model
+        , aboutModal model
         ]
 
 

@@ -69,8 +69,9 @@ type alias Model =
     , copyButtonTextInPlace : String
     , currentRewriteResultId : Int
     , currentMatchResultId : Int
-    , modalVisibility : Modal.Visibility
+    , modalTerminalVisibility : Modal.Visibility
     , modalText : String
+    , modalAboutVisibility : Modal.Visibility
     }
 
 
@@ -87,7 +88,9 @@ type Msg
     | ShareLinkClicked
     | CopyShareLinkClicked
     | ShortenUrlResult (Result Http.Error String)
-    | CloseModal
-    | ShowModal
+    | CloseTerminalModal
+    | ShowTerminalModal
+    | CloseAboutModal
+    | ShowAboutModal
     | CopyTerminalCommandClicked
     | CopyTerminalCommandInPlaceClicked

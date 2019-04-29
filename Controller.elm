@@ -273,8 +273,9 @@ loadInitialStaticState flags location =
     , copyButtonTextInPlace = "fa fa-copy"
     , currentRewriteResultId = 0
     , currentMatchResultId = 0
-    , modalVisibility = Modal.hidden
+    , modalTerminalVisibility = Modal.hidden
     , modalText = ""
+    , modalAboutVisibility = Modal.hidden
     }
 
 
@@ -663,11 +664,6 @@ update msg model =
                 ]
             )
 
-        CloseModal ->
-            ( { model | modalVisibility = Modal.hidden }
-            , Cmd.none
-            )
-
         CopyTerminalCommandClicked ->
             let
                 text =
@@ -696,18 +692,29 @@ update msg model =
             , Ports.copyToClipboard text
             )
 
-        ShowModal ->
+        ShowTerminalModal ->
             let
                 text =
                     terminalCommand model ""
             in
             ( { model
                 | modalText = text
-                , modalVisibility = Modal.shown
+                , modalTerminalVisibility = Modal.shown
                 , copyButtonTextInPlace = "fa fa-copy"
               }
             , Cmd.none
             )
+
+        CloseTerminalModal ->
+            ( { model | modalTerminalVisibility = Modal.hidden }
+            , Cmd.none
+            )
+
+        ShowAboutModal ->
+            ( { model | modalAboutVisibility = Modal.shown }, Cmd.none )
+
+        CloseAboutModal ->
+            ( { model | modalAboutVisibility = Modal.hidden }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
