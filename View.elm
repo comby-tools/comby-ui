@@ -226,22 +226,6 @@ footerAbout =
         [ i [ class "fa fa-info-circle text-secondary" ] [] ]
 
 
-halves : List LanguageExtension -> ( List LanguageExtension, List LanguageExtension )
-halves l =
-    let
-        newl =
-            List.indexedMap (\i x -> ( i, x )) l
-
-        n =
-            (List.length l // 2) + 2
-
-        -- + 4
-        ( left, right ) =
-            List.partition (\( i, _ ) -> i < n) newl
-    in
-    ( List.map (\( _, x ) -> x) left, List.map (\( _, x ) -> x) right )
-
-
 aboutModal : Model -> Html Msg
 aboutModal model =
     Modal.config CloseAboutModal

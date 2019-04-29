@@ -14134,8 +14134,8 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8887';
-var _user$project$Configuration$thisDomain = 'https://staging.comby.live';
+var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
+var _user$project$Configuration$thisDomain = 'https://comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
 	function (source, match, rule, rewrite, language, substitutionKind, id) {
@@ -15415,6 +15415,42 @@ var _user$project$Controller$update = F2(
 		}
 	});
 
+var _user$project$View$halves = function (l) {
+	var n = ((_elm_lang$core$List$length(l) / 2) | 0) + 2;
+	var newl = A2(
+		_elm_lang$core$List$indexedMap,
+		F2(
+			function (i, x) {
+				return {ctor: '_Tuple2', _0: i, _1: x};
+			}),
+		l);
+	var _p0 = A2(
+		_elm_lang$core$List$partition,
+		function (_p1) {
+			var _p2 = _p1;
+			return _elm_lang$core$Native_Utils.cmp(_p2._0, n) < 0;
+		},
+		newl);
+	var left = _p0._0;
+	var right = _p0._1;
+	return {
+		ctor: '_Tuple2',
+		_0: A2(
+			_elm_lang$core$List$map,
+			function (_p3) {
+				var _p4 = _p3;
+				return _p4._1;
+			},
+			left),
+		_1: A2(
+			_elm_lang$core$List$map,
+			function (_p5) {
+				var _p6 = _p5;
+				return _p6._1;
+			},
+			right)
+	};
+};
 var _user$project$View$terminalButtonGroup = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -15906,42 +15942,6 @@ var _user$project$View$aboutModal = function (model) {
 				_rundis$elm_bootstrap$Bootstrap_Modal$small(
 					_rundis$elm_bootstrap$Bootstrap_Modal$config(_user$project$Types$CloseAboutModal)))));
 };
-var _user$project$View$halves = function (l) {
-	var n = ((_elm_lang$core$List$length(l) / 2) | 0) + 2;
-	var newl = A2(
-		_elm_lang$core$List$indexedMap,
-		F2(
-			function (i, x) {
-				return {ctor: '_Tuple2', _0: i, _1: x};
-			}),
-		l);
-	var _p0 = A2(
-		_elm_lang$core$List$partition,
-		function (_p1) {
-			var _p2 = _p1;
-			return _elm_lang$core$Native_Utils.cmp(_p2._0, n) < 0;
-		},
-		newl);
-	var left = _p0._0;
-	var right = _p0._1;
-	return {
-		ctor: '_Tuple2',
-		_0: A2(
-			_elm_lang$core$List$map,
-			function (_p3) {
-				var _p4 = _p3;
-				return _p4._1;
-			},
-			left),
-		_1: A2(
-			_elm_lang$core$List$map,
-			function (_p5) {
-				var _p6 = _p5;
-				return _p6._1;
-			},
-			right)
-	};
-};
 var _user$project$View$footerAbout = A2(
 	_rundis$elm_bootstrap$Bootstrap_Button$button,
 	{
@@ -15965,46 +15965,6 @@ var _user$project$View$footerAbout = A2(
 			{ctor: '[]'}),
 		_1: {ctor: '[]'}
 	});
-<<<<<<< HEAD
-
-var _user$project$View$halves = function (l) {
-	var n = ((_elm_lang$core$List$length(l) / 2) | 0) + 2;
-	var newl = A2(
-		_elm_lang$core$List$indexedMap,
-		F2(
-			function (i, x) {
-				return {ctor: '_Tuple2', _0: i, _1: x};
-			}),
-		l);
-	var _p0 = A2(
-		_elm_lang$core$List$partition,
-		function (_p1) {
-			var _p2 = _p1;
-			return _elm_lang$core$Native_Utils.cmp(_p2._0, n) < 0;
-		},
-		newl);
-	var left = _p0._0;
-	var right = _p0._1;
-	return {
-		ctor: '_Tuple2',
-		_0: A2(
-			_elm_lang$core$List$map,
-			function (_p3) {
-				var _p4 = _p3;
-				return _p4._1;
-			},
-			left),
-		_1: A2(
-			_elm_lang$core$List$map,
-			function (_p5) {
-				var _p6 = _p5;
-				return _p6._1;
-			},
-			right)
-	};
-};
-=======
->>>>>>> staging
 var _user$project$View$footerServerConnected = function (model) {
 	return model.serverConnected ? A2(
 		_rundis$elm_bootstrap$Bootstrap_Badge$pillSuccess,
@@ -16504,44 +16464,6 @@ var _user$project$View$sourcePage = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-<<<<<<< HEAD
-				_elm_lang$html$Html$br,
-				{ctor: '[]'},
-				{ctor: '[]'}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_rundis$elm_bootstrap$Bootstrap_Grid$row,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: A2(
-							_rundis$elm_bootstrap$Bootstrap_Grid$col,
-							{
-								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md10,
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: A2(
-									_rundis$elm_bootstrap$Bootstrap_Grid$row,
-									{
-										ctor: '::',
-										_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$rightMd,
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: A2(
-											_rundis$elm_bootstrap$Bootstrap_Grid$col,
-											{
-												ctor: '::',
-												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md11,
-												_1: {ctor: '[]'}
-											},
-											{
-=======
 				_rundis$elm_bootstrap$Bootstrap_Grid$row,
 				{
 					ctor: '::',
@@ -16617,7 +16539,6 @@ var _user$project$View$sourcePage = function (model) {
 													}
 												}),
 											_1: {
->>>>>>> staging
 												ctor: '::',
 												_0: A2(
 													_rundis$elm_bootstrap$Bootstrap_Grid$row,
@@ -16780,23 +16701,8 @@ var _user$project$View$sourcePage = function (model) {
 														}
 													}
 												}
-<<<<<<< HEAD
-											}),
-										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_rundis$elm_bootstrap$Bootstrap_Grid$col,
-								{
-									ctor: '::',
-									_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
-=======
 											}
 										}),
->>>>>>> staging
 									_1: {ctor: '[]'}
 								}),
 							_1: {ctor: '[]'}
@@ -16815,9 +16721,6 @@ var _user$project$View$sourcePage = function (model) {
 								_0: _user$project$View$substitutionKindSelection(model),
 								_1: {
 									ctor: '::',
-<<<<<<< HEAD
-									_0: _user$project$View$substitutionKindSelection(model),
-=======
 									_0: A2(
 										_elm_lang$html$Html$h6,
 										{
@@ -16830,7 +16733,6 @@ var _user$project$View$sourcePage = function (model) {
 											_0: _elm_lang$html$Html$text('Language'),
 											_1: {ctor: '[]'}
 										}),
->>>>>>> staging
 									_1: {
 										ctor: '::',
 										_0: A2(
@@ -16870,21 +16772,6 @@ var _user$project$View$sourcePage = function (model) {
 										_1: {
 											ctor: '::',
 											_0: A2(
-<<<<<<< HEAD
-												_elm_lang$html$Html$h6,
-												{ctor: '[]'},
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html$text('Language'),
-													_1: {ctor: '[]'}
-												}),
-											_1: {
-												ctor: '::',
-												_0: A2(
-													_rundis$elm_bootstrap$Bootstrap_Grid$row,
-													{ctor: '[]'},
-													{
-=======
 												_rundis$elm_bootstrap$Bootstrap_Grid$row,
 												{
 													ctor: '::',
@@ -16919,45 +16806,16 @@ var _user$project$View$sourcePage = function (model) {
 															_1: {ctor: '[]'}
 														}),
 													_1: {
->>>>>>> staging
 														ctor: '::',
 														_0: A2(
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
 															{
 																ctor: '::',
-<<<<<<< HEAD
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
-=======
 																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
->>>>>>> staging
 																_1: {ctor: '[]'}
 															},
 															{
 																ctor: '::',
-<<<<<<< HEAD
-																_0: A3(_user$project$View$languageSelection, '', model, left),
-																_1: {ctor: '[]'}
-															}),
-														_1: {
-															ctor: '::',
-															_0: A2(
-																_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																{
-																	ctor: '::',
-																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
-																	_1: {ctor: '[]'}
-																},
-																{
-																	ctor: '::',
-																	_0: A3(_user$project$View$languageSelection, '', model, right),
-																	_1: {ctor: '[]'}
-																}),
-															_1: {ctor: '[]'}
-														}
-													}),
-												_1: {ctor: '[]'}
-											}
-=======
 																_0: _user$project$View$footerAbout,
 																_1: {ctor: '[]'}
 															}),
@@ -16965,7 +16823,6 @@ var _user$project$View$sourcePage = function (model) {
 													}
 												}),
 											_1: {ctor: '[]'}
->>>>>>> staging
 										}
 									}
 								}
