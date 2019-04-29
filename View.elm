@@ -26,9 +26,9 @@ sourceInput : Model -> Html Msg
 sourceInput model =
     Textarea.textarea
         [ Textarea.id "source"
-        , Textarea.rows 5
+        , Textarea.rows 3
         , Textarea.onInput SourceInputUpdated
-        , Textarea.attrs [ placeholder "Source Input" ]
+        , Textarea.attrs [ placeholder "Paste your source code here" ]
         , Textarea.value model.sourceInput
         ]
 
@@ -37,7 +37,7 @@ matchTemplateInput : Model -> Html Msg
 matchTemplateInput model =
     Textarea.textarea
         [ Textarea.id "match_template"
-        , Textarea.rows 5
+        , Textarea.rows 3
         , Textarea.onInput MatchTemplateInputUpdated
         , Textarea.attrs [ placeholder "Match Template" ]
         , Textarea.value model.matchTemplateInput
@@ -48,7 +48,7 @@ ruleInput : Model -> Html Msg
 ruleInput model =
     Textarea.textarea
         [ Textarea.id "rule"
-        , Textarea.rows 3
+        , Textarea.rows 1
         , Textarea.onInput RuleInputUpdated
         , Textarea.attrs [ placeholder "where true" ]
         , Textarea.value model.ruleInput
@@ -66,7 +66,7 @@ rewriteTemplateInput : Model -> Html Msg
 rewriteTemplateInput model =
     Textarea.textarea
         [ Textarea.id "rewrite"
-        , Textarea.rows 5
+        , Textarea.rows 3
         , Textarea.onInput RewriteTemplateInputUpdated
         , Textarea.attrs [ placeholder "Rewrite Template" ]
         , Textarea.value model.rewriteTemplateInput
@@ -97,12 +97,12 @@ highlightableRewriteResult model =
         ]
 
 
-languageSelection : Model -> Html Msg
-languageSelection model =
-    div []
-        ([ h6 [] [ text "Language" ] ]
+languageSelection : String -> Model -> List LanguageExtension -> Html Msg
+languageSelection header_text model languages =
+    div [ class "language_selection" ]
+        ([ h6 [] [ text header_text ] ]
             ++ Radio.radioList "languageRadios"
-                (LanguageExtension.all
+                (languages
                     |> List.map
                         (\l ->
                             let
@@ -126,7 +126,7 @@ languageSelection model =
 
 substitutionKindSelection : Model -> Html Msg
 substitutionKindSelection model =
-    div []
+    div [ class "substitution_kind" ]
         ([ h6 [] [ text "Substitution" ] ]
             ++ Radio.radioList "inPlaceMatchingRadios"
                 [ Radio.create
@@ -191,14 +191,35 @@ footerServerConnected model =
         ]
 
 
+halves : List LanguageExtension -> ( List LanguageExtension, List LanguageExtension )
+halves l =
+    let
+        newl =
+            List.indexedMap (\i x -> ( i, x )) l
+
+        n =
+            (List.length l // 2) + 2
+
+        -- + 4
+        ( left, right ) =
+            List.partition (\( i, _ ) -> i < n) newl
+    in
+    ( List.map (\( _, x ) -> x) left, List.map (\( _, x ) -> x) right )
+
+
 sourcePage : Model -> Html Msg
 sourcePage model =
+    let
+        ( left, right ) =
+            halves LanguageExtension.all
+    in
     Grid.containerFluid []
         [ br [] []
         , Grid.row []
             [ Grid.col [ Col.md10 ]
                 [ Grid.row [ Row.rightMd ]
-                    [ Grid.col [ Col.md12 ]
+                    -- changing to md12 makes this flush on left
+                    [ Grid.col [ Col.md11 ]
                         [ Grid.row []
                             [ Grid.col [ Col.md6 ]
                                 [ highlightableSourceListing model
@@ -230,11 +251,14 @@ sourcePage model =
                         ]
                     ]
                 ]
-            , Grid.col [ Col.md1 ]
-                [ languageSelection model
+            , Grid.col [ Col.md2 ]
+                [ substitutionKindSelection model
                 , br [] []
-                , br [] []
-                , substitutionKindSelection model
+                , h6 [] [ text "Language" ]
+                , Grid.row []
+                    [ Grid.col [ Col.md6 ] [ languageSelection "" model left ]
+                    , Grid.col [ Col.md6 ] [ languageSelection "" model right ]
+                    ]
                 ]
             ]
         , br [] []
