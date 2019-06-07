@@ -223,7 +223,7 @@ footerAbout =
         [ Button.small
         , Button.onClick ShowAboutModal
         ]
-        [ i [ class "fa fa-info-circle text-secondary" ] [] ]
+        [ i [ class "fa fa-info-circle info-button" ] [] ]
 
 
 aboutModal : Model -> Html Msg
@@ -291,16 +291,16 @@ terminalModal model =
                             ]
                             [ ButtonGroup.button
                                 [ Button.secondary
-                                , Button.attrs [ Spacing.mt1, class "w-100" ]
+                                , Button.attrs [ Spacing.mt1, class "w-100 terminal-button" ]
                                 , Button.onClick CopyTerminalCommandClicked
                                 ]
                                 [ text "Copy above command. Output will print to terminal." ]
                             , ButtonGroup.button
                                 [ Button.outlineSecondary
-                                , Button.attrs [ class model.copyButtonTerminalText, Spacing.mt1 ]
+                                , Button.attrs [ Spacing.mt1, class "terminal-small-button" ]
                                 , Button.onClick CopyTerminalCommandClicked
                                 ]
-                                []
+                                [ i [ class model.copyButtonTerminalText ] [] ]
                             ]
                         ]
                     ]
@@ -312,16 +312,16 @@ terminalModal model =
                             ]
                             [ ButtonGroup.button
                                 [ Button.danger
-                                , Button.attrs [ Spacing.mt1, class "w-100" ]
+                                , Button.attrs [ Spacing.mt1, class "w-100 terminal-button-add-in-place" ]
                                 , Button.onClick CopyTerminalCommandInPlaceClicked
                                 ]
                                 [ text "Add -i option to the command. Files will change in place. Make sure you have a backup or version control." ]
                             , ButtonGroup.button
                                 [ Button.outlineDanger
-                                , Button.attrs [ class model.copyButtonTextInPlace, Spacing.mt1 ]
+                                , Button.attrs [ Spacing.mt1, class "terminal-small-button-add-in-place" ]
                                 , Button.onClick CopyTerminalCommandInPlaceClicked
                                 ]
-                                []
+                                [ i [ class model.copyButtonTextInPlace ] [] ]
                             ]
                         ]
                     ]
@@ -333,11 +333,14 @@ terminalModal model =
 terminalButtonGroup : Model -> Html Msg
 terminalButtonGroup model =
     div [ class "text-right" ]
-        [ ButtonGroup.buttonGroup [ ButtonGroup.small ]
+        [ ButtonGroup.buttonGroup
+            [ ButtonGroup.small
+            ]
             [ ButtonGroup.button
                 [ Button.secondary
                 , Button.small
                 , Button.onClick ShowTerminalModal
+                , Button.attrs [ class "terminal-button" ]
                 ]
                 [ i [ class "fa-fw fas fa-chevron-right" ] []
                 , text "Run in Terminal"
@@ -345,10 +348,10 @@ terminalButtonGroup model =
             , ButtonGroup.button
                 [ Button.outlineSecondary
                 , Button.small
-                , Button.attrs [ class model.copyButtonTerminalText ]
+                , Button.attrs [ class "terminal-small-button" ]
                 , Button.onClick CopyTerminalCommandClicked
                 ]
-                []
+                [ i [ class model.copyButtonTerminalText ] [] ]
             ]
         ]
 

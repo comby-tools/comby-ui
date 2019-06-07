@@ -6,3 +6,5 @@ Token.elm
 /prod
 /staging
 /dev
+/update-prod.sh
+/update-staging.sh
