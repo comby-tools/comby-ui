@@ -1,10 +1,9 @@
 #!/bin/bash
 
-cp staging/* .
-make clean &> /dev/null
+cp prod/* .
+make clean
 make prod
 cp elm.js docs
-cp dark-theme/custom.css docs
 git add docs
 git commit -m "docs updated"
 
