@@ -1,3 +1,95 @@
+body {
+    background-color: #0f0f0f;
+}
+
+/* match and rewrite content boxes */
+pre {
+    color: #ced4da;
+    background-color: #1f1f1f;
+}
+
+h6 {
+    color: #ced4da;
+}
+
+
+/* text box background and font color */
+.form-control {
+    background-color: #343a40;
+    color: #ced4da;
+}
+
+.form-control::placeholder {
+    color: #cccccc;
+}
+
+.rule-syntax-errors {
+    color: #ffa504;
+}
+
+.modal-content {
+    background-color: #343a40;
+}
+
+.modal-title {
+    color: #ced4da;
+}
+
+.run-in-terminal {
+    border-color: #ced4da;
+}
+
+/* radio buttons */
+.form-check-label {
+    color: #ced4da;
+}
+
+.btn-warning {
+    background-color: #865f18 !important;
+}
+
+
+.info-button {
+    color: #ced4da !important;
+}
+
+.terminal-button {
+    border-color: #ced4da;
+}
+
+.terminal-button:hover {
+    border-color: #ced4da;
+}
+
+.terminal-small-button {
+    border-color: #ced4da;
+    color: #ced4da;
+}
+
+.terminal-small-button:hover {
+    border-color: #ced4da;
+    color: #ced4da;
+}
+
+.terminal-button-add-in-place {
+    border-color: yellow;
+}
+
+.terminal-button-add-in-place:hover {
+    border-color: yellow;
+}
+
+
+.terminal-small-button-add-in-place {
+    border-color: yellow;
+}
+
+.terminal-small-button-add-in-place:hover {
+    border-color: yellow;
+}
+
+
+
 mark {
     background-color: gray;
     color: white;
