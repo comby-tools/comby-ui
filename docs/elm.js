@@ -14134,8 +14134,8 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
-var _user$project$Configuration$thisDomain = 'https://comby.live';
+var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8887';
+var _user$project$Configuration$thisDomain = 'https://staging.comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
 	function (source, match, rule, rewrite, language, substitutionKind, id) {
@@ -14932,7 +14932,7 @@ var _user$project$Controller$jsonFromModel = function (model) {
 var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/rewrite');
 var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
 var _user$project$Controller$terminalCommand = F2(
-	function (model, extra_option) {
+	function (model, extraOption) {
 		var zeroInstall = A2(_elm_lang$core$Basics_ops['++'], '# the next line installs comby if you need it :)\n', 'bash <(curl -sL 0.comby.dev) && \\\n');
 		var _p1 = _elm_lang$core$Native_Utils.eq(model.ruleInput, 'where true') ? {ctor: '_Tuple2', _0: '', _1: ''} : {
 			ctor: '_Tuple2',
@@ -14960,7 +14960,7 @@ var _user$project$Controller$terminalCommand = F2(
 			A2(_elm_lang$core$Basics_ops['++'], model.matchTemplateInput, '\nMATCH\n)\n'));
 		var languageFilter = function () {
 			var s = _user$project$LanguageExtension$toString(model.language);
-			return _elm_lang$core$Native_Utils.eq(s, '.generic') ? '*' : s;
+			return _elm_lang$core$Native_Utils.eq(s, '.generic') ? '' : s;
 		}();
 		var text = _elm_lang$core$Native_Utils.eq(model.matchTemplateInput, '') ? 'First enter a match template :)' : A2(
 			_elm_lang$core$Basics_ops['++'],
@@ -14995,7 +14995,7 @@ var _user$project$Controller$terminalCommand = F2(
 												A2(
 													_elm_lang$core$Basics_ops['++'],
 													' ',
-													A2(_elm_lang$core$Basics_ops['++'], '-stats', extra_option))))))))))));
+													A2(_elm_lang$core$Basics_ops['++'], '-stats', extraOption))))))))))));
 		return text;
 	});
 var _user$project$Controller$debug = false;
@@ -15481,7 +15481,16 @@ var _user$project$View$terminalButtonGroup = function (model) {
 								_1: {
 									ctor: '::',
 									_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$ShowTerminalModal),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('terminal-button'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						},
@@ -15516,7 +15525,7 @@ var _user$project$View$terminalButtonGroup = function (model) {
 										_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTerminalText),
+												_0: _elm_lang$html$Html_Attributes$class('terminal-small-button'),
 												_1: {ctor: '[]'}
 											}),
 										_1: {
@@ -15527,7 +15536,18 @@ var _user$project$View$terminalButtonGroup = function (model) {
 									}
 								}
 							},
-							{ctor: '[]'}),
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$i,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTerminalText),
+										_1: {ctor: '[]'}
+									},
+									{ctor: '[]'}),
+								_1: {ctor: '[]'}
+							}),
 						_1: {ctor: '[]'}
 					}
 				}),
@@ -15597,7 +15617,7 @@ var _user$project$View$terminalModal = function (model) {
 																	_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
 																	_1: {
 																		ctor: '::',
-																		_0: _elm_lang$html$Html_Attributes$class('w-100'),
+																		_0: _elm_lang$html$Html_Attributes$class('w-100 terminal-button'),
 																		_1: {ctor: '[]'}
 																	}
 																}),
@@ -15625,10 +15645,10 @@ var _user$project$View$terminalModal = function (model) {
 																_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
 																	{
 																		ctor: '::',
-																		_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTerminalText),
+																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
 																		_1: {
 																			ctor: '::',
-																			_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																			_0: _elm_lang$html$Html_Attributes$class('terminal-small-button'),
 																			_1: {ctor: '[]'}
 																		}
 																	}),
@@ -15639,7 +15659,18 @@ var _user$project$View$terminalModal = function (model) {
 																}
 															}
 														},
-														{ctor: '[]'}),
+														{
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$i,
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTerminalText),
+																	_1: {ctor: '[]'}
+																},
+																{ctor: '[]'}),
+															_1: {ctor: '[]'}
+														}),
 													_1: {ctor: '[]'}
 												}
 											}),
@@ -15694,7 +15725,7 @@ var _user$project$View$terminalModal = function (model) {
 																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
 																		_1: {
 																			ctor: '::',
-																			_0: _elm_lang$html$Html_Attributes$class('w-100'),
+																			_0: _elm_lang$html$Html_Attributes$class('w-100 terminal-button-add-in-place'),
 																			_1: {ctor: '[]'}
 																		}
 																	}),
@@ -15722,10 +15753,10 @@ var _user$project$View$terminalModal = function (model) {
 																	_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
 																		{
 																			ctor: '::',
-																			_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTextInPlace),
+																			_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
 																			_1: {
 																				ctor: '::',
-																				_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt1,
+																				_0: _elm_lang$html$Html_Attributes$class('terminal-small-button-add-in-place'),
 																				_1: {ctor: '[]'}
 																			}
 																		}),
@@ -15736,7 +15767,18 @@ var _user$project$View$terminalModal = function (model) {
 																	}
 																}
 															},
-															{ctor: '[]'}),
+															{
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$i,
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$class(model.copyButtonTextInPlace),
+																		_1: {ctor: '[]'}
+																	},
+																	{ctor: '[]'}),
+																_1: {ctor: '[]'}
+															}),
 														_1: {ctor: '[]'}
 													}
 												}),
@@ -15959,7 +16001,7 @@ var _user$project$View$footerAbout = A2(
 			_elm_lang$html$Html$i,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('fa fa-info-circle text-secondary'),
+				_0: _elm_lang$html$Html_Attributes$class('fa fa-info-circle info-button'),
 				_1: {ctor: '[]'}
 			},
 			{ctor: '[]'}),
