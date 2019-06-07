@@ -4,5 +4,7 @@ elm.js
 web-root
 Token.elm
 /prod
+/staging
 /update-prod.sh
+/update-staging.sh
 /dev
