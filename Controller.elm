@@ -22,7 +22,7 @@ debug =
 
 
 terminalCommand : Model -> String -> String
-terminalCommand model extra_option =
+terminalCommand model extraOption =
     let
         languageFilter =
             let
@@ -30,7 +30,7 @@ terminalCommand model extra_option =
                     LanguageExtension.toString model.language
             in
             if s == ".generic" then
-                "*"
+                ""
 
             else
                 s
@@ -71,7 +71,7 @@ terminalCommand model extra_option =
                 "First enter a match template :)"
 
             else
-                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby $COMBY_M " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extra_option
+                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby $COMBY_M " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extraOption
     in
     text
 
