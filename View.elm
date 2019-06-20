@@ -31,7 +31,7 @@ sourceInput model =
         [ Textarea.id "source"
         , Textarea.rows 3
         , Textarea.onInput SourceInputUpdated
-        , Textarea.attrs [ placeholder "Paste your source code here" ]
+        , Textarea.attrs [ placeholder "Paste your source code here", spellcheck False ]
         , Textarea.defaultValue model.sourceInput
         ]
 
@@ -42,7 +42,7 @@ matchTemplateInput model =
         [ Textarea.id "match_template"
         , Textarea.rows 3
         , Textarea.onInput MatchTemplateInputUpdated
-        , Textarea.attrs [ placeholder "Match Template" ]
+        , Textarea.attrs [ placeholder "Match Template", spellcheck False ]
         , Textarea.defaultValue model.matchTemplateInput
         ]
 
@@ -53,7 +53,7 @@ ruleInput model =
         [ Textarea.id "rule"
         , Textarea.rows 1
         , Textarea.onInput RuleInputUpdated
-        , Textarea.attrs [ placeholder "where true" ]
+        , Textarea.attrs [ placeholder "where true", spellcheck False ]
         , Textarea.defaultValue model.ruleInput
         ]
 
@@ -71,7 +71,7 @@ rewriteTemplateInput model =
         [ Textarea.id "rewrite"
         , Textarea.rows 3
         , Textarea.onInput RewriteTemplateInputUpdated
-        , Textarea.attrs [ placeholder "Rewrite Template" ]
+        , Textarea.attrs [ placeholder "Rewrite Template", spellcheck False ]
         , Textarea.defaultValue model.rewriteTemplateInput
         ]
 
@@ -273,7 +273,7 @@ terminalModal model =
                 [ Grid.row []
                     [ Grid.col [ Col.md3 ] []
                     , Grid.col [ Col.md7 ]
-                        [ Html.pre []
+                        [ Html.pre [ class "modal-pre" ]
                             [ Html.code []
                                 [ text model.modalText ]
                             ]
@@ -385,11 +385,9 @@ sourcePage model =
                     -- changing to md12 makes this flush on left
                     [ Grid.col [ Col.md11 ]
                         [ Grid.row []
-                            [ Grid.col [ Col.md6 ]
-                                [ highlightableSourceListing model
-                                ]
-                            , Grid.col [ Col.md6 ]
-                                [ highlightableRewriteResult model
+                            [ Grid.col [ Col.xs12 ]
+                                [ br [] []
+                                , sourceInput model
                                 ]
                             ]
                         , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
@@ -408,10 +406,12 @@ sourcePage model =
                                 [ ruleDisplaySyntaxErrors model
                                 ]
                             ]
-                        , Grid.row []
-                            [ Grid.col [ Col.xs12 ]
-                                [ br [] []
-                                , sourceInput model
+                        , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+                            [ Grid.col [ Col.md6 ]
+                                [ highlightableSourceListing model
+                                ]
+                            , Grid.col [ Col.md6 ]
+                                [ highlightableRewriteResult model
                                 ]
                             ]
                         , Grid.row [ Row.betweenXs, Row.attrs [ Spacing.mt3 ] ]
