@@ -14134,8 +14134,8 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
-var _user$project$Configuration$thisDomain = 'https://comby.live';
+var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8887';
+var _user$project$Configuration$thisDomain = 'https://staging.comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
 	function (source, match, rule, rewrite, language, substitutionKind, id) {
@@ -15827,7 +15827,11 @@ var _user$project$View$terminalModal = function (model) {
 												ctor: '::',
 												_0: A2(
 													_elm_lang$html$Html$pre,
-													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$class('modal-pre'),
+														_1: {ctor: '[]'}
+													},
 													{
 														ctor: '::',
 														_0: A2(
@@ -16383,7 +16387,11 @@ var _user$project$View$rewriteTemplateInput = function (model) {
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$placeholder('Rewrite Template'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$spellcheck(false),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16426,7 +16434,11 @@ var _user$project$View$ruleInput = function (model) {
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$placeholder('where true'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$spellcheck(false),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16455,7 +16467,11 @@ var _user$project$View$matchTemplateInput = function (model) {
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$placeholder('Match Template'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$spellcheck(false),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16484,7 +16500,11 @@ var _user$project$View$sourceInput = function (model) {
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$placeholder('Paste your source code here'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$spellcheck(false),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16555,30 +16575,22 @@ var _user$project$View$sourcePage = function (model) {
 														_rundis$elm_bootstrap$Bootstrap_Grid$col,
 														{
 															ctor: '::',
-															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
 															_1: {ctor: '[]'}
 														},
 														{
 															ctor: '::',
-															_0: _user$project$View$highlightableSourceListing(model),
-															_1: {ctor: '[]'}
+															_0: A2(
+																_elm_lang$html$Html$br,
+																{ctor: '[]'},
+																{ctor: '[]'}),
+															_1: {
+																ctor: '::',
+																_0: _user$project$View$sourceInput(model),
+																_1: {ctor: '[]'}
+															}
 														}),
-													_1: {
-														ctor: '::',
-														_0: A2(
-															_rundis$elm_bootstrap$Bootstrap_Grid$col,
-															{
-																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
-																_1: {ctor: '[]'}
-															},
-															{
-																ctor: '::',
-																_0: _user$project$View$highlightableRewriteResult(model),
-																_1: {ctor: '[]'}
-															}),
-														_1: {ctor: '[]'}
-													}
+													_1: {ctor: '[]'}
 												}),
 											_1: {
 												ctor: '::',
@@ -16674,29 +16686,46 @@ var _user$project$View$sourcePage = function (model) {
 														ctor: '::',
 														_0: A2(
 															_rundis$elm_bootstrap$Bootstrap_Grid$row,
-															{ctor: '[]'},
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															},
 															{
 																ctor: '::',
 																_0: A2(
 																	_rundis$elm_bootstrap$Bootstrap_Grid$col,
 																	{
 																		ctor: '::',
-																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
 																		_1: {ctor: '[]'}
 																	},
 																	{
 																		ctor: '::',
-																		_0: A2(
-																			_elm_lang$html$Html$br,
-																			{ctor: '[]'},
-																			{ctor: '[]'}),
-																		_1: {
-																			ctor: '::',
-																			_0: _user$project$View$sourceInput(model),
-																			_1: {ctor: '[]'}
-																		}
+																		_0: _user$project$View$highlightableSourceListing(model),
+																		_1: {ctor: '[]'}
 																	}),
-																_1: {ctor: '[]'}
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																		{
+																			ctor: '::',
+																			_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																			_1: {ctor: '[]'}
+																		},
+																		{
+																			ctor: '::',
+																			_0: _user$project$View$highlightableRewriteResult(model),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {ctor: '[]'}
+																}
 															}),
 														_1: {
 															ctor: '::',
