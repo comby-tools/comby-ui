@@ -29,6 +29,11 @@ h6 {
 
 .modal-content {
     background-color: #343a40;
+    color: #ced4da;
+}
+
+.modal-pre {
+    background-color: #343a40;
 }
 
 .modal-title {
