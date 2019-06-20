@@ -15810,7 +15810,7 @@ var _user$project$View$terminalModal = function (model) {
 										_rundis$elm_bootstrap$Bootstrap_Grid$col,
 										{
 											ctor: '::',
-											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
+											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
 											_1: {ctor: '[]'}
 										},
 										{ctor: '[]'}),
@@ -15820,7 +15820,7 @@ var _user$project$View$terminalModal = function (model) {
 											_rundis$elm_bootstrap$Bootstrap_Grid$col,
 											{
 												ctor: '::',
-												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md7,
+												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md8,
 												_1: {ctor: '[]'}
 											},
 											{
