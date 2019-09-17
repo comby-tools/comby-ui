@@ -14938,7 +14938,7 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			modalTerminalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
 			modalText: '',
 			modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
-			theme: _user$project$Types$Dark
+			theme: _user$project$Types$Light
 		};
 	});
 var _user$project$Controller$jsonFromModel = function (model) {
