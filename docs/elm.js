@@ -14387,6 +14387,7 @@ var _user$project$Types$Model = function (a) {
 var _user$project$Types$NotFound = {ctor: 'NotFound'};
 var _user$project$Types$SourcePage = {ctor: 'SourcePage'};
 var _user$project$Types$XML = {ctor: 'XML'};
+var _user$project$Types$Text = {ctor: 'Text'};
 var _user$project$Types$Swift = {ctor: 'Swift'};
 var _user$project$Types$SQL = {ctor: 'SQL'};
 var _user$project$Types$Scala = {ctor: 'Scala'};
@@ -14506,6 +14507,8 @@ var _user$project$LanguageExtension$toString = function (s) {
 			return '.swift';
 		case 'Latex':
 			return '.tex';
+		case 'Text':
+			return '.txt';
 		default:
 			return '.xml';
 	}
@@ -14563,6 +14566,8 @@ var _user$project$LanguageExtension$prettyName = function (s) {
 			return 'Swift';
 		case 'Latex':
 			return 'Latex';
+		case 'Text':
+			return 'Text';
 		default:
 			return 'XML';
 	}
@@ -14624,6 +14629,8 @@ var _user$project$LanguageExtension$ofString = function (s) {
 			return _user$project$Types$Swift;
 		case '.tex':
 			return _user$project$Types$Latex;
+		case '.txt':
+			return _user$project$Types$Text;
 		case '.bib':
 			return _user$project$Types$Latex;
 		default:
@@ -14708,7 +14715,11 @@ var _user$project$LanguageExtension$all = {
 																									_1: {
 																										ctor: '::',
 																										_0: _user$project$Types$XML,
-																										_1: {ctor: '[]'}
+																										_1: {
+																											ctor: '::',
+																											_0: _user$project$Types$Text,
+																											_1: {ctor: '[]'}
+																										}
 																									}
 																								}
 																							}

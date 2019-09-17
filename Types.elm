@@ -41,6 +41,7 @@ type LanguageExtension
     | Scala
     | SQL
     | Swift
+    | Text
     | XML
 
 
