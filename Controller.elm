@@ -9,7 +9,7 @@ import JsonRequest
 import JsonResult
 import LanguageExtension
 import Mock exposing (..)
-import Navigation exposing (Location)
+import Navigation exposing (Location, load)
 import Ports
 import SubstitutionKind
 import Token
@@ -558,6 +558,9 @@ update msg model =
               }
             , Ports.copyToClipboard model.url
             )
+
+        DocsLinkClicked ->
+            ( new_model, load "https://comby.dev/#basic-usage" )
 
         ShortenUrlResult (Ok url) ->
             case Json.Decode.decodeString (field "id" Json.Decode.string) url of

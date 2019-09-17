@@ -87,6 +87,7 @@ type Msg
     | RewriteResult (Result Http.Error JsonResult.JsonRewriteResult)
     | MatchesResult (Result Http.Error JsonResult.JsonMatchResult)
     | ShareLinkClicked
+    | DocsLinkClicked
     | CopyShareLinkClicked
     | ShortenUrlResult (Result Http.Error String)
     | CloseTerminalModal

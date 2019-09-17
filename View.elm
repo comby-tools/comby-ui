@@ -158,7 +158,7 @@ substitutionKindSelection model =
 
 footerShareLink : Model -> Html Msg
 footerShareLink model =
-    div [] <|
+    div [ class "text-left" ] <|
         [ Button.button
             [ Button.small
             , Button.warning
@@ -194,6 +194,21 @@ footerShareLink model =
                         ]
                     ]
                )
+
+
+docsLink : () -> Html Msg
+docsLink () =
+    div [] <|
+        [ Button.button
+            [ Button.small
+            , Button.secondary
+            , Button.onClick DocsLinkClicked
+            , Button.attrs [ class "documentation-button" ]
+            ]
+            [ i [ class "fa-fw fas fa-file-alt" ] []
+            , text "Documentation"
+            ]
+        ]
 
 
 footerServerConnected : Model -> Html Msg
@@ -414,9 +429,11 @@ sourcePage model =
                                 [ highlightableRewriteResult model
                                 ]
                             ]
-                        , Grid.row [ Row.betweenXs, Row.attrs [ Spacing.mt3 ] ]
+                        , Grid.row [ Row.betweenXs, Row.attrs [ Spacing.mt3, class "text-center" ] ]
                             [ Grid.col []
                                 [ footerShareLink model ]
+                            , Grid.col [ Col.md4 ]
+                                [ docsLink () ]
                             , Grid.col []
                                 [ terminalButtonGroup model ]
                             ]
