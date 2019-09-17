@@ -14361,7 +14361,9 @@ var _user$project$Types$Model = function (a) {
 																			return function (t) {
 																				return function (u) {
 																					return function (v) {
-																						return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonLinkText: o, copyButtonTerminalText: p, copyButtonTextInPlace: q, currentRewriteResultId: r, currentMatchResultId: s, modalTerminalVisibility: t, modalText: u, modalAboutVisibility: v};
+																						return function (w) {
+																							return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonLinkText: o, copyButtonTerminalText: p, copyButtonTextInPlace: q, currentRewriteResultId: r, currentMatchResultId: s, modalTerminalVisibility: t, modalText: u, modalAboutVisibility: v, theme: w};
+																						};
 																					};
 																				};
 																			};
@@ -14386,6 +14388,8 @@ var _user$project$Types$Model = function (a) {
 };
 var _user$project$Types$NotFound = {ctor: 'NotFound'};
 var _user$project$Types$SourcePage = {ctor: 'SourcePage'};
+var _user$project$Types$Light = {ctor: 'Light'};
+var _user$project$Types$Dark = {ctor: 'Dark'};
 var _user$project$Types$XML = {ctor: 'XML'};
 var _user$project$Types$Text = {ctor: 'Text'};
 var _user$project$Types$Swift = {ctor: 'Swift'};
@@ -14415,6 +14419,9 @@ var _user$project$Types$Assembly = {ctor: 'Assembly'};
 var _user$project$Types$Generic = {ctor: 'Generic'};
 var _user$project$Types$NewlineSeparated = {ctor: 'NewlineSeparated'};
 var _user$project$Types$InPlace = {ctor: 'InPlace'};
+var _user$project$Types$Theme = function (a) {
+	return {ctor: 'Theme', _0: a};
+};
 var _user$project$Types$CopyTerminalCommandInPlaceClicked = {ctor: 'CopyTerminalCommandInPlaceClicked'};
 var _user$project$Types$CopyTerminalCommandClicked = {ctor: 'CopyTerminalCommandClicked'};
 var _user$project$Types$ShowAboutModal = {ctor: 'ShowAboutModal'};
@@ -14930,7 +14937,8 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			currentMatchResultId: 0,
 			modalTerminalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
 			modalText: '',
-			modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden
+			modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
+			theme: _user$project$Types$Dark
 		};
 	});
 var _user$project$Controller$jsonFromModel = function (model) {
@@ -15422,7 +15430,7 @@ var _user$project$Controller$update = F2(
 						{modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$shown}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'CloseAboutModal':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15430,9 +15438,109 @@ var _user$project$Controller$update = F2(
 						{modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			default:
+				var _p39 = _p8._0;
+				if (_p39.ctor === 'Dark') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{theme: _user$project$Types$Dark}),
+						_1: _elm_lang$navigation$Navigation$load('https://comby.live')
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{theme: _user$project$Types$Light}),
+						_1: _elm_lang$navigation$Navigation$load('https://light.comby.live')
+					};
+				}
 		}
 	});
 
+var _user$project$View$toggleTheme = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButtonGroup,
+				{
+					ctor: '::',
+					_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A3(
+						_rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButton,
+						_elm_lang$core$Native_Utils.eq(model.theme, _user$project$Types$Dark),
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+							_1: {
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(
+									_user$project$Types$Theme(_user$project$Types$Dark)),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$i,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-moon'),
+									_1: {ctor: '[]'}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(''),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A3(
+							_rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButton,
+							_elm_lang$core$Native_Utils.eq(model.theme, _user$project$Types$Light),
+							{
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+								_1: {
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(
+										_user$project$Types$Theme(_user$project$Types$Light)),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$i,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-sun'),
+										_1: {ctor: '[]'}
+									},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(''),
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
 var _user$project$View$halves = function (l) {
 	var n = ((_elm_lang$core$List$length(l) / 2) | 0) + 2;
 	var newl = A2(
@@ -16956,10 +17064,10 @@ var _user$project$View$sourcePage = function (model) {
 														_rundis$elm_bootstrap$Bootstrap_Grid$col,
 														{
 															ctor: '::',
-															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md5,
 															_1: {
 																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd3,
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd4,
 																_1: {ctor: '[]'}
 															}
 														},
@@ -16974,7 +17082,7 @@ var _user$project$View$sourcePage = function (model) {
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
 															{
 																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
 																_1: {ctor: '[]'}
 															},
 															{
@@ -16985,7 +17093,61 @@ var _user$project$View$sourcePage = function (model) {
 														_1: {ctor: '[]'}
 													}
 												}),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_rundis$elm_bootstrap$Bootstrap_Grid$row,
+													{
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt4,
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$middleXs,
+															_1: {ctor: '[]'}
+														}
+													},
+													{
+														ctor: '::',
+														_0: A2(
+															_rundis$elm_bootstrap$Bootstrap_Grid$col,
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																_1: {
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd3,
+																	_1: {ctor: '[]'}
+																}
+															},
+															{
+																ctor: '::',
+																_0: _user$project$View$toggleTheme(model),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text(''),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
+														}
+													}),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
