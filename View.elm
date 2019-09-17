@@ -76,11 +76,11 @@ rewriteTemplateInput model =
         ]
 
 
-highlightableSourceListing : Model -> Html Msg
-highlightableSourceListing model =
+highlightableSourceListing : Model -> String -> Html Msg
+highlightableSourceListing model cssHeight =
     Html.div
         [ Html.Attributes.class "context" ]
-        [ Html.pre [ Html.Attributes.class "source-box" ]
+        [ Html.pre [ Html.Attributes.class cssHeight ]
             [ Html.code [ Html.Attributes.id "listing" ]
                 -- we set the text in index.html to synchronize highlighting
                 [ text "" ]
@@ -88,11 +88,11 @@ highlightableSourceListing model =
         ]
 
 
-highlightableRewriteResult : Model -> Html Msg
-highlightableRewriteResult model =
+highlightableRewriteResult : Model -> String -> Html Msg
+highlightableRewriteResult model cssHeight =
     Html.div
         [ Html.Attributes.class "context2" ]
-        [ Html.pre [ Html.Attributes.class "rewrite-box" ]
+        [ Html.pre [ Html.Attributes.class cssHeight ]
             [ Html.code [ Html.Attributes.id "listing2" ]
                 -- we set the text in index.html to synchronize highlighting
                 [ text "" ]
@@ -407,6 +407,56 @@ toggleTheme model =
         ]
 
 
+toggleWindowLayout : Model -> Html Msg
+toggleWindowLayout model =
+    let
+        ( icon, nextRotation ) =
+            if model.rotation == Horizontal then
+                ( "fas fa-ellipsis-v", Vertical )
+
+            else
+                ( "fas fa-ellipsis-h", Horizontal )
+    in
+    div [] <|
+        [ Button.button
+            [ Button.small
+            , Button.secondary
+            , Button.onClick (ChangeRotation nextRotation)
+            ]
+            [ i [ class icon ] []
+            , text ""
+            ]
+        ]
+
+
+horizontalLayout : Model -> List (Html Msg)
+horizontalLayout model =
+    [ Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+        [ Grid.col [ Col.md6 ]
+            [ highlightableSourceListing model "source-box"
+            ]
+        , Grid.col [ Col.md6 ]
+            [ highlightableRewriteResult model "rewrite-box"
+            ]
+        ]
+    ]
+
+
+verticalLayout : Model -> List (Html Msg)
+verticalLayout model =
+    [ Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+        [ Grid.col []
+            [ highlightableSourceListing model "source-box"
+            ]
+        ]
+    , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+        [ Grid.col []
+            [ highlightableRewriteResult model "rewrite-box"
+            ]
+        ]
+    ]
+
+
 sourcePage : Model -> Html Msg
 sourcePage model =
     let
@@ -419,13 +469,13 @@ sourcePage model =
                 [ Grid.row [ Row.rightMd ]
                     -- changing to md12 makes this flush on left
                     [ Grid.col [ Col.md11 ]
-                        [ Grid.row []
+                        ([ Grid.row []
                             [ Grid.col [ Col.xs12 ]
                                 [ br [] []
                                 , sourceInput model
                                 ]
                             ]
-                        , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+                         , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
                             [ Grid.col [ Col.md6 ]
                                 [ matchTemplateInput model
                                 ]
@@ -433,7 +483,7 @@ sourcePage model =
                                 [ rewriteTemplateInput model
                                 ]
                             ]
-                        , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+                         , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
                             [ Grid.col [ Col.md6 ]
                                 [ ruleInput model
                                 ]
@@ -441,23 +491,23 @@ sourcePage model =
                                 [ ruleDisplaySyntaxErrors model
                                 ]
                             ]
-                        , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
-                            [ Grid.col [ Col.md6 ]
-                                [ highlightableSourceListing model
-                                ]
-                            , Grid.col [ Col.md6 ]
-                                [ highlightableRewriteResult model
-                                ]
-                            ]
-                        , Grid.row [ Row.betweenXs, Row.attrs [ Spacing.mt3, class "text-center" ] ]
-                            [ Grid.col []
-                                [ footerShareLink model ]
-                            , Grid.col [ Col.md4 ]
-                                [ docsLink () ]
-                            , Grid.col []
-                                [ terminalButtonGroup model ]
-                            ]
-                        ]
+                         ]
+                            ++ (if model.rotation == Vertical then
+                                    verticalLayout model
+
+                                else
+                                    horizontalLayout model
+                               )
+                            ++ [ Grid.row [ Row.betweenXs, Row.attrs [ Spacing.mt3, class "text-center" ] ]
+                                    [ Grid.col []
+                                        [ footerShareLink model ]
+                                    , Grid.col [ Col.md4 ]
+                                        [ docsLink () ]
+                                    , Grid.col []
+                                        [ terminalButtonGroup model ]
+                                    ]
+                               ]
+                        )
                     ]
                 ]
             , Grid.col [ Col.md2 ]
@@ -474,10 +524,10 @@ sourcePage model =
                         [ footerAbout ]
                     ]
                 , Grid.row [ Row.attrs [ Spacing.mt4 ], Row.middleXs ]
-                    [ Grid.col [ Col.md6, Col.offsetMd3 ]
+                    [ Grid.col [ Col.md1 ]
                         [ toggleTheme model ]
-                    , Grid.col [ Col.md3 ]
-                        [ text "" ]
+                    , Grid.col [ Col.md3, Col.offsetMd3 ]
+                        [ toggleWindowLayout model ]
                     ]
                 ]
             ]

@@ -277,6 +277,7 @@ loadInitialStaticState flags location =
     , modalText = ""
     , modalAboutVisibility = Modal.hidden
     , theme = Dark
+    , rotation = Horizontal
     }
 
 
@@ -727,6 +728,14 @@ update msg model =
 
                 Light ->
                     ( { model | theme = Light }, load "https://light.comby.live" )
+
+        ChangeRotation r ->
+            case r of
+                Horizontal ->
+                    ( { model | rotation = Horizontal }, Cmd.none )
+
+                Vertical ->
+                    ( { model | rotation = Vertical }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

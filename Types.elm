@@ -1,4 +1,4 @@
-module Types exposing (Flags, LanguageExtension(..), Model, Msg(..), Page(..), SubstitutionKind(..), ThemeKind(..))
+module Types exposing (Flags, LanguageExtension(..), Model, Msg(..), Page(..), Rotation(..), SubstitutionKind(..), ThemeKind(..))
 
 import Bootstrap.Modal as Modal
 import Http
@@ -18,6 +18,11 @@ type Page
 type ThemeKind
     = Dark
     | Light
+
+
+type Rotation
+    = Vertical
+    | Horizontal
 
 
 type LanguageExtension
@@ -79,6 +84,7 @@ type alias Model =
     , modalText : String
     , modalAboutVisibility : Modal.Visibility
     , theme : ThemeKind
+    , rotation : Rotation
     }
 
 
@@ -103,3 +109,4 @@ type Msg
     | CopyTerminalCommandClicked
     | CopyTerminalCommandInPlaceClicked
     | Theme ThemeKind
+    | ChangeRotation Rotation
