@@ -1,4 +1,4 @@
-module Types exposing (Flags, LanguageExtension(..), Model, Msg(..), Page(..), SubstitutionKind(..))
+module Types exposing (Flags, LanguageExtension(..), Model, Msg(..), Page(..), SubstitutionKind(..), ThemeKind(..))
 
 import Bootstrap.Modal as Modal
 import Http
@@ -13,6 +13,11 @@ type alias Flags =
 type Page
     = SourcePage
     | NotFound
+
+
+type ThemeKind
+    = Dark
+    | Light
 
 
 type LanguageExtension
@@ -41,6 +46,7 @@ type LanguageExtension
     | Scala
     | SQL
     | Swift
+    | Text
     | XML
 
 
@@ -72,6 +78,7 @@ type alias Model =
     , modalTerminalVisibility : Modal.Visibility
     , modalText : String
     , modalAboutVisibility : Modal.Visibility
+    , theme : ThemeKind
     }
 
 
@@ -86,6 +93,7 @@ type Msg
     | RewriteResult (Result Http.Error JsonResult.JsonRewriteResult)
     | MatchesResult (Result Http.Error JsonResult.JsonMatchResult)
     | ShareLinkClicked
+    | DocsLinkClicked
     | CopyShareLinkClicked
     | ShortenUrlResult (Result Http.Error String)
     | CloseTerminalModal
@@ -94,3 +102,4 @@ type Msg
     | ShowAboutModal
     | CopyTerminalCommandClicked
     | CopyTerminalCommandInPlaceClicked
+    | Theme ThemeKind

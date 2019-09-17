@@ -14134,8 +14134,8 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
-var _user$project$Configuration$thisDomain = 'https://comby.live';
+var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8887';
+var _user$project$Configuration$thisDomain = 'https://staging.comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
 	function (source, match, rule, rewrite, language, substitutionKind, id) {
@@ -14361,7 +14361,9 @@ var _user$project$Types$Model = function (a) {
 																			return function (t) {
 																				return function (u) {
 																					return function (v) {
-																						return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonLinkText: o, copyButtonTerminalText: p, copyButtonTextInPlace: q, currentRewriteResultId: r, currentMatchResultId: s, modalTerminalVisibility: t, modalText: u, modalAboutVisibility: v};
+																						return function (w) {
+																							return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonLinkText: o, copyButtonTerminalText: p, copyButtonTextInPlace: q, currentRewriteResultId: r, currentMatchResultId: s, modalTerminalVisibility: t, modalText: u, modalAboutVisibility: v, theme: w};
+																						};
 																					};
 																				};
 																			};
@@ -14386,7 +14388,10 @@ var _user$project$Types$Model = function (a) {
 };
 var _user$project$Types$NotFound = {ctor: 'NotFound'};
 var _user$project$Types$SourcePage = {ctor: 'SourcePage'};
+var _user$project$Types$Light = {ctor: 'Light'};
+var _user$project$Types$Dark = {ctor: 'Dark'};
 var _user$project$Types$XML = {ctor: 'XML'};
+var _user$project$Types$Text = {ctor: 'Text'};
 var _user$project$Types$Swift = {ctor: 'Swift'};
 var _user$project$Types$SQL = {ctor: 'SQL'};
 var _user$project$Types$Scala = {ctor: 'Scala'};
@@ -14414,6 +14419,9 @@ var _user$project$Types$Assembly = {ctor: 'Assembly'};
 var _user$project$Types$Generic = {ctor: 'Generic'};
 var _user$project$Types$NewlineSeparated = {ctor: 'NewlineSeparated'};
 var _user$project$Types$InPlace = {ctor: 'InPlace'};
+var _user$project$Types$Theme = function (a) {
+	return {ctor: 'Theme', _0: a};
+};
 var _user$project$Types$CopyTerminalCommandInPlaceClicked = {ctor: 'CopyTerminalCommandInPlaceClicked'};
 var _user$project$Types$CopyTerminalCommandClicked = {ctor: 'CopyTerminalCommandClicked'};
 var _user$project$Types$ShowAboutModal = {ctor: 'ShowAboutModal'};
@@ -14424,6 +14432,7 @@ var _user$project$Types$ShortenUrlResult = function (a) {
 	return {ctor: 'ShortenUrlResult', _0: a};
 };
 var _user$project$Types$CopyShareLinkClicked = {ctor: 'CopyShareLinkClicked'};
+var _user$project$Types$DocsLinkClicked = {ctor: 'DocsLinkClicked'};
 var _user$project$Types$ShareLinkClicked = {ctor: 'ShareLinkClicked'};
 var _user$project$Types$MatchesResult = function (a) {
 	return {ctor: 'MatchesResult', _0: a};
@@ -14506,6 +14515,8 @@ var _user$project$LanguageExtension$toString = function (s) {
 			return '.swift';
 		case 'Latex':
 			return '.tex';
+		case 'Text':
+			return '.txt';
 		default:
 			return '.xml';
 	}
@@ -14563,6 +14574,8 @@ var _user$project$LanguageExtension$prettyName = function (s) {
 			return 'Swift';
 		case 'Latex':
 			return 'Latex';
+		case 'Text':
+			return 'Text';
 		default:
 			return 'XML';
 	}
@@ -14624,6 +14637,8 @@ var _user$project$LanguageExtension$ofString = function (s) {
 			return _user$project$Types$Swift;
 		case '.tex':
 			return _user$project$Types$Latex;
+		case '.txt':
+			return _user$project$Types$Text;
 		case '.bib':
 			return _user$project$Types$Latex;
 		default:
@@ -14708,7 +14723,11 @@ var _user$project$LanguageExtension$all = {
 																									_1: {
 																										ctor: '::',
 																										_0: _user$project$Types$XML,
-																										_1: {ctor: '[]'}
+																										_1: {
+																											ctor: '::',
+																											_0: _user$project$Types$Text,
+																											_1: {ctor: '[]'}
+																										}
 																									}
 																								}
 																							}
@@ -14918,7 +14937,8 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			currentMatchResultId: 0,
 			modalTerminalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
 			modalText: '',
-			modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden
+			modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
+			theme: _user$project$Types$Dark
 		};
 	});
 var _user$project$Controller$jsonFromModel = function (model) {
@@ -15271,6 +15291,12 @@ var _user$project$Controller$update = F2(
 						{copyButtonLinkText: 'fa fa-check'}),
 					_1: _user$project$Ports$copyToClipboard(model.url)
 				};
+			case 'DocsLinkClicked':
+				return {
+					ctor: '_Tuple2',
+					_0: new_model,
+					_1: _elm_lang$navigation$Navigation$load('https://comby.dev/#basic-usage')
+				};
 			case 'ShortenUrlResult':
 				if (_p8._0.ctor === 'Ok') {
 					var _p33 = A2(
@@ -15404,7 +15430,7 @@ var _user$project$Controller$update = F2(
 						{modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$shown}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'CloseAboutModal':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15412,9 +15438,109 @@ var _user$project$Controller$update = F2(
 						{modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			default:
+				var _p39 = _p8._0;
+				if (_p39.ctor === 'Dark') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{theme: _user$project$Types$Dark}),
+						_1: _elm_lang$navigation$Navigation$load('https://comby.live')
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{theme: _user$project$Types$Light}),
+						_1: _elm_lang$navigation$Navigation$load('https://light.comby.live')
+					};
+				}
 		}
 	});
 
+var _user$project$View$toggleTheme = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButtonGroup,
+				{
+					ctor: '::',
+					_0: _rundis$elm_bootstrap$Bootstrap_ButtonGroup$small,
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A3(
+						_rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButton,
+						_elm_lang$core$Native_Utils.eq(model.theme, _user$project$Types$Dark),
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+							_1: {
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(
+									_user$project$Types$Theme(_user$project$Types$Dark)),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$i,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-moon'),
+									_1: {ctor: '[]'}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(''),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A3(
+							_rundis$elm_bootstrap$Bootstrap_ButtonGroup$radioButton,
+							_elm_lang$core$Native_Utils.eq(model.theme, _user$project$Types$Light),
+							{
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+								_1: {
+									ctor: '::',
+									_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(
+										_user$project$Types$Theme(_user$project$Types$Light)),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$i,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-sun'),
+										_1: {ctor: '[]'}
+									},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(''),
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
 var _user$project$View$halves = function (l) {
 	var n = ((_elm_lang$core$List$length(l) / 2) | 0) + 2;
 	var newl = A2(
@@ -15810,7 +15936,7 @@ var _user$project$View$terminalModal = function (model) {
 										_rundis$elm_bootstrap$Bootstrap_Grid$col,
 										{
 											ctor: '::',
-											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
+											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md2,
 											_1: {ctor: '[]'}
 										},
 										{ctor: '[]'}),
@@ -15820,14 +15946,18 @@ var _user$project$View$terminalModal = function (model) {
 											_rundis$elm_bootstrap$Bootstrap_Grid$col,
 											{
 												ctor: '::',
-												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md7,
+												_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md8,
 												_1: {ctor: '[]'}
 											},
 											{
 												ctor: '::',
 												_0: A2(
 													_elm_lang$html$Html$pre,
-													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$class('modal-pre'),
+														_1: {ctor: '[]'}
+													},
 													{
 														ctor: '::',
 														_0: A2(
@@ -16062,10 +16192,64 @@ var _user$project$View$footerServerConnected = function (model) {
 			}
 		});
 };
-var _user$project$View$footerShareLink = function (model) {
+var _user$project$View$docsLink = function (_p7) {
+	var _p8 = _p7;
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_rundis$elm_bootstrap$Bootstrap_Button$button,
+				{
+					ctor: '::',
+					_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+					_1: {
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+						_1: {
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$DocsLinkClicked),
+							_1: {
+								ctor: '::',
+								_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('documentation-button'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$i,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('fa-fw fas fa-file-alt'),
+							_1: {ctor: '[]'}
+						},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Documentation'),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$View$footerShareLink = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('text-left'),
+			_1: {ctor: '[]'}
+		},
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			{
@@ -16383,7 +16567,11 @@ var _user$project$View$rewriteTemplateInput = function (model) {
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$placeholder('Rewrite Template'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$spellcheck(false),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16426,7 +16614,11 @@ var _user$project$View$ruleInput = function (model) {
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$placeholder('where true'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$spellcheck(false),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16455,7 +16647,11 @@ var _user$project$View$matchTemplateInput = function (model) {
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$placeholder('Match Template'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$spellcheck(false),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16484,7 +16680,11 @@ var _user$project$View$sourceInput = function (model) {
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$placeholder('Paste your source code here'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$spellcheck(false),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16497,9 +16697,9 @@ var _user$project$View$sourceInput = function (model) {
 		});
 };
 var _user$project$View$sourcePage = function (model) {
-	var _p7 = _user$project$View$halves(_user$project$LanguageExtension$all);
-	var left = _p7._0;
-	var right = _p7._1;
+	var _p9 = _user$project$View$halves(_user$project$LanguageExtension$all);
+	var left = _p9._0;
+	var right = _p9._1;
 	return A2(
 		_rundis$elm_bootstrap$Bootstrap_Grid$containerFluid,
 		{ctor: '[]'},
@@ -16555,30 +16755,22 @@ var _user$project$View$sourcePage = function (model) {
 														_rundis$elm_bootstrap$Bootstrap_Grid$col,
 														{
 															ctor: '::',
-															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
 															_1: {ctor: '[]'}
 														},
 														{
 															ctor: '::',
-															_0: _user$project$View$highlightableSourceListing(model),
-															_1: {ctor: '[]'}
+															_0: A2(
+																_elm_lang$html$Html$br,
+																{ctor: '[]'},
+																{ctor: '[]'}),
+															_1: {
+																ctor: '::',
+																_0: _user$project$View$sourceInput(model),
+																_1: {ctor: '[]'}
+															}
 														}),
-													_1: {
-														ctor: '::',
-														_0: A2(
-															_rundis$elm_bootstrap$Bootstrap_Grid$col,
-															{
-																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
-																_1: {ctor: '[]'}
-															},
-															{
-																ctor: '::',
-																_0: _user$project$View$highlightableRewriteResult(model),
-																_1: {ctor: '[]'}
-															}),
-														_1: {ctor: '[]'}
-													}
+													_1: {ctor: '[]'}
 												}),
 											_1: {
 												ctor: '::',
@@ -16674,29 +16866,46 @@ var _user$project$View$sourcePage = function (model) {
 														ctor: '::',
 														_0: A2(
 															_rundis$elm_bootstrap$Bootstrap_Grid$row,
-															{ctor: '[]'},
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															},
 															{
 																ctor: '::',
 																_0: A2(
 																	_rundis$elm_bootstrap$Bootstrap_Grid$col,
 																	{
 																		ctor: '::',
-																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
 																		_1: {ctor: '[]'}
 																	},
 																	{
 																		ctor: '::',
-																		_0: A2(
-																			_elm_lang$html$Html$br,
-																			{ctor: '[]'},
-																			{ctor: '[]'}),
-																		_1: {
-																			ctor: '::',
-																			_0: _user$project$View$sourceInput(model),
-																			_1: {ctor: '[]'}
-																		}
+																		_0: _user$project$View$highlightableSourceListing(model),
+																		_1: {ctor: '[]'}
 																	}),
-																_1: {ctor: '[]'}
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																		{
+																			ctor: '::',
+																			_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																			_1: {ctor: '[]'}
+																		},
+																		{
+																			ctor: '::',
+																			_0: _user$project$View$highlightableRewriteResult(model),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {ctor: '[]'}
+																}
 															}),
 														_1: {
 															ctor: '::',
@@ -16711,7 +16920,11 @@ var _user$project$View$sourcePage = function (model) {
 																			{
 																				ctor: '::',
 																				_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
-																				_1: {ctor: '[]'}
+																				_1: {
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$class('text-center'),
+																					_1: {ctor: '[]'}
+																				}
 																			}),
 																		_1: {ctor: '[]'}
 																	}
@@ -16730,13 +16943,29 @@ var _user$project$View$sourcePage = function (model) {
 																		ctor: '::',
 																		_0: A2(
 																			_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																			{ctor: '[]'},
 																			{
 																				ctor: '::',
-																				_0: _user$project$View$terminalButtonGroup(model),
+																				_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md4,
+																				_1: {ctor: '[]'}
+																			},
+																			{
+																				ctor: '::',
+																				_0: _user$project$View$docsLink(
+																					{ctor: '_Tuple0'}),
 																				_1: {ctor: '[]'}
 																			}),
-																		_1: {ctor: '[]'}
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																				{ctor: '[]'},
+																				{
+																					ctor: '::',
+																					_0: _user$project$View$terminalButtonGroup(model),
+																					_1: {ctor: '[]'}
+																				}),
+																			_1: {ctor: '[]'}
+																		}
 																	}
 																}),
 															_1: {ctor: '[]'}
@@ -16835,10 +17064,10 @@ var _user$project$View$sourcePage = function (model) {
 														_rundis$elm_bootstrap$Bootstrap_Grid$col,
 														{
 															ctor: '::',
-															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md5,
 															_1: {
 																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd3,
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd4,
 																_1: {ctor: '[]'}
 															}
 														},
@@ -16853,7 +17082,7 @@ var _user$project$View$sourcePage = function (model) {
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
 															{
 																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
 																_1: {ctor: '[]'}
 															},
 															{
@@ -16864,7 +17093,61 @@ var _user$project$View$sourcePage = function (model) {
 														_1: {ctor: '[]'}
 													}
 												}),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_rundis$elm_bootstrap$Bootstrap_Grid$row,
+													{
+														ctor: '::',
+														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt4,
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$middleXs,
+															_1: {ctor: '[]'}
+														}
+													},
+													{
+														ctor: '::',
+														_0: A2(
+															_rundis$elm_bootstrap$Bootstrap_Grid$col,
+															{
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																_1: {
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd3,
+																	_1: {ctor: '[]'}
+																}
+															},
+															{
+																ctor: '::',
+																_0: _user$project$View$toggleTheme(model),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																{
+																	ctor: '::',
+																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text(''),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
+														}
+													}),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -16903,8 +17186,8 @@ var _user$project$View$pageNotFound = A2(
 		}
 	});
 var _user$project$View$root = function (model) {
-	var _p8 = model.page;
-	if (_p8.ctor === 'SourcePage') {
+	var _p10 = model.page;
+	if (_p10.ctor === 'SourcePage') {
 		return _user$project$View$sourcePage(model);
 	} else {
 		return _user$project$View$pageNotFound;

@@ -9,7 +9,7 @@ import JsonRequest
 import JsonResult
 import LanguageExtension
 import Mock exposing (..)
-import Navigation exposing (Location)
+import Navigation exposing (Location, load)
 import Ports
 import SubstitutionKind
 import Token
@@ -276,6 +276,7 @@ loadInitialStaticState flags location =
     , modalTerminalVisibility = Modal.hidden
     , modalText = ""
     , modalAboutVisibility = Modal.hidden
+    , theme = Dark
     }
 
 
@@ -559,6 +560,9 @@ update msg model =
             , Ports.copyToClipboard model.url
             )
 
+        DocsLinkClicked ->
+            ( new_model, load "https://comby.dev/#basic-usage" )
+
         ShortenUrlResult (Ok url) ->
             case Json.Decode.decodeString (field "id" Json.Decode.string) url of
                 Ok url ->
@@ -715,6 +719,14 @@ update msg model =
 
         CloseAboutModal ->
             ( { model | modalAboutVisibility = Modal.hidden }, Cmd.none )
+
+        Theme t ->
+            case t of
+                Dark ->
+                    ( { model | theme = Dark }, load "https://comby.live" )
+
+                Light ->
+                    ( { model | theme = Light }, load "https://light.comby.live" )
 
 
 subscriptions : Model -> Sub Msg

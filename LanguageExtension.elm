@@ -31,6 +31,7 @@ all =
     , SQL
     , Swift
     , XML
+    , Text
     ]
 
 
@@ -118,6 +119,9 @@ ofString s =
         ".tex" ->
             Latex
 
+        ".txt" ->
+            Text
+
         ".bib" ->
             Latex
 
@@ -203,6 +207,9 @@ prettyName s =
         Latex ->
             "Latex"
 
+        Text ->
+            "Text"
+
         XML ->
             "XML"
 
@@ -284,6 +291,9 @@ toString s =
 
         Latex ->
             ".tex"
+
+        Text ->
+            ".txt"
 
         XML ->
             ".xml"

@@ -31,7 +31,7 @@ sourceInput model =
         [ Textarea.id "source"
         , Textarea.rows 3
         , Textarea.onInput SourceInputUpdated
-        , Textarea.attrs [ placeholder "Paste your source code here" ]
+        , Textarea.attrs [ placeholder "Paste your source code here", spellcheck False ]
         , Textarea.defaultValue model.sourceInput
         ]
 
@@ -42,7 +42,7 @@ matchTemplateInput model =
         [ Textarea.id "match_template"
         , Textarea.rows 3
         , Textarea.onInput MatchTemplateInputUpdated
-        , Textarea.attrs [ placeholder "Match Template" ]
+        , Textarea.attrs [ placeholder "Match Template", spellcheck False ]
         , Textarea.defaultValue model.matchTemplateInput
         ]
 
@@ -53,7 +53,7 @@ ruleInput model =
         [ Textarea.id "rule"
         , Textarea.rows 1
         , Textarea.onInput RuleInputUpdated
-        , Textarea.attrs [ placeholder "where true" ]
+        , Textarea.attrs [ placeholder "where true", spellcheck False ]
         , Textarea.defaultValue model.ruleInput
         ]
 
@@ -71,7 +71,7 @@ rewriteTemplateInput model =
         [ Textarea.id "rewrite"
         , Textarea.rows 3
         , Textarea.onInput RewriteTemplateInputUpdated
-        , Textarea.attrs [ placeholder "Rewrite Template" ]
+        , Textarea.attrs [ placeholder "Rewrite Template", spellcheck False ]
         , Textarea.defaultValue model.rewriteTemplateInput
         ]
 
@@ -158,7 +158,7 @@ substitutionKindSelection model =
 
 footerShareLink : Model -> Html Msg
 footerShareLink model =
-    div [] <|
+    div [ class "text-left" ] <|
         [ Button.button
             [ Button.small
             , Button.warning
@@ -194,6 +194,21 @@ footerShareLink model =
                         ]
                     ]
                )
+
+
+docsLink : () -> Html Msg
+docsLink () =
+    div [] <|
+        [ Button.button
+            [ Button.small
+            , Button.secondary
+            , Button.onClick DocsLinkClicked
+            , Button.attrs [ class "documentation-button" ]
+            ]
+            [ i [ class "fa-fw fas fa-file-alt" ] []
+            , text "Documentation"
+            ]
+        ]
 
 
 footerServerConnected : Model -> Html Msg
@@ -271,9 +286,9 @@ terminalModal model =
         |> Modal.body []
             [ Grid.containerFluid []
                 [ Grid.row []
-                    [ Grid.col [ Col.md3 ] []
-                    , Grid.col [ Col.md7 ]
-                        [ Html.pre []
+                    [ Grid.col [ Col.md2 ] []
+                    , Grid.col [ Col.md8 ]
+                        [ Html.pre [ class "modal-pre" ]
                             [ Html.code []
                                 [ text model.modalText ]
                             ]
@@ -372,6 +387,26 @@ halves l =
     ( List.map (\( _, x ) -> x) left, List.map (\( _, x ) -> x) right )
 
 
+toggleTheme : Model -> Html Msg
+toggleTheme model =
+    div [] <|
+        [ ButtonGroup.radioButtonGroup [ ButtonGroup.small ]
+            [ ButtonGroup.radioButton
+                (model.theme == Dark)
+                [ Button.secondary, Button.onClick <| Theme Dark ]
+                [ i [ class "fa-fw fas fa-moon" ] []
+                , text ""
+                ]
+            , ButtonGroup.radioButton
+                (model.theme == Light)
+                [ Button.secondary, Button.onClick <| Theme Light ]
+                [ i [ class "fa-fw fas fa-sun" ] []
+                , text ""
+                ]
+            ]
+        ]
+
+
 sourcePage : Model -> Html Msg
 sourcePage model =
     let
@@ -385,11 +420,9 @@ sourcePage model =
                     -- changing to md12 makes this flush on left
                     [ Grid.col [ Col.md11 ]
                         [ Grid.row []
-                            [ Grid.col [ Col.md6 ]
-                                [ highlightableSourceListing model
-                                ]
-                            , Grid.col [ Col.md6 ]
-                                [ highlightableRewriteResult model
+                            [ Grid.col [ Col.xs12 ]
+                                [ br [] []
+                                , sourceInput model
                                 ]
                             ]
                         , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
@@ -408,15 +441,19 @@ sourcePage model =
                                 [ ruleDisplaySyntaxErrors model
                                 ]
                             ]
-                        , Grid.row []
-                            [ Grid.col [ Col.xs12 ]
-                                [ br [] []
-                                , sourceInput model
+                        , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+                            [ Grid.col [ Col.md6 ]
+                                [ highlightableSourceListing model
+                                ]
+                            , Grid.col [ Col.md6 ]
+                                [ highlightableRewriteResult model
                                 ]
                             ]
-                        , Grid.row [ Row.betweenXs, Row.attrs [ Spacing.mt3 ] ]
+                        , Grid.row [ Row.betweenXs, Row.attrs [ Spacing.mt3, class "text-center" ] ]
                             [ Grid.col []
                                 [ footerShareLink model ]
+                            , Grid.col [ Col.md4 ]
+                                [ docsLink () ]
                             , Grid.col []
                                 [ terminalButtonGroup model ]
                             ]
@@ -431,10 +468,16 @@ sourcePage model =
                     , Grid.col [ Col.md6 ] [ languageSelection "" model right ]
                     ]
                 , Grid.row [ Row.attrs [ Spacing.mt5 ], Row.middleXs ]
-                    [ Grid.col [ Col.md6, Col.offsetMd3 ]
+                    [ Grid.col [ Col.md5, Col.offsetMd4 ]
                         [ footerServerConnected model ]
-                    , Grid.col [ Col.md3 ]
+                    , Grid.col [ Col.md1 ]
                         [ footerAbout ]
+                    ]
+                , Grid.row [ Row.attrs [ Spacing.mt4 ], Row.middleXs ]
+                    [ Grid.col [ Col.md6, Col.offsetMd3 ]
+                        [ toggleTheme model ]
+                    , Grid.col [ Col.md3 ]
+                        [ text "" ]
                     ]
                 ]
             ]

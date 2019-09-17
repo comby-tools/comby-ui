@@ -29,6 +29,11 @@ h6 {
 
 .modal-content {
     background-color: #343a40;
+    color: #ced4da;
+}
+
+.modal-pre {
+    background-color: #343a40;
 }
 
 .modal-title {
@@ -51,6 +56,10 @@ h6 {
 
 .info-button {
     color: #ced4da !important;
+}
+
+.documentation-button {
+    background-color: #0e0e0e !important;
 }
 
 .terminal-button {
