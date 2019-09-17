@@ -8,5 +8,5 @@ cp dark-theme/custom.css docs
 git add docs
 git commit -m "docs updated"
 
-# get rid of prod configuration
+# get rid of configuration
 git checkout -- .
