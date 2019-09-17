@@ -387,6 +387,26 @@ halves l =
     ( List.map (\( _, x ) -> x) left, List.map (\( _, x ) -> x) right )
 
 
+toggleTheme : Model -> Html Msg
+toggleTheme model =
+    div [] <|
+        [ ButtonGroup.radioButtonGroup [ ButtonGroup.small ]
+            [ ButtonGroup.radioButton
+                (model.theme == Dark)
+                [ Button.secondary, Button.onClick <| Theme Dark ]
+                [ i [ class "fa-fw fas fa-moon" ] []
+                , text ""
+                ]
+            , ButtonGroup.radioButton
+                (model.theme == Light)
+                [ Button.secondary, Button.onClick <| Theme Light ]
+                [ i [ class "fa-fw fas fa-sun" ] []
+                , text ""
+                ]
+            ]
+        ]
+
+
 sourcePage : Model -> Html Msg
 sourcePage model =
     let
@@ -448,10 +468,16 @@ sourcePage model =
                     , Grid.col [ Col.md6 ] [ languageSelection "" model right ]
                     ]
                 , Grid.row [ Row.attrs [ Spacing.mt5 ], Row.middleXs ]
-                    [ Grid.col [ Col.md6, Col.offsetMd3 ]
+                    [ Grid.col [ Col.md5, Col.offsetMd4 ]
                         [ footerServerConnected model ]
-                    , Grid.col [ Col.md3 ]
+                    , Grid.col [ Col.md1 ]
                         [ footerAbout ]
+                    ]
+                , Grid.row [ Row.attrs [ Spacing.mt4 ], Row.middleXs ]
+                    [ Grid.col [ Col.md6, Col.offsetMd3 ]
+                        [ toggleTheme model ]
+                    , Grid.col [ Col.md3 ]
+                        [ text "" ]
                     ]
                 ]
             ]

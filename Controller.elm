@@ -276,6 +276,7 @@ loadInitialStaticState flags location =
     , modalTerminalVisibility = Modal.hidden
     , modalText = ""
     , modalAboutVisibility = Modal.hidden
+    , theme = Dark
     }
 
 
@@ -718,6 +719,14 @@ update msg model =
 
         CloseAboutModal ->
             ( { model | modalAboutVisibility = Modal.hidden }, Cmd.none )
+
+        Theme t ->
+            case t of
+                Dark ->
+                    ( { model | theme = Dark }, load "https://comby.live" )
+
+                Light ->
+                    ( { model | theme = Light }, load "https://light.comby.live" )
 
 
 subscriptions : Model -> Sub Msg

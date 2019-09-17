@@ -1,4 +1,4 @@
-module Types exposing (Flags, LanguageExtension(..), Model, Msg(..), Page(..), SubstitutionKind(..))
+module Types exposing (Flags, LanguageExtension(..), Model, Msg(..), Page(..), SubstitutionKind(..), ThemeKind(..))
 
 import Bootstrap.Modal as Modal
 import Http
@@ -13,6 +13,11 @@ type alias Flags =
 type Page
     = SourcePage
     | NotFound
+
+
+type ThemeKind
+    = Dark
+    | Light
 
 
 type LanguageExtension
@@ -73,6 +78,7 @@ type alias Model =
     , modalTerminalVisibility : Modal.Visibility
     , modalText : String
     , modalAboutVisibility : Modal.Visibility
+    , theme : ThemeKind
     }
 
 
@@ -96,3 +102,4 @@ type Msg
     | ShowAboutModal
     | CopyTerminalCommandClicked
     | CopyTerminalCommandInPlaceClicked
+    | Theme ThemeKind
