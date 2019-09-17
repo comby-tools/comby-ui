@@ -64,6 +64,7 @@ match_template {
 .documentation-button {
     background-color: white !important;
     border-color: black !important;
+    color: black !important;
 }
 
 textarea
