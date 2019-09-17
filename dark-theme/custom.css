@@ -58,6 +58,10 @@ h6 {
     color: #ced4da !important;
 }
 
+.documentation-button {
+    background-color: #0e0e0e !important;
+}
+
 .terminal-button {
     border-color: #ced4da;
 }
