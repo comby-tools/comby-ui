@@ -14362,7 +14362,9 @@ var _user$project$Types$Model = function (a) {
 																				return function (u) {
 																					return function (v) {
 																						return function (w) {
-																							return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonLinkText: o, copyButtonTerminalText: p, copyButtonTextInPlace: q, currentRewriteResultId: r, currentMatchResultId: s, modalTerminalVisibility: t, modalText: u, modalAboutVisibility: v, theme: w};
+																							return function (x) {
+																								return {page: a, matchResult: b, matchTemplateInput: c, ruleInput: d, ruleSyntaxErrors: e, rewriteTemplateInput: f, sourceInput: g, rewriteResult: h, debug: i, url: j, prettyUrl: k, serverConnected: l, language: m, substitutionKind: n, copyButtonLinkText: o, copyButtonTerminalText: p, copyButtonTextInPlace: q, currentRewriteResultId: r, currentMatchResultId: s, modalTerminalVisibility: t, modalText: u, modalAboutVisibility: v, theme: w, rotation: x};
+																							};
 																						};
 																					};
 																				};
@@ -14390,6 +14392,8 @@ var _user$project$Types$NotFound = {ctor: 'NotFound'};
 var _user$project$Types$SourcePage = {ctor: 'SourcePage'};
 var _user$project$Types$Light = {ctor: 'Light'};
 var _user$project$Types$Dark = {ctor: 'Dark'};
+var _user$project$Types$Horizontal = {ctor: 'Horizontal'};
+var _user$project$Types$Vertical = {ctor: 'Vertical'};
 var _user$project$Types$XML = {ctor: 'XML'};
 var _user$project$Types$Text = {ctor: 'Text'};
 var _user$project$Types$Swift = {ctor: 'Swift'};
@@ -14419,6 +14423,9 @@ var _user$project$Types$Assembly = {ctor: 'Assembly'};
 var _user$project$Types$Generic = {ctor: 'Generic'};
 var _user$project$Types$NewlineSeparated = {ctor: 'NewlineSeparated'};
 var _user$project$Types$InPlace = {ctor: 'InPlace'};
+var _user$project$Types$ChangeRotation = function (a) {
+	return {ctor: 'ChangeRotation', _0: a};
+};
 var _user$project$Types$Theme = function (a) {
 	return {ctor: 'Theme', _0: a};
 };
@@ -14938,7 +14945,8 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			modalTerminalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
 			modalText: '',
 			modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
-			theme: _user$project$Types$Dark
+			theme: _user$project$Types$Dark,
+			rotation: _user$project$Types$Horizontal
 		};
 	});
 var _user$project$Controller$jsonFromModel = function (model) {
@@ -15438,7 +15446,7 @@ var _user$project$Controller$update = F2(
 						{modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'Theme':
 				var _p39 = _p8._0;
 				if (_p39.ctor === 'Dark') {
 					return {
@@ -15457,9 +15465,72 @@ var _user$project$Controller$update = F2(
 						_1: _elm_lang$navigation$Navigation$load('https://light.comby.live')
 					};
 				}
+			default:
+				var _p40 = _p8._0;
+				if (_p40.ctor === 'Horizontal') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{rotation: _user$project$Types$Horizontal}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{rotation: _user$project$Types$Vertical}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
 		}
 	});
 
+var _user$project$View$toggleWindowLayout = function (model) {
+	var _p0 = _elm_lang$core$Native_Utils.eq(model.rotation, _user$project$Types$Horizontal) ? {ctor: '_Tuple2', _0: 'fas fa-ellipsis-v', _1: _user$project$Types$Vertical} : {ctor: '_Tuple2', _0: 'fas fa-ellipsis-h', _1: _user$project$Types$Horizontal};
+	var icon = _p0._0;
+	var nextRotation = _p0._1;
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_rundis$elm_bootstrap$Bootstrap_Button$button,
+				{
+					ctor: '::',
+					_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+					_1: {
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
+						_1: {
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(
+								_user$project$Types$ChangeRotation(nextRotation)),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$i,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class(icon),
+							_1: {ctor: '[]'}
+						},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(''),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
 var _user$project$View$toggleTheme = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -15550,29 +15621,29 @@ var _user$project$View$halves = function (l) {
 				return {ctor: '_Tuple2', _0: i, _1: x};
 			}),
 		l);
-	var _p0 = A2(
+	var _p1 = A2(
 		_elm_lang$core$List$partition,
-		function (_p1) {
-			var _p2 = _p1;
-			return _elm_lang$core$Native_Utils.cmp(_p2._0, n) < 0;
+		function (_p2) {
+			var _p3 = _p2;
+			return _elm_lang$core$Native_Utils.cmp(_p3._0, n) < 0;
 		},
 		newl);
-	var left = _p0._0;
-	var right = _p0._1;
+	var left = _p1._0;
+	var right = _p1._1;
 	return {
 		ctor: '_Tuple2',
 		_0: A2(
 			_elm_lang$core$List$map,
-			function (_p3) {
-				var _p4 = _p3;
-				return _p4._1;
+			function (_p4) {
+				var _p5 = _p4;
+				return _p5._1;
 			},
 			left),
 		_1: A2(
 			_elm_lang$core$List$map,
-			function (_p5) {
-				var _p6 = _p5;
-				return _p6._1;
+			function (_p6) {
+				var _p7 = _p6;
+				return _p7._1;
 			},
 			right)
 	};
@@ -16192,8 +16263,8 @@ var _user$project$View$footerServerConnected = function (model) {
 			}
 		});
 };
-var _user$project$View$docsLink = function (_p7) {
-	var _p8 = _p7;
+var _user$project$View$docsLink = function (_p8) {
+	var _p9 = _p8;
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
@@ -16478,77 +16549,185 @@ var _user$project$View$languageSelection = F3(
 						},
 						languages))));
 	});
-var _user$project$View$highlightableRewriteResult = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('context2'),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$pre,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('rewrite-box'),
-					_1: {ctor: '[]'}
-				},
-				{
+var _user$project$View$highlightableRewriteResult = F2(
+	function (model, cssHeight) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('context2'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$pre,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class(cssHeight),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$code,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('listing2'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(''),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$View$highlightableSourceListing = F2(
+	function (model, cssHeight) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('context'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$pre,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class(cssHeight),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$code,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('listing'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(''),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$View$horizontalLayout = function (model) {
+	return {
+		ctor: '::',
+		_0: A2(
+			_rundis$elm_bootstrap$Bootstrap_Grid$row,
+			{
+				ctor: '::',
+				_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_rundis$elm_bootstrap$Bootstrap_Grid$col,
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(_user$project$View$highlightableSourceListing, model, 'source-box'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$code,
+						_rundis$elm_bootstrap$Bootstrap_Grid$col,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$id('listing2'),
+							_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
 							_1: {ctor: '[]'}
 						},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(''),
+							_0: A2(_user$project$View$highlightableRewriteResult, model, 'rewrite-box'),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		});
+				}
+			}),
+		_1: {ctor: '[]'}
+	};
 };
-var _user$project$View$highlightableSourceListing = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('context'),
-			_1: {ctor: '[]'}
-		},
-		{
+var _user$project$View$verticalLayout = function (model) {
+	return {
+		ctor: '::',
+		_0: A2(
+			_rundis$elm_bootstrap$Bootstrap_Grid$row,
+			{
+				ctor: '::',
+				_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+					{
+						ctor: '::',
+						_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_rundis$elm_bootstrap$Bootstrap_Grid$col,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(_user$project$View$highlightableSourceListing, model, 'source-box'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}),
+		_1: {
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$pre,
+				_rundis$elm_bootstrap$Bootstrap_Grid$row,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('source-box'),
+					_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+						{
+							ctor: '::',
+							_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+							_1: {ctor: '[]'}
+						}),
 					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$code,
+						_rundis$elm_bootstrap$Bootstrap_Grid$col,
+						{ctor: '[]'},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$id('listing'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(''),
+							_0: A2(_user$project$View$highlightableRewriteResult, model, 'rewrite-box'),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
-		});
+		}
+	};
 };
 var _user$project$View$rewriteTemplateInput = function (model) {
 	return _rundis$elm_bootstrap$Bootstrap_Form_Textarea$textarea(
@@ -16697,9 +16876,9 @@ var _user$project$View$sourceInput = function (model) {
 		});
 };
 var _user$project$View$sourcePage = function (model) {
-	var _p9 = _user$project$View$halves(_user$project$LanguageExtension$all);
-	var left = _p9._0;
-	var right = _p9._1;
+	var _p10 = _user$project$View$halves(_user$project$LanguageExtension$all);
+	var left = _p10._0;
+	var right = _p10._1;
 	return A2(
 		_rundis$elm_bootstrap$Bootstrap_Grid$containerFluid,
 		{ctor: '[]'},
@@ -16744,78 +16923,35 @@ var _user$project$View$sourcePage = function (model) {
 											_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md11,
 											_1: {ctor: '[]'}
 										},
-										{
-											ctor: '::',
-											_0: A2(
-												_rundis$elm_bootstrap$Bootstrap_Grid$row,
-												{ctor: '[]'},
-												{
-													ctor: '::',
-													_0: A2(
-														_rundis$elm_bootstrap$Bootstrap_Grid$col,
-														{
-															ctor: '::',
-															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
-															_1: {ctor: '[]'}
-														},
-														{
-															ctor: '::',
-															_0: A2(
-																_elm_lang$html$Html$br,
-																{ctor: '[]'},
-																{ctor: '[]'}),
-															_1: {
-																ctor: '::',
-																_0: _user$project$View$sourceInput(model),
-																_1: {ctor: '[]'}
-															}
-														}),
-													_1: {ctor: '[]'}
-												}),
-											_1: {
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											{
 												ctor: '::',
 												_0: A2(
 													_rundis$elm_bootstrap$Bootstrap_Grid$row,
-													{
-														ctor: '::',
-														_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
-															{
-																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
-																_1: {ctor: '[]'}
-															}),
-														_1: {ctor: '[]'}
-													},
+													{ctor: '[]'},
 													{
 														ctor: '::',
 														_0: A2(
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
 															{
 																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$xs12,
 																_1: {ctor: '[]'}
 															},
 															{
 																ctor: '::',
-																_0: _user$project$View$matchTemplateInput(model),
-																_1: {ctor: '[]'}
+																_0: A2(
+																	_elm_lang$html$Html$br,
+																	{ctor: '[]'},
+																	{ctor: '[]'}),
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$View$sourceInput(model),
+																	_1: {ctor: '[]'}
+																}
 															}),
-														_1: {
-															ctor: '::',
-															_0: A2(
-																_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																{
-																	ctor: '::',
-																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
-																	_1: {ctor: '[]'}
-																},
-																{
-																	ctor: '::',
-																	_0: _user$project$View$rewriteTemplateInput(model),
-																	_1: {ctor: '[]'}
-																}),
-															_1: {ctor: '[]'}
-														}
+														_1: {ctor: '[]'}
 													}),
 												_1: {
 													ctor: '::',
@@ -16842,7 +16978,7 @@ var _user$project$View$sourcePage = function (model) {
 																},
 																{
 																	ctor: '::',
-																	_0: _user$project$View$ruleInput(model),
+																	_0: _user$project$View$matchTemplateInput(model),
 																	_1: {ctor: '[]'}
 																}),
 															_1: {
@@ -16856,7 +16992,7 @@ var _user$project$View$sourcePage = function (model) {
 																	},
 																	{
 																		ctor: '::',
-																		_0: _user$project$View$ruleDisplaySyntaxErrors(model),
+																		_0: _user$project$View$rewriteTemplateInput(model),
 																		_1: {ctor: '[]'}
 																	}),
 																_1: {ctor: '[]'}
@@ -16887,7 +17023,7 @@ var _user$project$View$sourcePage = function (model) {
 																	},
 																	{
 																		ctor: '::',
-																		_0: _user$project$View$highlightableSourceListing(model),
+																		_0: _user$project$View$ruleInput(model),
 																		_1: {ctor: '[]'}
 																	}),
 																_1: {
@@ -16901,79 +17037,82 @@ var _user$project$View$sourcePage = function (model) {
 																		},
 																		{
 																			ctor: '::',
-																			_0: _user$project$View$highlightableRewriteResult(model),
+																			_0: _user$project$View$ruleDisplaySyntaxErrors(model),
 																			_1: {ctor: '[]'}
 																		}),
 																	_1: {ctor: '[]'}
 																}
 															}),
-														_1: {
+														_1: {ctor: '[]'}
+													}
+												}
+											},
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Native_Utils.eq(model.rotation, _user$project$Types$Vertical) ? _user$project$View$verticalLayout(model) : _user$project$View$horizontalLayout(model),
+												{
+													ctor: '::',
+													_0: A2(
+														_rundis$elm_bootstrap$Bootstrap_Grid$row,
+														{
+															ctor: '::',
+															_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$betweenXs,
+															_1: {
+																ctor: '::',
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
+																	{
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
+																		_1: {
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$class('text-center'),
+																			_1: {ctor: '[]'}
+																		}
+																	}),
+																_1: {ctor: '[]'}
+															}
+														},
+														{
 															ctor: '::',
 															_0: A2(
-																_rundis$elm_bootstrap$Bootstrap_Grid$row,
+																_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																{ctor: '[]'},
 																{
 																	ctor: '::',
-																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$betweenXs,
-																	_1: {
+																	_0: _user$project$View$footerShareLink(model),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_rundis$elm_bootstrap$Bootstrap_Grid$col,
+																	{
 																		ctor: '::',
-																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
-																			{
-																				ctor: '::',
-																				_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
-																				_1: {
-																					ctor: '::',
-																					_0: _elm_lang$html$Html_Attributes$class('text-center'),
-																					_1: {ctor: '[]'}
-																				}
-																			}),
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md4,
 																		_1: {ctor: '[]'}
-																	}
-																},
-																{
+																	},
+																	{
+																		ctor: '::',
+																		_0: _user$project$View$docsLink(
+																			{ctor: '_Tuple0'}),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {
 																	ctor: '::',
 																	_0: A2(
 																		_rundis$elm_bootstrap$Bootstrap_Grid$col,
 																		{ctor: '[]'},
 																		{
 																			ctor: '::',
-																			_0: _user$project$View$footerShareLink(model),
+																			_0: _user$project$View$terminalButtonGroup(model),
 																			_1: {ctor: '[]'}
 																		}),
-																	_1: {
-																		ctor: '::',
-																		_0: A2(
-																			_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																			{
-																				ctor: '::',
-																				_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md4,
-																				_1: {ctor: '[]'}
-																			},
-																			{
-																				ctor: '::',
-																				_0: _user$project$View$docsLink(
-																					{ctor: '_Tuple0'}),
-																				_1: {ctor: '[]'}
-																			}),
-																		_1: {
-																			ctor: '::',
-																			_0: A2(
-																				_rundis$elm_bootstrap$Bootstrap_Grid$col,
-																				{ctor: '[]'},
-																				{
-																					ctor: '::',
-																					_0: _user$project$View$terminalButtonGroup(model),
-																					_1: {ctor: '[]'}
-																				}),
-																			_1: {ctor: '[]'}
-																		}
-																	}
-																}),
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}),
+													_1: {ctor: '[]'}
+												}))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {ctor: '[]'}
@@ -17117,12 +17256,8 @@ var _user$project$View$sourcePage = function (model) {
 															_rundis$elm_bootstrap$Bootstrap_Grid$col,
 															{
 																ctor: '::',
-																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md6,
-																_1: {
-																	ctor: '::',
-																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd3,
-																	_1: {ctor: '[]'}
-																}
+																_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md1,
+																_1: {ctor: '[]'}
 															},
 															{
 																ctor: '::',
@@ -17136,11 +17271,15 @@ var _user$project$View$sourcePage = function (model) {
 																{
 																	ctor: '::',
 																	_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$md3,
-																	_1: {ctor: '[]'}
+																	_1: {
+																		ctor: '::',
+																		_0: _rundis$elm_bootstrap$Bootstrap_Grid_Col$offsetMd3,
+																		_1: {ctor: '[]'}
+																	}
 																},
 																{
 																	ctor: '::',
-																	_0: _elm_lang$html$Html$text(''),
+																	_0: _user$project$View$toggleWindowLayout(model),
 																	_1: {ctor: '[]'}
 																}),
 															_1: {ctor: '[]'}
@@ -17186,8 +17325,8 @@ var _user$project$View$pageNotFound = A2(
 		}
 	});
 var _user$project$View$root = function (model) {
-	var _p10 = model.page;
-	if (_p10.ctor === 'SourcePage') {
+	var _p11 = model.page;
+	if (_p11.ctor === 'SourcePage') {
 		return _user$project$View$sourcePage(model);
 	} else {
 		return _user$project$View$pageNotFound;
