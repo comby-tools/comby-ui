@@ -61,6 +61,10 @@ match_template {
     font-size:14px;
 }
 
+.documentation-button {
+    background-color: white !important;
+    border-color: black !important;
+}
 
 textarea
 {
