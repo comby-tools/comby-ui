@@ -36,18 +36,18 @@ terminalCommand model extraOption =
                 s
 
         matchTemplate =
-            "COMBY_M=$(cat <<\"MATCH\"\n"
+            "COMBY_M=\"$(cat <<\"MATCH\"\n"
                 ++ model.matchTemplateInput
-                ++ "\nMATCH\n)\n"
+                ++ "\nMATCH\n)\"\n"
 
         ( rewriteTemplateEnv, rewriteVar ) =
             if model.rewriteTemplateInput == "" then
                 ( "", "''" )
 
             else
-                ( "COMBY_R=$(cat <<\"REWRITE\"\n"
+                ( "COMBY_R=\"$(cat <<\"REWRITE\"\n"
                     ++ model.rewriteTemplateInput
-                    ++ "\nREWRITE\n)\n"
+                    ++ "\nREWRITE\n)\"\n"
                 , "$COMBY_R"
                 )
 
@@ -56,9 +56,9 @@ terminalCommand model extraOption =
                 ( "", "" )
 
             else
-                ( "COMBY_RULE=$(cat <<\"RULE\"\n"
+                ( "COMBY_RULE=\"$(cat <<\"RULE\"\n"
                     ++ model.ruleInput
-                    ++ "\nRULE\n)\n"
+                    ++ "\nRULE\n)\"\n"
                 , " -rule $COMBY_RULE"
                 )
 
