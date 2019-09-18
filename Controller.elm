@@ -63,8 +63,7 @@ terminalCommand model extraOption =
                 )
 
         zeroInstall =
-            "# the next line installs comby if you need it :)\n"
-                ++ "bash <(curl -sL 0.comby.dev) && \\\n"
+            "# Install comby with `bash <(curl -sL get.comby.dev)` or see github.com/comby-tools/comby && \\\n"
 
         text =
             if model.matchTemplateInput == "" then
