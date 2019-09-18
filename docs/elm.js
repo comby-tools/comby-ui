@@ -14950,8 +14950,8 @@ var _user$project$Controller$terminalCommand = F2(
 			ctor: '_Tuple2',
 			_0: A2(
 				_elm_lang$core$Basics_ops['++'],
-				'COMBY_RULE=$(cat <<\"RULE\"\n',
-				A2(_elm_lang$core$Basics_ops['++'], model.ruleInput, '\nRULE\n)\n')),
+				'COMBY_RULE=\"$(cat <<\"RULE\"\n',
+				A2(_elm_lang$core$Basics_ops['++'], model.ruleInput, '\nRULE\n)\"\n')),
 			_1: ' -rule $COMBY_RULE'
 		};
 		var ruleEnv = _p1._0;
@@ -14960,16 +14960,16 @@ var _user$project$Controller$terminalCommand = F2(
 			ctor: '_Tuple2',
 			_0: A2(
 				_elm_lang$core$Basics_ops['++'],
-				'COMBY_R=$(cat <<\"REWRITE\"\n',
-				A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\n')),
+				'COMBY_R=\"$(cat <<\"REWRITE\"\n',
+				A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\"\n')),
 			_1: '$COMBY_R'
 		};
 		var rewriteTemplateEnv = _p2._0;
 		var rewriteVar = _p2._1;
 		var matchTemplate = A2(
 			_elm_lang$core$Basics_ops['++'],
-			'COMBY_M=$(cat <<\"MATCH\"\n',
-			A2(_elm_lang$core$Basics_ops['++'], model.matchTemplateInput, '\nMATCH\n)\n'));
+			'COMBY_M=\"$(cat <<\"MATCH\"\n',
+			A2(_elm_lang$core$Basics_ops['++'], model.matchTemplateInput, '\nMATCH\n)\"\n'));
 		var languageFilter = function () {
 			var s = _user$project$LanguageExtension$toString(model.language);
 			return _elm_lang$core$Native_Utils.eq(s, '.generic') ? '' : s;
