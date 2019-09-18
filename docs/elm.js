@@ -14945,7 +14945,7 @@ var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'
 var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
 var _user$project$Controller$terminalCommand = F2(
 	function (model, extraOption) {
-		var zeroInstall = A2(_elm_lang$core$Basics_ops['++'], '# the next line installs comby if you need it :)\n', 'bash <(curl -sL 0.comby.dev) && \\\n');
+		var zeroInstall = '# Install comby with `bash <(curl -sL get.comby.dev)` or see github.com/comby-tools/comby && \\\n';
 		var _p1 = _elm_lang$core$Native_Utils.eq(model.ruleInput, 'where true') ? {ctor: '_Tuple2', _0: '', _1: ''} : {
 			ctor: '_Tuple2',
 			_0: A2(
