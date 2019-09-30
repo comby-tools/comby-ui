@@ -14952,7 +14952,7 @@ var _user$project$Controller$terminalCommand = F2(
 				_elm_lang$core$Basics_ops['++'],
 				'COMBY_RULE=\"$(cat <<\"RULE\"\n',
 				A2(_elm_lang$core$Basics_ops['++'], model.ruleInput, '\nRULE\n)\"\n')),
-			_1: ' -rule $COMBY_RULE'
+			_1: ' -rule \"$COMBY_RULE\"'
 		};
 		var ruleEnv = _p1._0;
 		var rule = _p1._1;
@@ -14962,7 +14962,7 @@ var _user$project$Controller$terminalCommand = F2(
 				_elm_lang$core$Basics_ops['++'],
 				'COMBY_R=\"$(cat <<\"REWRITE\"\n',
 				A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\"\n')),
-			_1: '$COMBY_R'
+			_1: '\"$COMBY_R\"'
 		};
 		var rewriteTemplateEnv = _p2._0;
 		var rewriteVar = _p2._1;
@@ -14988,7 +14988,7 @@ var _user$project$Controller$terminalCommand = F2(
 						zeroInstall,
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							'comby $COMBY_M ',
+							'comby \"$COMBY_M\" ',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								rewriteVar,
