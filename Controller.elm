@@ -48,7 +48,7 @@ terminalCommand model extraOption =
                 ( "COMBY_R=\"$(cat <<\"REWRITE\"\n"
                     ++ model.rewriteTemplateInput
                     ++ "\nREWRITE\n)\"\n"
-                , "$COMBY_R"
+                , "\"$COMBY_R\""
                 )
 
         ( ruleEnv, rule ) =
@@ -59,7 +59,7 @@ terminalCommand model extraOption =
                 ( "COMBY_RULE=\"$(cat <<\"RULE\"\n"
                     ++ model.ruleInput
                     ++ "\nRULE\n)\"\n"
-                , " -rule $COMBY_RULE"
+                , " -rule \"$COMBY_RULE\""
                 )
 
         zeroInstall =
@@ -70,7 +70,7 @@ terminalCommand model extraOption =
                 "First enter a match template :)"
 
             else
-                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby $COMBY_M " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extraOption
+                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby \"$COMBY_M\" " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extraOption
     in
     text
 
