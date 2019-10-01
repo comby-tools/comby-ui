@@ -16565,7 +16565,11 @@ var _user$project$View$highlightableRewriteResult = F2(
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html_Attributes$class(cssHeight),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('rewrite-box'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
@@ -16602,7 +16606,11 @@ var _user$project$View$highlightableSourceListing = F2(
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html_Attributes$class(cssHeight),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('source-box'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
@@ -16649,7 +16657,7 @@ var _user$project$View$horizontalLayout = function (model) {
 					},
 					{
 						ctor: '::',
-						_0: A2(_user$project$View$highlightableSourceListing, model, 'source-box'),
+						_0: A2(_user$project$View$highlightableSourceListing, model, 'height-horizontal'),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -16663,7 +16671,7 @@ var _user$project$View$horizontalLayout = function (model) {
 						},
 						{
 							ctor: '::',
-							_0: A2(_user$project$View$highlightableRewriteResult, model, 'rewrite-box'),
+							_0: A2(_user$project$View$highlightableRewriteResult, model, 'height-horizontal'),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
@@ -16694,7 +16702,7 @@ var _user$project$View$verticalLayout = function (model) {
 					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: A2(_user$project$View$highlightableSourceListing, model, 'source-box'),
+						_0: A2(_user$project$View$highlightableSourceListing, model, 'height-vertical'),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}
@@ -16703,16 +16711,7 @@ var _user$project$View$verticalLayout = function (model) {
 			ctor: '::',
 			_0: A2(
 				_rundis$elm_bootstrap$Bootstrap_Grid$row,
-				{
-					ctor: '::',
-					_0: _rundis$elm_bootstrap$Bootstrap_Grid_Row$attrs(
-						{
-							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$mt3,
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
-				},
+				{ctor: '[]'},
 				{
 					ctor: '::',
 					_0: A2(
@@ -16720,7 +16719,7 @@ var _user$project$View$verticalLayout = function (model) {
 						{ctor: '[]'},
 						{
 							ctor: '::',
-							_0: A2(_user$project$View$highlightableRewriteResult, model, 'rewrite-box'),
+							_0: A2(_user$project$View$highlightableRewriteResult, model, 'height-vertical'),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
