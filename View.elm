@@ -80,7 +80,7 @@ highlightableSourceListing : Model -> String -> Html Msg
 highlightableSourceListing model cssHeight =
     Html.div
         [ Html.Attributes.class "context" ]
-        [ Html.pre [ Html.Attributes.class cssHeight ]
+        [ Html.pre [ Html.Attributes.class cssHeight, Html.Attributes.class "source-box" ]
             [ Html.code [ Html.Attributes.id "listing" ]
                 -- we set the text in index.html to synchronize highlighting
                 [ text "" ]
@@ -92,7 +92,7 @@ highlightableRewriteResult : Model -> String -> Html Msg
 highlightableRewriteResult model cssHeight =
     Html.div
         [ Html.Attributes.class "context2" ]
-        [ Html.pre [ Html.Attributes.class cssHeight ]
+        [ Html.pre [ Html.Attributes.class cssHeight, Html.Attributes.class "rewrite-box" ]
             [ Html.code [ Html.Attributes.id "listing2" ]
                 -- we set the text in index.html to synchronize highlighting
                 [ text "" ]
@@ -433,10 +433,10 @@ horizontalLayout : Model -> List (Html Msg)
 horizontalLayout model =
     [ Grid.row [ Row.attrs [ Spacing.mt3 ] ]
         [ Grid.col [ Col.md6 ]
-            [ highlightableSourceListing model "source-box"
+            [ highlightableSourceListing model "height-horizontal"
             ]
         , Grid.col [ Col.md6 ]
-            [ highlightableRewriteResult model "rewrite-box"
+            [ highlightableRewriteResult model "height-horizontal"
             ]
         ]
     ]
@@ -446,12 +446,12 @@ verticalLayout : Model -> List (Html Msg)
 verticalLayout model =
     [ Grid.row [ Row.attrs [ Spacing.mt3 ] ]
         [ Grid.col []
-            [ highlightableSourceListing model "source-box"
+            [ highlightableSourceListing model "height-vertical"
             ]
         ]
-    , Grid.row [ Row.attrs [ Spacing.mt3 ] ]
+    , Grid.row []
         [ Grid.col []
-            [ highlightableRewriteResult model "rewrite-box"
+            [ highlightableRewriteResult model "height-vertical"
             ]
         ]
     ]
