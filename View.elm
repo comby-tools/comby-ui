@@ -198,13 +198,8 @@ footerShareLink model =
 
 docsLink : () -> Html Msg
 docsLink () =
-    div [] <|
-        [ Button.button
-            [ Button.small
-            , Button.secondary
-            , Button.onClick DocsLinkClicked
-            , Button.attrs [ class "documentation-button" ]
-            ]
+    div []
+        [ a [ href "https://comby.dev", class "btn btn-secondary documentation-button" ]
             [ i [ class "fa-fw fas fa-file-alt" ] []
             , text "Documentation"
             ]
