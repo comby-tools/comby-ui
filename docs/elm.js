@@ -16092,27 +16092,14 @@ var _user$project$View$docsLink = function (_p7) {
 		{
 			ctor: '::',
 			_0: A2(
-				_rundis$elm_bootstrap$Bootstrap_Button$button,
+				_elm_lang$html$Html$a,
 				{
 					ctor: '::',
-					_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+					_0: _elm_lang$html$Html_Attributes$href('https://comby.dev'),
 					_1: {
 						ctor: '::',
-						_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
-						_1: {
-							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$DocsLinkClicked),
-							_1: {
-								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class('documentation-button'),
-										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}
-						}
+						_0: _elm_lang$html$Html_Attributes$class('btn btn-secondary documentation-button'),
+						_1: {ctor: '[]'}
 					}
 				},
 				{
