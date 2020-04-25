@@ -8,4 +8,4 @@ thisDomain =
 
 rewriteServer : String
 rewriteServer =
-    "https://lerewriteserver.ml:8888"
+    "https://lerewriteserver.ml:8887"
