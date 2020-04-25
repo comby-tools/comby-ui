@@ -159,13 +159,13 @@ match_template {
 
 textarea
 {
-    font-family:"Monaco";
+    font-family:"Monaco", monospace;
     spellcheck:false;
     font-size:14px !important;
 }
 
 pre code {
-    font-family:"Monaco";
+    font-family:"Monaco", monospace;
     font-size:14px;
 }
 
@@ -186,7 +186,7 @@ pre {
 
 
 .rule-syntax-errors {
-    font-family:"Monaco";
+    font-family:"Monaco", monospace;
     white-space: pre-wrap;
     font-size:12px;
     margin:0px;

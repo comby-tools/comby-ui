@@ -14134,8 +14134,8 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8887';
-var _user$project$Configuration$thisDomain = 'https://staging.comby.live';
+var _user$project$Configuration$rewriteServer = 'https://lerewriteserver.ml:8888';
+var _user$project$Configuration$thisDomain = 'https://comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
 	function (source, match, rule, rewrite, language, substitutionKind, id) {
@@ -14961,14 +14961,14 @@ var _user$project$Controller$rewriteEndpoint = A2(_elm_lang$core$Basics_ops['++'
 var _user$project$Controller$matchEndpoint = A2(_elm_lang$core$Basics_ops['++'], _user$project$Configuration$rewriteServer, '/match');
 var _user$project$Controller$terminalCommand = F2(
 	function (model, extraOption) {
-		var zeroInstall = A2(_elm_lang$core$Basics_ops['++'], '# the next line installs comby if you need it :)\n', 'bash <(curl -sL 0.comby.dev) && \\\n');
+		var zeroInstall = '# Install comby with `bash <(curl -sL get.comby.dev)` or see github.com/comby-tools/comby && \\\n';
 		var _p1 = _elm_lang$core$Native_Utils.eq(model.ruleInput, 'where true') ? {ctor: '_Tuple2', _0: '', _1: ''} : {
 			ctor: '_Tuple2',
 			_0: A2(
 				_elm_lang$core$Basics_ops['++'],
-				'COMBY_RULE=$(cat <<\"RULE\"\n',
-				A2(_elm_lang$core$Basics_ops['++'], model.ruleInput, '\nRULE\n)\n')),
-			_1: ' -rule $COMBY_RULE'
+				'COMBY_RULE=\"$(cat <<\"RULE\"\n',
+				A2(_elm_lang$core$Basics_ops['++'], model.ruleInput, '\nRULE\n)\"\n')),
+			_1: ' -rule \"$COMBY_RULE\"'
 		};
 		var ruleEnv = _p1._0;
 		var rule = _p1._1;
@@ -14976,16 +14976,16 @@ var _user$project$Controller$terminalCommand = F2(
 			ctor: '_Tuple2',
 			_0: A2(
 				_elm_lang$core$Basics_ops['++'],
-				'COMBY_R=$(cat <<\"REWRITE\"\n',
-				A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\n')),
-			_1: '$COMBY_R'
+				'COMBY_R=\"$(cat <<\"REWRITE\"\n',
+				A2(_elm_lang$core$Basics_ops['++'], model.rewriteTemplateInput, '\nREWRITE\n)\"\n')),
+			_1: '\"$COMBY_R\"'
 		};
 		var rewriteTemplateEnv = _p2._0;
 		var rewriteVar = _p2._1;
 		var matchTemplate = A2(
 			_elm_lang$core$Basics_ops['++'],
-			'COMBY_M=$(cat <<\"MATCH\"\n',
-			A2(_elm_lang$core$Basics_ops['++'], model.matchTemplateInput, '\nMATCH\n)\n'));
+			'COMBY_M=\"$(cat <<\"MATCH\"\n',
+			A2(_elm_lang$core$Basics_ops['++'], model.matchTemplateInput, '\nMATCH\n)\"\n'));
 		var languageFilter = function () {
 			var s = _user$project$LanguageExtension$toString(model.language);
 			return _elm_lang$core$Native_Utils.eq(s, '.generic') ? '' : s;
@@ -15004,7 +15004,7 @@ var _user$project$Controller$terminalCommand = F2(
 						zeroInstall,
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							'comby $COMBY_M ',
+							'comby \"$COMBY_M\" ',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								rewriteVar,
@@ -16271,27 +16271,14 @@ var _user$project$View$docsLink = function (_p8) {
 		{
 			ctor: '::',
 			_0: A2(
-				_rundis$elm_bootstrap$Bootstrap_Button$button,
+				_elm_lang$html$Html$a,
 				{
 					ctor: '::',
-					_0: _rundis$elm_bootstrap$Bootstrap_Button$small,
+					_0: _elm_lang$html$Html_Attributes$href('https://comby.dev'),
 					_1: {
 						ctor: '::',
-						_0: _rundis$elm_bootstrap$Bootstrap_Button$secondary,
-						_1: {
-							ctor: '::',
-							_0: _rundis$elm_bootstrap$Bootstrap_Button$onClick(_user$project$Types$DocsLinkClicked),
-							_1: {
-								ctor: '::',
-								_0: _rundis$elm_bootstrap$Bootstrap_Button$attrs(
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class('documentation-button'),
-										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}
-						}
+						_0: _elm_lang$html$Html_Attributes$class('btn btn-secondary documentation-button'),
+						_1: {ctor: '[]'}
 					}
 				},
 				{

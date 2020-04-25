@@ -36,19 +36,19 @@ terminalCommand model extraOption =
                 s
 
         matchTemplate =
-            "COMBY_M=$(cat <<\"MATCH\"\n"
+            "COMBY_M=\"$(cat <<\"MATCH\"\n"
                 ++ model.matchTemplateInput
-                ++ "\nMATCH\n)\n"
+                ++ "\nMATCH\n)\"\n"
 
         ( rewriteTemplateEnv, rewriteVar ) =
             if model.rewriteTemplateInput == "" then
                 ( "", "''" )
 
             else
-                ( "COMBY_R=$(cat <<\"REWRITE\"\n"
+                ( "COMBY_R=\"$(cat <<\"REWRITE\"\n"
                     ++ model.rewriteTemplateInput
-                    ++ "\nREWRITE\n)\n"
-                , "$COMBY_R"
+                    ++ "\nREWRITE\n)\"\n"
+                , "\"$COMBY_R\""
                 )
 
         ( ruleEnv, rule ) =
@@ -56,22 +56,21 @@ terminalCommand model extraOption =
                 ( "", "" )
 
             else
-                ( "COMBY_RULE=$(cat <<\"RULE\"\n"
+                ( "COMBY_RULE=\"$(cat <<\"RULE\"\n"
                     ++ model.ruleInput
-                    ++ "\nRULE\n)\n"
-                , " -rule $COMBY_RULE"
+                    ++ "\nRULE\n)\"\n"
+                , " -rule \"$COMBY_RULE\""
                 )
 
         zeroInstall =
-            "# the next line installs comby if you need it :)\n"
-                ++ "bash <(curl -sL 0.comby.dev) && \\\n"
+            "# Install comby with `bash <(curl -sL get.comby.dev)` or see github.com/comby-tools/comby && \\\n"
 
         text =
             if model.matchTemplateInput == "" then
                 "First enter a match template :)"
 
             else
-                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby $COMBY_M " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extraOption
+                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby \"$COMBY_M\" " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extraOption
     in
     text
 
