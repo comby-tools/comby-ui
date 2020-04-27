@@ -36,6 +36,7 @@ type LanguageExtension
     | OCaml
     | Php
     | Python
+    | Reason
     | Ruby
     | Rust
     | Scala

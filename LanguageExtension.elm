@@ -25,6 +25,7 @@ all =
     , OCaml
     , Php
     , Python
+    , Reason
     , Ruby
     , Rust
     , Scala
@@ -91,6 +92,12 @@ ofString s =
 
         ".py" ->
             Python
+
+        ".re" ->
+            Reason
+
+        ".rei" ->
+            Reason
 
         ".rb" ->
             Ruby
@@ -186,6 +193,9 @@ prettyName s =
         Python ->
             "Python"
 
+        Reason ->
+            "Reason"
+
         Ruby ->
             "Ruby"
 
@@ -267,6 +277,9 @@ toString s =
 
         Python ->
             ".py"
+
+        Reason ->
+            ".re"
 
         Ruby ->
             ".rb"
