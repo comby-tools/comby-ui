@@ -14393,6 +14393,7 @@ var _user$project$Types$SQL = {ctor: 'SQL'};
 var _user$project$Types$Scala = {ctor: 'Scala'};
 var _user$project$Types$Rust = {ctor: 'Rust'};
 var _user$project$Types$Ruby = {ctor: 'Ruby'};
+var _user$project$Types$Reason = {ctor: 'Reason'};
 var _user$project$Types$Python = {ctor: 'Python'};
 var _user$project$Types$Php = {ctor: 'Php'};
 var _user$project$Types$OCaml = {ctor: 'OCaml'};
@@ -14492,6 +14493,8 @@ var _user$project$LanguageExtension$toString = function (s) {
 			return '.php';
 		case 'Python':
 			return '.py';
+		case 'Reason':
+			return '.re';
 		case 'Ruby':
 			return '.rb';
 		case 'Rust':
@@ -14553,6 +14556,8 @@ var _user$project$LanguageExtension$prettyName = function (s) {
 			return 'PHP';
 		case 'Python':
 			return 'Python';
+		case 'Reason':
+			return 'Reason';
 		case 'Ruby':
 			return 'Ruby';
 		case 'Rust':
@@ -14612,6 +14617,10 @@ var _user$project$LanguageExtension$ofString = function (s) {
 			return _user$project$Types$Php;
 		case '.py':
 			return _user$project$Types$Python;
+		case '.re':
+			return _user$project$Types$Reason;
+		case '.rei':
+			return _user$project$Types$Reason;
 		case '.rb':
 			return _user$project$Types$Ruby;
 		case '.rs':
@@ -14700,26 +14709,30 @@ var _user$project$LanguageExtension$all = {
 																				_0: _user$project$Types$Python,
 																				_1: {
 																					ctor: '::',
-																					_0: _user$project$Types$Ruby,
+																					_0: _user$project$Types$Reason,
 																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Types$Rust,
+																						_0: _user$project$Types$Ruby,
 																						_1: {
 																							ctor: '::',
-																							_0: _user$project$Types$Scala,
+																							_0: _user$project$Types$Rust,
 																							_1: {
 																								ctor: '::',
-																								_0: _user$project$Types$SQL,
+																								_0: _user$project$Types$Scala,
 																								_1: {
 																									ctor: '::',
-																									_0: _user$project$Types$Swift,
+																									_0: _user$project$Types$SQL,
 																									_1: {
 																										ctor: '::',
-																										_0: _user$project$Types$XML,
+																										_0: _user$project$Types$Swift,
 																										_1: {
 																											ctor: '::',
-																											_0: _user$project$Types$Text,
-																											_1: {ctor: '[]'}
+																											_0: _user$project$Types$XML,
+																											_1: {
+																												ctor: '::',
+																												_0: _user$project$Types$Text,
+																												_1: {ctor: '[]'}
+																											}
 																										}
 																									}
 																								}
