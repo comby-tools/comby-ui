@@ -20,6 +20,7 @@ type LanguageExtension
     | Assembly
     | Bash
     | Cpp
+    | Csharp
     | Clojure
     | CSS
     | Dart

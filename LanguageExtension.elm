@@ -9,6 +9,7 @@ all =
     , Assembly
     , Bash
     , Cpp
+    , Csharp
     , Clojure
     , CSS
     , Dart
@@ -41,6 +42,9 @@ ofString s =
     case s of
         ".c" ->
             Cpp
+
+        ".cs" ->
+            Csharp
 
         ".clj" ->
             Clojure
@@ -148,6 +152,9 @@ prettyName s =
         Cpp ->
             "C/C++"
 
+        Csharp ->
+            "C#"
+
         Clojure ->
             "Clojure"
 
@@ -232,6 +239,9 @@ toString s =
 
         Cpp ->
             ".c"
+
+        Csharp ->
+            ".cs"
 
         Clojure ->
             ".clj"
