@@ -14410,6 +14410,7 @@ var _user$project$Types$Elm = {ctor: 'Elm'};
 var _user$project$Types$Dart = {ctor: 'Dart'};
 var _user$project$Types$CSS = {ctor: 'CSS'};
 var _user$project$Types$Clojure = {ctor: 'Clojure'};
+var _user$project$Types$Csharp = {ctor: 'Csharp'};
 var _user$project$Types$Cpp = {ctor: 'Cpp'};
 var _user$project$Types$Bash = {ctor: 'Bash'};
 var _user$project$Types$Assembly = {ctor: 'Assembly'};
@@ -14463,6 +14464,8 @@ var _user$project$LanguageExtension$toString = function (s) {
 			return '.generic';
 		case 'Cpp':
 			return '.c';
+		case 'Csharp':
+			return '.cs';
 		case 'Clojure':
 			return '.clj';
 		case 'CSS':
@@ -14526,6 +14529,8 @@ var _user$project$LanguageExtension$prettyName = function (s) {
 			return 'Bash';
 		case 'Cpp':
 			return 'C/C++';
+		case 'Csharp':
+			return 'C#';
 		case 'Clojure':
 			return 'Clojure';
 		case 'CSS':
@@ -14583,6 +14588,8 @@ var _user$project$LanguageExtension$ofString = function (s) {
 	switch (_p2) {
 		case '.c':
 			return _user$project$Types$Cpp;
+		case '.cs':
+			return _user$project$Types$Csharp;
 		case '.clj':
 			return _user$project$Types$Clojure;
 		case '.css':
@@ -14661,77 +14668,81 @@ var _user$project$LanguageExtension$all = {
 				_0: _user$project$Types$Cpp,
 				_1: {
 					ctor: '::',
-					_0: _user$project$Types$Clojure,
+					_0: _user$project$Types$Csharp,
 					_1: {
 						ctor: '::',
-						_0: _user$project$Types$CSS,
+						_0: _user$project$Types$Clojure,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Types$Dart,
+							_0: _user$project$Types$CSS,
 							_1: {
 								ctor: '::',
-								_0: _user$project$Types$Elm,
+								_0: _user$project$Types$Dart,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Types$Erlang,
+									_0: _user$project$Types$Elm,
 									_1: {
 										ctor: '::',
-										_0: _user$project$Types$Elixir,
+										_0: _user$project$Types$Erlang,
 										_1: {
 											ctor: '::',
-											_0: _user$project$Types$Html,
+											_0: _user$project$Types$Elixir,
 											_1: {
 												ctor: '::',
-												_0: _user$project$Types$Haskell,
+												_0: _user$project$Types$Html,
 												_1: {
 													ctor: '::',
-													_0: _user$project$Types$Go,
+													_0: _user$project$Types$Haskell,
 													_1: {
 														ctor: '::',
-														_0: _user$project$Types$Java,
+														_0: _user$project$Types$Go,
 														_1: {
 															ctor: '::',
-															_0: _user$project$Types$Javascript,
+															_0: _user$project$Types$Java,
 															_1: {
 																ctor: '::',
-																_0: _user$project$Types$Json,
+																_0: _user$project$Types$Javascript,
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Types$Latex,
+																	_0: _user$project$Types$Json,
 																	_1: {
 																		ctor: '::',
-																		_0: _user$project$Types$OCaml,
+																		_0: _user$project$Types$Latex,
 																		_1: {
 																			ctor: '::',
-																			_0: _user$project$Types$Php,
+																			_0: _user$project$Types$OCaml,
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$Types$Python,
+																				_0: _user$project$Types$Php,
 																				_1: {
 																					ctor: '::',
-																					_0: _user$project$Types$Reason,
+																					_0: _user$project$Types$Python,
 																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Types$Ruby,
+																						_0: _user$project$Types$Reason,
 																						_1: {
 																							ctor: '::',
-																							_0: _user$project$Types$Rust,
+																							_0: _user$project$Types$Ruby,
 																							_1: {
 																								ctor: '::',
-																								_0: _user$project$Types$Scala,
+																								_0: _user$project$Types$Rust,
 																								_1: {
 																									ctor: '::',
-																									_0: _user$project$Types$SQL,
+																									_0: _user$project$Types$Scala,
 																									_1: {
 																										ctor: '::',
-																										_0: _user$project$Types$Swift,
+																										_0: _user$project$Types$SQL,
 																										_1: {
 																											ctor: '::',
-																											_0: _user$project$Types$XML,
+																											_0: _user$project$Types$Swift,
 																											_1: {
 																												ctor: '::',
-																												_0: _user$project$Types$Text,
-																												_1: {ctor: '[]'}
+																												_0: _user$project$Types$XML,
+																												_1: {
+																													ctor: '::',
+																													_0: _user$project$Types$Text,
+																													_1: {ctor: '[]'}
+																												}
 																											}
 																										}
 																									}
