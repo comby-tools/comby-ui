@@ -15031,7 +15031,13 @@ var _user$project$Controller$terminalCommand = F2(
 												A2(
 													_elm_lang$core$Basics_ops['++'],
 													' ',
-													A2(_elm_lang$core$Basics_ops['++'], '-stats', extraOption))))))))))));
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														'-stats',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															' ',
+															A2(_elm_lang$core$Basics_ops['++'], '-match-newline-at-toplevel', extraOption))))))))))))));
 		return text;
 	});
 var _user$project$Controller$debug = false;
