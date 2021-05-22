@@ -14134,7 +14134,7 @@ var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m2 = _elm_lang$html$Html_A
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m1 = _elm_lang$html$Html_Attributes$class('m-1');
 var _rundis$elm_bootstrap$Bootstrap_Utilities_Spacing$m0 = _elm_lang$html$Html_Attributes$class('m-0');
 
-var _user$project$Configuration$rewriteServer = 'https://idgaffff.ga:8888';
+var _user$project$Configuration$rewriteServer = 'https://lerewriteserver.xyz:8888';
 var _user$project$Configuration$thisDomain = 'https://comby.live';
 
 var _user$project$JsonRequest$jsonRewriteRequest = F7(
@@ -14938,7 +14938,7 @@ var _user$project$Controller$loadInitialStaticState = F2(
 			modalTerminalVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
 			modalText: '',
 			modalAboutVisibility: _rundis$elm_bootstrap$Bootstrap_Modal$hidden,
-			theme: _user$project$Types$Light
+			theme: _user$project$Types$Dark
 		};
 	});
 var _user$project$Controller$jsonFromModel = function (model) {
