@@ -70,7 +70,7 @@ terminalCommand model extraOption =
                 "First enter a match template :)"
 
             else
-                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby \"$COMBY_M\" " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ extraOption
+                matchTemplate ++ rewriteTemplateEnv ++ ruleEnv ++ zeroInstall ++ "comby \"$COMBY_M\" " ++ rewriteVar ++ " " ++ rule ++ " " ++ languageFilter ++ " " ++ "-stats" ++ " " ++ "-match-newline-at-toplevel" ++ extraOption
     in
     text
 
