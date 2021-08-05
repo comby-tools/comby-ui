@@ -14398,6 +14398,7 @@ var _user$project$Types$Python = {ctor: 'Python'};
 var _user$project$Types$Php = {ctor: 'Php'};
 var _user$project$Types$OCaml = {ctor: 'OCaml'};
 var _user$project$Types$Latex = {ctor: 'Latex'};
+var _user$project$Types$Julia = {ctor: 'Julia'};
 var _user$project$Types$Json = {ctor: 'Json'};
 var _user$project$Types$Javascript = {ctor: 'Javascript'};
 var _user$project$Types$Java = {ctor: 'Java'};
@@ -14490,6 +14491,8 @@ var _user$project$LanguageExtension$toString = function (s) {
 			return '.js';
 		case 'Json':
 			return '.json';
+		case 'Julia':
+			return '.jl';
 		case 'OCaml':
 			return '.ml';
 		case 'Php':
@@ -14555,6 +14558,8 @@ var _user$project$LanguageExtension$prettyName = function (s) {
 			return 'JS/Typescript';
 		case 'Json':
 			return 'JSON';
+		case 'Julia':
+			return 'Julia';
 		case 'OCaml':
 			return 'OCaml';
 		case 'Php':
@@ -14618,6 +14623,8 @@ var _user$project$LanguageExtension$ofString = function (s) {
 			return _user$project$Types$Json;
 		case '.ml':
 			return _user$project$Types$OCaml;
+		case '.jl':
+			return _user$project$Types$Julia;
 		case '.mli':
 			return _user$project$Types$OCaml;
 		case '.php':
@@ -14707,41 +14714,45 @@ var _user$project$LanguageExtension$all = {
 																	_0: _user$project$Types$Json,
 																	_1: {
 																		ctor: '::',
-																		_0: _user$project$Types$Latex,
+																		_0: _user$project$Types$Julia,
 																		_1: {
 																			ctor: '::',
-																			_0: _user$project$Types$OCaml,
+																			_0: _user$project$Types$Latex,
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$Types$Php,
+																				_0: _user$project$Types$OCaml,
 																				_1: {
 																					ctor: '::',
-																					_0: _user$project$Types$Python,
+																					_0: _user$project$Types$Php,
 																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Types$Reason,
+																						_0: _user$project$Types$Python,
 																						_1: {
 																							ctor: '::',
-																							_0: _user$project$Types$Ruby,
+																							_0: _user$project$Types$Reason,
 																							_1: {
 																								ctor: '::',
-																								_0: _user$project$Types$Rust,
+																								_0: _user$project$Types$Ruby,
 																								_1: {
 																									ctor: '::',
-																									_0: _user$project$Types$Scala,
+																									_0: _user$project$Types$Rust,
 																									_1: {
 																										ctor: '::',
-																										_0: _user$project$Types$SQL,
+																										_0: _user$project$Types$Scala,
 																										_1: {
 																											ctor: '::',
-																											_0: _user$project$Types$Swift,
+																											_0: _user$project$Types$SQL,
 																											_1: {
 																												ctor: '::',
-																												_0: _user$project$Types$XML,
+																												_0: _user$project$Types$Swift,
 																												_1: {
 																													ctor: '::',
-																													_0: _user$project$Types$Text,
-																													_1: {ctor: '[]'}
+																													_0: _user$project$Types$XML,
+																													_1: {
+																														ctor: '::',
+																														_0: _user$project$Types$Text,
+																														_1: {ctor: '[]'}
+																													}
 																												}
 																											}
 																										}
