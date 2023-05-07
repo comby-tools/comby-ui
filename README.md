@@ -1,3 +1,5 @@
+**Archived. Previously the front end UI for `comby.live`**
+
 # comby-ui
 
 A front end UI for declarative syntax rewriting using [comby](https://github.com/comby-tools/comby). [Try it live](https://comby.live).
